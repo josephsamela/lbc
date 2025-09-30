@@ -5,7 +5,7 @@ class General(Merchant):
     open = True
     listings = [
         Listing(
-            item=items.lures.Crankbait(),
+            item=items.lures.Crankbait,
             price=3
         )
     ]

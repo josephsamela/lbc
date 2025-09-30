@@ -1,6 +1,7 @@
 from . import *
 
 from items import ItemModel
+
 class InventorySlotModel(Base):
     class Meta:
         db_table = 'inventories'
@@ -10,14 +11,6 @@ class InventorySlotModel(Base):
 
 class InventorySlot(Record):
     _model = InventorySlotModel
-    # def __init__(self, player, item):
-    #     record, created = self._model.get_or_create(
-    #         player=player._record,
-    #         item=item._record
-    #     )
-    #     self.player = record.player
-    #     self.item = record.item
-    #     self.quantity = record.quantity
 
 class Inventory:
     def __init__(self, player):

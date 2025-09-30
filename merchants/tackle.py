@@ -5,15 +5,15 @@ class Tackle(Merchant):
     open = True
     listings = [
         Listing(
-            item=items.lures.Crankbait(),
+            item=items.lures.Crankbait,
             price=3
         ),
         Listing(
-            item=items.lures.Popper(),
+            item=items.lures.Popper,
             price=3
         ),
         Listing(
-            item=items.lures.Spinner(),
+            item=items.lures.Spinner,
             price=3
         )
     ]

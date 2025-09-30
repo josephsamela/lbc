@@ -18,4 +18,9 @@ class Player(Record):
     def inventory(self):
         return Inventory(self)
 
+    @property
+    def experience(self):
+        return Experience(self)
+
 from .inventory import Inventory
+from .experience import Experience
