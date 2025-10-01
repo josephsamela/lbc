@@ -1,18 +1,9 @@
-from . import *
-
-from items import ItemModel
-
-class InventorySlotModel(Base):
-    class Meta:
-        db_table = 'inventories'
-    player = ForeignKeyField(PlayerModel)
-    item = ForeignKeyField(ItemModel)
-    quantity = IntegerField(default=0)
+from db import Record, InventoryModel
 
 class InventorySlot(Record):
-    _model = InventorySlotModel
+    _model = InventoryModel
 
-class Inventory:
+class InventoryManager:
     def __init__(self, player):
         self.player = player
 

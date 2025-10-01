@@ -1,4 +1,5 @@
 from peewee import *
+import datetime
 
 import inspect
 
@@ -8,6 +9,44 @@ db.connect()
 class Base(Model):
     class Meta:
         database = db
+
+class SkillModel(Base):
+    class Meta:
+        db_table = 'skills'
+    name = CharField(unique=True)
+
+class ItemModel(Base):
+    class Meta:
+        db_table = 'items'
+    name = CharField(unique=True)
+
+class LocationModel(Base):
+    class Meta:
+        db_table = 'locations'
+    name = CharField(unique=True)
+
+class PlayerModel(Base):
+    class Meta:
+        db_table = 'players'
+    username = CharField(unique=True)
+    password = CharField()
+    balance = IntegerField(default=0, constraints=[Check('balance >= 0')])
+    admin = BooleanField(default=False)
+    created_at = DateTimeField(default=datetime.datetime.now())
+
+class ExperienceModel(Base):
+    class Meta:
+        db_table = 'experience'
+    player = ForeignKeyField(PlayerModel)
+    skill = ForeignKeyField(SkillModel)
+    quantity = IntegerField(default=1)
+
+class InventoryModel(Base):
+    class Meta:
+        db_table = 'inventory'
+    player = ForeignKeyField(PlayerModel)
+    item = ForeignKeyField(ItemModel)
+    quantity = IntegerField(default=0)
 
 class Record:
     def _pre_init(self, *args, **kwargs):

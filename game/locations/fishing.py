@@ -1,4 +1,4 @@
-from . import *
+from . import Location
 
 class TributaryRiver(Location):
     name = 'TributaryRiver'
@@ -11,3 +11,9 @@ class Estuary(Location):
 
 class CoralReef(Location):
     name = 'Coral Reef'
+
+class FishingLocations:
+    tributary_river = TributaryRiver
+    open_ocean = OpenOcean
+    estuary = Estuary
+    coral_reef = CoralReef
