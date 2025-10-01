@@ -48,7 +48,11 @@ class ExperienceManager:
         '''
         Return player % progress to next level
         '''
-        return self.count(skill) / self._xp_from_level(self.next_level(skill))
+        xp_curr_lvl = self._xp_from_level(self.level(skill))
+        xp_next_lvl = self._xp_from_level(self.next_level(skill))
+        total_xp_req = xp_next_lvl - xp_curr_lvl
+        xp_acquired = total_xp_req - self.xp_remaining(skill)
+        return xp_acquired / total_xp_req
 
     def add(self, skill, quantity=1):
         '''
