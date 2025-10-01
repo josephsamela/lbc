@@ -31,7 +31,7 @@ class InventoryManager:
         '''
         InventorySlot(
             player=self.player, 
-            item=self.player
+            item=item
         ).quantity += quantity
 
     def remove(self, item, quantity=1):
@@ -45,3 +45,23 @@ class InventoryManager:
             player=self.player, 
             item=item
         ).quantity -= quantity
+
+    def drop(self, item):
+        '''
+        Drop item inventory slot.
+        '''
+        InventorySlot(
+            player=self.player, 
+            item=item
+        )._record.delete_instance()
+
+    def items(self):
+        '''
+        Return player inventory item slots
+        '''
+        slots = []
+        for slot in InventoryModel.select().where(InventoryModel.player == self.player._record):
+            if slot.quantity > 0:
+                slots.append(slot)
+
+        return slots

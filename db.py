@@ -39,14 +39,14 @@ class ExperienceModel(Base):
         db_table = 'experience'
     player = ForeignKeyField(PlayerModel)
     skill = ForeignKeyField(SkillModel)
-    quantity = IntegerField(default=1)
+    quantity = IntegerField(default=1, constraints=[Check('balance >= 0')])
 
 class InventoryModel(Base):
     class Meta:
         db_table = 'inventory'
     player = ForeignKeyField(PlayerModel)
     item = ForeignKeyField(ItemModel)
-    quantity = IntegerField(default=0)
+    quantity = IntegerField(default=0, constraints=[Check('balance >= 0')])
 
 class Record:
     def _pre_init(self, *args, **kwargs):
