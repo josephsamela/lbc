@@ -11,10 +11,15 @@ class InventoryManager:
         '''
         Count quantity of item in inventory
         '''
-        return InventorySlot(
-            player=self.player, 
-            item=item
-        ).quantity
+        if self.player.journal.discovered(item):
+
+            return InventorySlot(
+                player=self.player, 
+                item=item
+            ).quantity
+
+        else:
+            return 0
 
     def check(self, item, quantity=1):
         '''
@@ -27,16 +32,16 @@ class InventoryManager:
 
     def add(self, item, quantity=1):
         '''
-        Add quantity of items to inventory
+        Add quantity of item to inventory
         '''
         InventorySlot(
-            player=self.player, 
+            player=self.player,
             item=item
         ).quantity += quantity
 
-    def remove(self, item, quantity=1):
+    def remove(self, item, quantity):
         '''
-        Remove quantity of items from inventory.
+        Remove quantity of item from inventory.
         '''
         if not self.check(item, quantity=quantity):
             raise Exception(f'Insuffient Item Quantity. Player {self.player.username} does not have {quantity} {item.name} to remove.')
@@ -48,20 +53,22 @@ class InventoryManager:
 
     def drop(self, item):
         '''
-        Drop item inventory slot.
+        Remove all quantity of item from inventory
         '''
         InventorySlot(
             player=self.player, 
             item=item
-        )._record.delete_instance()
+        ).quantity = 0
 
     def items(self):
         '''
-        Return player inventory item slots
+        Return items in player inventory
         '''
         slots = []
-        for slot in InventoryModel.select().where(InventoryModel.player == self.player._record):
-            if slot.quantity > 0:
-                slots.append(slot)
+        for slot in InventoryModel.select().where(
+            (InventoryModel.player == self.player._record) &
+            (InventoryModel.quantity > 0)
+        ):
+            slots.append(slot)
 
         return slots

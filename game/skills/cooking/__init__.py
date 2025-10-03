@@ -1,6 +1,4 @@
-from game.skills import Skill
-from .recipes import CookingRecipe
+from .. import Skill
 
 class Cooking(Skill):
     name = 'Cooking'
-    recipes = CookingRecipe()

@@ -1,8 +1,7 @@
-import random
+from game.items import Item
 
-class Plant:
-    def __init__(self):
-        pass
+class Plant(Item):
+    cookable = True
 
 class Carrots(Plant):
     name = 'Carrots'
@@ -12,8 +11,3 @@ class Tomatos(Plant):
 
 class Cucumbers(Plant):
     name = 'Cucumbers'
-
-class PlantSpecies:
-    carrots = Carrots
-    tomatos = Tomatos
-    cucumbers = Cucumbers

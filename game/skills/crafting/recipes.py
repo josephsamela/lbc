@@ -1,4 +1,3 @@
-import random
 
 class CraftingRecipe:
     def __init__(self):
@@ -12,8 +11,3 @@ class Spinner(CraftingRecipe):
 
 class Popper(CraftingRecipe):
     name = 'Popper'
-
-class CraftingRecipes:
-    crankbait = Crankbait
-    spinner = Spinner
-    popper = Popper

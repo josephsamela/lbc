@@ -1,7 +1,7 @@
-from peewee import *
 import datetime
-
 import inspect
+
+from peewee import *
 
 db = SqliteDatabase('db.sqlite')
 db.connect()
@@ -20,11 +20,6 @@ class ItemModel(Base):
         db_table = 'items'
     name = CharField(unique=True)
 
-class LocationModel(Base):
-    class Meta:
-        db_table = 'locations'
-    name = CharField(unique=True)
-
 class PlayerModel(Base):
     class Meta:
         db_table = 'players'
@@ -39,14 +34,14 @@ class ExperienceModel(Base):
         db_table = 'experience'
     player = ForeignKeyField(PlayerModel)
     skill = ForeignKeyField(SkillModel)
-    quantity = IntegerField(default=1, constraints=[Check('balance >= 0')])
+    quantity = IntegerField(default=0, constraints=[Check('quantity >= 0')])
 
 class InventoryModel(Base):
     class Meta:
         db_table = 'inventory'
     player = ForeignKeyField(PlayerModel)
     item = ForeignKeyField(ItemModel)
-    quantity = IntegerField(default=0, constraints=[Check('balance >= 0')])
+    quantity = IntegerField(default=0, constraints=[Check('quantity >= 0')])
 
 class Record:
     def _pre_init(self, *args, **kwargs):

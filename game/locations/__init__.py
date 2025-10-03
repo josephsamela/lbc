@@ -1,11 +1,9 @@
-from db import Record, LocationModel
 
-class Location(Record):
-    _model = LocationModel
+class Location():
+    name = ''        # Location name
+    description = '' # Location paragraph description
+    locations = []   # List of locations accessible from this location
+    actions = []  # List of activities that can be performed here
+    resources = []   # List of resources that can be gathered here
 
-from .fishing import FishingLocations
-from .market import MarketLocations
-
-class Locations:
-    fishing = FishingLocations()
-    market = MarketLocations()
+from .sleeping_giant import SleepingGiant

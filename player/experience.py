@@ -6,6 +6,7 @@ class ExperienceSlot(Record):
 class ExperienceManager:
     def __init__(self, player):
         self.player = player
+        self.xp_curve = 4.00874870400014
 
     def count(self, skill):
         '''
@@ -17,10 +18,16 @@ class ExperienceManager:
         ).quantity
 
     def _level_from_xp(self, xp):
-        return int(xp ** 0.249454399324694)
+        '''
+        Calculate level from experience
+        '''
+        return int(xp ** (1/self.xp_curve))
     
     def _xp_from_level(self, level):
-        return int(level ** 4.00874870400014)
+        '''
+        Calculate experience from level
+        '''
+        return int(level ** self.xp_curve)
 
     def level(self, skill):
         '''

@@ -1,6 +1,6 @@
-from ..items import Item
+from . import Bait
 
-class Lure(Item):
+class Lure(Bait):
     pass
 
 class Crankbait(Lure):
@@ -12,7 +12,8 @@ class Popper(Lure):
 class Spinner(Lure):
     name = 'Spinner'
 
-class Lures:
-    crankbait = Crankbait
-    popper = Popper
-    spinner = Spinner
+class Jig(Lure):
+    name = 'Jig'
+
+class Spoon(Lure):
+    name = 'Spoon'

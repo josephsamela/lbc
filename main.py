@@ -1,44 +1,35 @@
-from game import Game
+from game.skills.fishing.fish import PinkSalmon
+from game.skills.cooking.food import Milk, Egg, Flour
+from game.skills.cooking.recipes import Cake
+
+from game.skills.cooking.actions import CookItem, CookRecipe
 from player import Player
 
-game = Game()
-
 p = Player(username='joe', password='12345')
+f = PinkSalmon()
 
-# Test balance
+# Test Cook Item
+p.inventory.drop(f)
+p.inventory.add(f)
 
-p.balance = 0
-print(f'{p.username} has {p.balance} LBC.')
+ci = CookItem()
+ci.execute(
+    player=p,
+    item=f
+)
 
-p.balance += 10
-print(f'Add 10. {p.username} has {p.balance} LBC.')
+# Test Cook Recipe
+p.inventory.drop(Milk)
+p.inventory.drop(Egg)
+p.inventory.drop(Flour)
 
-p.balance += 4
-print(f'Add 4. {p.username} has {p.balance} LBC.')
+p.inventory.add(Milk)
+p.inventory.add(Egg)
+p.inventory.add(Flour)
 
-p.balance -= 2
-print(f'Subtract 2. {p.username} has {p.balance} LBC.')
+cr = CookRecipe()
 
-# Test inventory
-
-i = game.items.lures.crankbait
-print(f'{p.username} has {p.inventory.count(i)} {i.name}.')
-
-p.inventory.add(i, quantity=3)
-print(f'Add 3. {p.username} has {p.inventory.count(i)} {i.name}.')
-
-p.inventory.remove(i, quantity=2)
-print(f'Subtract 2. {p.username} has {p.inventory.count(i)} {i.name}.')
-
-# Test skill experience
-
-s = game.skills.fishing
-
-xp = p.experience.count(s)
-level = p.experience.level(s)
-
-next_level = p.experience.next_level(s)
-xp_remaining = p.experience.xp_remaining(s)
-progress = p.experience.next_level_progress(s)
-
-print('stop')
+cr.execute(
+    player=p,
+    recipe=Cake
+)

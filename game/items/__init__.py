@@ -1,11 +1,21 @@
+import re
+
 from db import Record, ItemModel
 
 class Item(Record):
     _model = ItemModel
 
-from .bait import Baits
-from .lures import Lures
+    state = None
+    cookable = False
 
-class Items:
-    bait = Baits()
-    lures = Lures()
+    @property
+    def name(self):
+        '''
+        Return name of object class.
+
+        Add space " " between words. "PinkSalmon" -> "Pink Salmon".
+        '''
+        pattern=r'([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))'
+        replace=r'\1 '
+        name=self.__class__.__name__
+        return re.sub(pattern, replace, name)
