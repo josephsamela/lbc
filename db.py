@@ -57,6 +57,10 @@ class Record:
         if not self._model._meta.database.table_exists(self._model._meta.table_name):
             self._model.create_table()
 
+    def _post_init(self, *args, **kwargs):
+        '''
+        Code to run after subclass __init__
+        '''
         # Build list of object attributes
         attrs = {}
         for a in dir(self):
@@ -87,10 +91,6 @@ class Record:
         # Add record fields to class as attributes
         self.__dict__.update(self._record.__data__)
 
-    def _post_init(self):
-        '''
-        Code to run after subclass __init__
-        '''
         if hasattr(self, '_initializing'):
             delattr(self, '_initializing')
 
@@ -120,6 +120,6 @@ class Record:
         def new_init(self, *args, **kwargs):
             self._pre_init(*args, **kwargs)
             original_init(self)
-            self._post_init()
+            self._post_init(*args, **kwargs)
 
         cls.__init__ = new_init

@@ -1,23 +1,22 @@
 from game.items import Item
 
 class Food(Item):
+    required_level = 0
+    xp = 0
 
-    cookable = False
+    @property
+    def cookable(self):
+        match self.state:
+            case 'Raw': 
+                return True
+            case _:
+                return False
 
-    def __init__(self):
-        # Food is raw by default. But contains a cooked version of itself.
-        if self.cookable:
-            self.state = 'Raw'
-            c = self.__class__
-            n = c.__name__
-            self.cooked = type(n, (c,), {'state': 'Cooked', 'cookable': False})
-
+class CookableFood(Food):
+    states = ['Raw', 'Cooked', 'Burnt']
     @property
     def name(self):
         n = super().name
-
-        if not self.state:
-            return n
         return f'{self.state} {n}'
 
 from .baking import *

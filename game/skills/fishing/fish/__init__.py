@@ -1,7 +1,7 @@
-from game.skills.cooking.food import Food
+from game.skills.cooking.food import CookableFood
 
-class Fish(Food):
-    cookable = True
+class Fish(CookableFood):
+    pass
 
 from .salmon import *
 from .trout import *

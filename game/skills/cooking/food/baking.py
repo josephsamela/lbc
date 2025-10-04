@@ -1,10 +1,10 @@
-from game.items import Item
+from . import Food, CookableFood
 
-class Flour(Item):
+class Flour(Food):
     pass
 
-class Egg(Item):
+class Egg(CookableFood):
     pass
 
-class Milk(Item):
+class Milk(Food):
     pass

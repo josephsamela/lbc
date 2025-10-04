@@ -1,43 +1,9 @@
+import random
+
 from game.actions import *
 from . import Cooking
 
-class CookItem(Action):
-
-    @property
-    def requirements(self):
-
-        if not self.item.cookable:
-            raise Exception(f'{self.item.name} cannot be cooked.')
-
-        return [
-            LevelRequirement(
-                skill=Cooking,
-                level=self.item.required_level
-            ),
-            ItemRequirement(
-                item=self.item,
-                quantity=1
-            )
-        ]
-
-    @property
-    def rewards(self):
-        return [
-            ItemReward(
-                item=self.item.cooked,
-                quantity=1
-            ),
-            ExperienceReward(
-                skill=Cooking,
-                quantity=self.item.xp
-            )
-        ]
-
-    def execute(self, player, item):
-        self.item = item
-        super().execute(player)
-
-class CookRecipe(Action):
+class CookAction(Action):
 
     @property
     def requirements(self):
@@ -66,15 +32,38 @@ class CookRecipe(Action):
         '''
         return [
             ItemReward(
-                item=self.recipe,
+                item=self.result,
                 quantity=1
             ),
             ExperienceReward(
                 skill=Cooking,
-                quantity=self.recipe.xp
+                quantity=self.result.xp
             )
         ]
 
-    def execute(self, player, recipe):
-        self.recipe = recipe
+    def execute(self, player, item=None, recipe=None):
+
+        if not item and not recipe:
+            raise Exception('You must pass item or recipe.')
+
+        elif item:
+            if not item.cookable:
+                raise Exception(f'{item.name} cannot be cooked.')
+            item.ingredients = [item.__class__]
+            self.recipe = item
+
+        elif recipe:
+            self.recipe = recipe
+
+        # Cooking success or failure is random. However, the outcome
+        # is weighted by recipe difficulty and player skill.
+        options = [self.recipe.cooked(), self.recipe.burnt()]
+        weights = [player.experience.level(Cooking) , self.recipe.xp/10 ]
+        self.result = random.choices(options, weights=weights)[0]
+
+        # Burnt food rewards zero xp
+        if self.result.state == 'Burnt':
+            self.result.xp = 0
+
         super().execute(player)
+        return self.result
