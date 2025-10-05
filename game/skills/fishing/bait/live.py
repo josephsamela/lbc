@@ -1,13 +1,13 @@
 from . import Bait
 
-class LiveBait(Bait):
+class Live(Bait):
     pass
 
-class Nightcrawlers(LiveBait):
+class Nightcrawlers(Live):
     name = 'Nightcrawlers'
 
-class Mealworms(LiveBait):
+class Mealworms(Live):
     name = 'Mealworms'
 
-class Crickets(LiveBait):
+class Crickets(Live):
     name = 'Crickets'
