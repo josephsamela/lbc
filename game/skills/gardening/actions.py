@@ -56,6 +56,7 @@ class HarvestAction(Action):
         ]
 
     def execute(self, player, garden):
+        
         # Check something is planted here
         self.garden = garden(player=player)
         if not self.garden.seed:
@@ -71,4 +72,13 @@ class HarvestAction(Action):
         return self.plant
 
 class ClearAction(Action):
-    pass
+    def execute(self, player, garden):
+
+        self.garden = garden(player=player)
+        if not self.garden.seed:
+            raise Exception('Garden has nothing planted.')
+
+        self.garden.seed = None
+        self.garden.planted_at = None
+
+        super().execute(player)
