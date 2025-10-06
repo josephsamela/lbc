@@ -1,8 +1,6 @@
 from game.items import Item
 
 class Food(Item):
-    required_level = 0
-    xp = 0
 
     @property
     def cookable(self):

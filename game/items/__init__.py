@@ -7,7 +7,13 @@ class Item(Record):
    
     states = []
     state = None
+
+    required_level = 0
     
+    @property
+    def xp(self):
+        return self.required_level*10
+
     @property
     def name(self):
         '''

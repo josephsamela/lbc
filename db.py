@@ -43,24 +43,21 @@ class InventoryModel(Base):
     item = ForeignKeyField(ItemModel)
     quantity = IntegerField(default=0, constraints=[Check('quantity >= 0')])
 
+class GardenModel(Base):
+    class Meta:
+        db_table = 'gardens'
+
+    name = CharField()
+    player = ForeignKeyField(PlayerModel)
+    seed = ForeignKeyField(ItemModel, null=True)
+    planted_at = DateTimeField(null=True)
+
 class Record:
-    def _pre_init(self, *args, **kwargs):
-        '''
-        Code to run before subclass __init__
-        '''
-        if len(args) > 0:
-            raise Exception(f'Keyword arguments required. {self.__class__.__name__} can accept kwargs: {self._model._meta.sorted_field_names}.')
 
-        self._initializing = True
+    def __init__(self, *args, **kwargs):
+        pass
 
-        # If table for this record model doesn't already exist, create it
-        if not self._model._meta.database.table_exists(self._model._meta.table_name):
-            self._model.create_table()
-
-    def _post_init(self, *args, **kwargs):
-        '''
-        Code to run after subclass __init__
-        '''
+    def _get_params(self, *args, **kwargs):
         # Build list of object attributes
         attrs = {}
         for a in dir(self):
@@ -85,6 +82,36 @@ class Record:
                 else:
                     params[key] = value
 
+        return params
+
+    def _pre_init(self, *args, **kwargs):
+        '''
+        Code to run before subclass __init__
+        '''
+        if len(args) > 0:
+            raise Exception(f'Keyword arguments required. {self.__class__.__name__} can accept kwargs: {self._model._meta.sorted_field_names}.')
+
+        self._initializing = True
+
+        # If table for this record model doesn't already exist, create it
+        if not self._model._meta.database.table_exists(self._model._meta.table_name):
+            self._model.create_table()
+
+        params = self._get_params(*args, **kwargs)
+
+        # try:
+        #     self._record = self._model.get(**params)
+        #     self.__dict__.update(self._record.__data__)
+        # except Exception as e:
+        #     pass
+
+
+    def _post_init(self, *args, **kwargs):
+        '''
+        Code to run after subclass __init__
+        '''
+        params = self._get_params(*args, **kwargs)
+
         # Get or create record based on kwargs
         self._record, created = self._model.get_or_create(**params)
 
@@ -98,6 +125,9 @@ class Record:
         '''
         Write record attribute changes to database.
         '''
+        if hasattr(attr_value, '_record'):
+            attr_value = getattr(attr_value, '_record')
+
         self.__dict__[attr_name] = attr_value
 
         # Write object attr updates to db if...
@@ -119,7 +149,7 @@ class Record:
 
         def new_init(self, *args, **kwargs):
             self._pre_init(*args, **kwargs)
-            original_init(self)
+            original_init(self, *args, **kwargs)
             self._post_init(*args, **kwargs)
 
         cls.__init__ = new_init

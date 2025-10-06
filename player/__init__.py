@@ -7,7 +7,8 @@ from .journal import JournalManager
 class Player(Record):
     _model = PlayerModel
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+
         self.inventory = InventoryManager(self)
         self.experience = ExperienceManager(self)
         self.journal = JournalManager(self)

@@ -55,6 +55,8 @@ class InventoryManager:
         '''
         Remove all quantity of item from inventory
         '''
+        if self.count(item) == 0:
+            return
         InventorySlot(
             player=self.player, 
             item=item
