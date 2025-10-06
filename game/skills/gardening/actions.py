@@ -4,7 +4,9 @@ from game.actions import *
 from . import Gardening
 
 class PlantAction(Action):
-
+    '''
+    Plant seed in garden.
+    '''
     @property
     def requirements(self):
         '''
@@ -41,7 +43,9 @@ class PlantAction(Action):
         return garden
 
 class HarvestAction(Action):
-
+    '''
+    Harvest plant from garden.
+    '''
     @property
     def rewards(self):
         return [
@@ -56,28 +60,33 @@ class HarvestAction(Action):
         ]
 
     def execute(self, player, garden):
-        
-        # Check something is planted here
+
+        # Check something is planted here!
         self.garden = garden(player=player)
         if not self.garden.seed:
             raise Exception('Garden has nothing planted.')
 
+        # Clear plant from garden
         self.plant = self.garden.plant.fruit()
-
         self.garden.seed = None
         self.garden.planted_at = None
 
+        # Reward player
         super().execute(player)
-
         return self.plant
 
 class ClearAction(Action):
+    '''
+    Clear plant from garden.
+    '''
     def execute(self, player, garden):
 
+        # Check something is planted here!
         self.garden = garden(player=player)
         if not self.garden.seed:
             raise Exception('Garden has nothing planted.')
 
+        # Clear plant from garden
         self.garden.seed = None
         self.garden.planted_at = None
 

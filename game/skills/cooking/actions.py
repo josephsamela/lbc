@@ -58,7 +58,7 @@ class CookAction(Action):
         # Cooking success or failure is random. However, the outcome
         # is weighted by recipe difficulty and player skill.
         options = [self.recipe.cooked(), self.recipe.burnt()]
-        weights = [player.experience.level(Cooking) , self.recipe.xp/10 ]
+        weights = [player.experience.level(Cooking)+1 , self.recipe.xp/10 ]
         self.result = random.choices(options, weights=weights)[0]
 
         # Burnt food rewards zero xp

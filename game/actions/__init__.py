@@ -14,13 +14,6 @@ class Action:
                 raise Exception(requirement.note)
         return True
 
-    def _grant_rewards(self, player):
-        '''
-        Grant player rewards
-        '''
-        for reward in self.rewards:
-            reward.grant(player)
-
     def _consume_resources(self, player):
         '''
         Remove required items from inventory
@@ -31,6 +24,13 @@ class Action:
                     item=requirement.item,
                     quantity=requirement.quantity
                 )
+
+    def _grant_rewards(self, player):
+        '''
+        Grant player rewards
+        '''
+        for reward in self.rewards:
+            reward.grant(player)
 
     def execute(self, player):
         '''
@@ -46,4 +46,3 @@ class Action:
         self._check_requirements(player)
         self._consume_resources(player)
         self._grant_rewards(player)
-
