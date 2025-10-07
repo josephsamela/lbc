@@ -21,13 +21,13 @@ class ExperienceManager:
         '''
         Calculate level from experience
         '''
-        return int(xp ** (1/self.xp_curve))
+        return round(xp ** (1/self.xp_curve))
     
     def _xp_from_level(self, level):
         '''
         Calculate experience from level
         '''
-        return int(level ** self.xp_curve)
+        return round(level ** self.xp_curve)
 
     def level(self, skill):
         '''

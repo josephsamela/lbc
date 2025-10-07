@@ -1,3 +1,9 @@
+from .skills import *
 
 class Game:
-    pass
+    skills = {
+        'fishing': Fishing(),
+        'gardening': Gardening(),
+        'cooking': Cooking(),
+        'crafting': Crafting()
+    }

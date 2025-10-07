@@ -1,0 +1,115 @@
+:root {
+    --base-color: #F9DBAE;
+    /* COMPUTED COLOR */
+    --background-color: hsl(from var(--base-color) calc(h + 3) calc(s - 23) calc(l + 6) );
+    --title-color: hsl(from var(--base-color) calc(h - 35) calc(s - 37) calc(l - 64) );
+    --card-color: var(--base-color);
+    --button-color: hsl(from var(--base-color) calc(h + 2) calc(s - 18) calc(l - 23) );
+}
+
+/* LAYOUT */
+
+body {
+    background-color: var(--background-color);
+    -webkit-font-smoothing: antialiased;
+    margin: 1em;
+}
+
+section {
+    margin: 1em auto 1em auto;
+    width: 315px;
+    display: flex;
+    align-items: center;
+}
+
+/* GLOBAL DEFAULTS */
+
+img {
+    width: 100%;
+}
+
+/* TEXT */
+
+h1,h2,h3,p,a {
+    font-family: 'Comic Neue';
+    color: var(--title-color);
+    margin: 0px;
+    line-height: 100%
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+p {
+    font-size: 14px;
+    color:  black;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* BANNER */
+
+.banner-title {
+    font-weight: bold;
+    float: left;
+}
+
+.banner-logo {
+    width: 36px;
+    display: block;
+    margin-left: auto;
+}
+
+/* CARD */
+
+.card {
+    background-color: var(--card-color);
+    padding: 12px;
+    border-radius: 1em;
+    text-align: center;
+    position: relative;
+    margin: 0px;
+    width: 100%;
+
+    background-size: 100%;
+    background-position-y: bottom;
+    background-repeat: no-repeat;
+}
+
+.card-title {
+
+}
+
+.card-subtitle {
+    margin: 1em 0px;
+}
+
+.card-body {
+    width: 100%;
+    height: 300px;
+}
+
+.card-action {
+    position: absolute;
+    bottom: 1em;
+    left: 1em;
+    right: 1em;
+    height: 50px;
+    background-color: var(--button-color);
+    border-radius: 0.5em;
+    align-content: center;
+}
