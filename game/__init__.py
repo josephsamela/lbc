@@ -40,3 +40,27 @@ class Game:
                 ]
             }
         }
+
+    journal = {
+        'fish': {
+            'salmon': [
+                raw_pink_salmon,
+                raw_coho_salmon,
+                raw_sockeye_salmon,
+                raw_chinook_salmon
+            ]
+        },
+        'recipes': {
+            'desserts': [
+                cake
+            ]
+        },
+        'bait': {
+            'lures': [
+                crankbait
+            ],
+            'flies': [
+                pheasant_tail
+            ]
+        }
+    }

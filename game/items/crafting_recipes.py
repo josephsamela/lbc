@@ -13,5 +13,8 @@ bead = Item('Bead')
 feather = Item('Feather')
 wire = Item('Wire')
 
+# Lures
+crankbait = CraftingRecipe('Crankbait', 1, [bead, feather, wire])
+
 # Flies
 pheasant_tail = CraftingRecipe('Pheasant Tail', 1, [bead, feather, wire])

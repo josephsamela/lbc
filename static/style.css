@@ -2,7 +2,9 @@
     --base-color: #F9DBAE;
     /* COMPUTED COLOR */
     --background-color: hsl(from var(--base-color) calc(h + 3) calc(s - 23) calc(l + 6) );
-    --title-color: hsl(from var(--base-color) calc(h - 35) calc(s - 37) calc(l - 64) );
+    /* --title-color: hsl(from var(--base-color) calc(h - 35) calc(s - 37) calc(l - 64) ); */
+    /* --title-color: hsl(from var(--base-color) calc(h - 35) calc(s - 37) calc(l - 64) ); */
+    --title-color: black;
     --card-color: var(--base-color);
     --button-color: hsl(from var(--base-color) calc(h + 2) calc(s - 18) calc(l - 23) );
 }
@@ -12,12 +14,12 @@
 body {
     background-color: var(--background-color);
     -webkit-font-smoothing: antialiased;
-    margin: 1em;
+    margin: 1em auto;
+    width: 315px;
 }
 
 section {
-    margin: 1em auto 1em auto;
-    width: 315px;
+    margin-top: 1em;
     display: flex;
     align-items: center;
 }
@@ -28,37 +30,58 @@ img {
     width: 100%;
 }
 
+button {
+    border: none;
+    padding: none;
+}
+
 /* TEXT */
 
-h1,h2,h3,p,a {
-    font-family: 'Comic Neue';
+h1,h2,h3,h4,h5,p {
+    font-family: 'National Park';
     color: var(--title-color);
     margin: 0px;
-    line-height: 100%
+    line-height: 100%;
+    font-weight: bold;
+    filter: opacity(70%);
 }
 
 h1 {
     font-size: 30px;
-    font-weight: bold;
+    color: #4a1a19;
+    filter: none;
 }
 
 h2 {
     font-size: 20px;
-    font-weight: bold;
 }
 
 h3 {
     font-size: 18px;
-    font-weight: bold;
+}
+
+h4 {
+    font-size: 12px;
+}
+
+h5 {
+    font-size: 65px;
 }
 
 p {
     font-size: 14px;
     color:  black;
+    font-weight: normal;
 }
 
 a {
     text-decoration: none;
+    width: 100%;
+}
+
+.error {
+    color: red;
+    margin-top: 1em;
 }
 
 /* BANNER */
@@ -70,7 +93,7 @@ a {
 
 .banner-logo {
     width: 36px;
-    display: block;
+    margin-top: 3px;
     margin-left: auto;
 }
 
@@ -78,12 +101,14 @@ a {
 
 .card {
     background-color: var(--card-color);
-    padding: 12px;
+    padding: 1em;
     border-radius: 1em;
     text-align: center;
     position: relative;
     margin: 0px;
-    width: 100%;
+    width: -webkit-fill-available;
+
+    border: solid rgba(0,0,0, 0.25);
 
     background-size: 100%;
     background-position-y: bottom;
@@ -100,16 +125,133 @@ a {
 
 .card-body {
     width: 100%;
-    height: 300px;
+    height: 240px;
+}
+
+.card-image {
+    width: 70%;
+    /* margin: 1em; */
 }
 
 .card-action {
-    position: absolute;
-    bottom: 1em;
-    left: 1em;
-    right: 1em;
+    margin-top: 1em;
     height: 50px;
+    width: 100%;
     background-color: var(--button-color);
     border-radius: 0.5em;
     align-content: center;
+    display: block;
+}
+
+input, select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 32px;
+    border: none;
+    padding: 0px;
+    border-radius: 6px;
+    margin: 1em 0px;
+    text-align: center;
+    text-align-last: center;
+    font-family: 'Comic Neue';
+}
+
+/* PROFILE CARD */
+
+.profile-card {
+    width: 100%;
+    height: 190px;
+    border-radius: 1em;
+    background-color: var(--button-color);
+    background-image: url(/static/avatar/default.png);
+    background-position: left;
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    position: relative;
+}
+.profile-card p {
+    position: absolute;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+}
+.profile-card .name {
+    left: 1em;
+    bottom: 1.5em
+}
+
+/* SKILL CARD */
+
+.skill-card {
+    position: relative;
+    border-radius: 0.5em;
+    text-align: left;
+    height: 80px;
+}
+.skill-card p{
+    position: absolute;
+    bottom: 0.5em
+}
+.skill-card .current-level{
+    justify-self: start;
+}
+.skill-card .progress{
+    justify-self: center;
+}
+.skill-card .next-level{
+    justify-self: end;
+}
+.skill-card .progress-bar {
+    height: 1em;
+    width: 100%;
+    background-color: white;
+    margin: 1.25em 0px;
+    border-radius: 1em;
+    mix-blend-mode: soft-light;
+}
+.skill-card .progress-bar .progress-bar-inner {
+    background-color: black !important;
+    mix-blend-mode: darken;
+}
+.skill-card .icon {
+    position: absolute;
+    height: 25px;
+    width: 25px;
+    border-radius: 100%;
+    background-color: black;
+    mix-blend-mode: soft-light;
+    justify-self: end;
+    top: 10px;
+}
+.hidden {
+    filter: contrast(0%) brightness(50%) opacity(0.25);
+}    
+
+/* SKILL PROFILE TABLE */
+
+table {
+    table-layout: fixed;
+}
+table td:nth-child(2) {
+    width: 40%;
+}
+table td:nth-child(3) {
+    text-align: right;
+}
+
+/* SKILL COLORS */
+.fishing {
+    background-color: lightblue;
+}
+.gardening {
+    background-color: darkseagreen;
+}
+.cooking {
+    background-color: lightsalmon;
+}
+.crafting {
+    background-color: rosybrown;
 }

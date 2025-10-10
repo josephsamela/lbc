@@ -1,0 +1,56 @@
+{% set title = "Home" %}
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if player %}
+<section>
+    <div class="card">
+        <div class="card-title">
+            <h2>Welcome, {{ player.name }}!</h2>
+        </div>
+        <div class="card-subtitle">
+            <p>Click here to access your profile!</p>
+        </div>
+        <a class="card-action" href="/profile">
+            <h3>Profile</h3>
+        </a>
+    </div>
+</section>
+{% else %}
+<section>
+    <div class="card">
+        <div class="card-title">
+            <h2>Welcome</h2>
+        </div>
+        <div class="card-subtitle">
+            <p>Login to get started!</p>
+        </div>
+        <a class="card-action" href="/login">
+            <h3>Login</h3>
+        </a>
+        <a class="card-action" href="/signup">
+            <h3>Create Account</h3>
+        </a>
+    </card>
+</section>
+{% endif %}
+
+{% for name, skill in game.skills.items() %}
+<section>
+    <div class="card" style="background-image: url(/static/locations/Tributary\ River.png);">
+        <div class="card-title">
+            <h2>{{ skill.name }}</h2>
+        </div>
+        <div class="card-subtitle">
+            <p>{{ skill.description }}</p>
+        </div>
+        <div class="card-body"></div>
+        <a class="card-action" href="/skill/{{ key }}">
+            <h3>{{ skill.name }}</h3>
+        </a>
+    </card>
+</section>
+{% endfor %}
+
+{% endblock %}

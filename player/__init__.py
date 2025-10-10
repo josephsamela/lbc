@@ -5,9 +5,12 @@ from .experience import ExperienceManager
 from .journal import JournalManager
 
 class Player:
-    def __init__(self, username, password=None, session_token=None, session_expiration=None):
+    def __init__(self, username=None, password=None, session_token=None, session_expiration=None):
 
-        if self.username_exists(username):
+        if session_token and self.session_exists(session_token):
+            # Look-up player by session.
+            self._record = PlayerModel.get(session_token=session_token)
+        elif username and self.username_exists(username):
             # Look-up player by username.
             self._record = PlayerModel.get(username=username)
         else:
@@ -25,10 +28,10 @@ class Player:
 
     @property
     def name(self):
-        if hasattr(self, 'username'):
-            return self.username.title()
+        return self._record.username.title()
 
-    def username_exists(self, username):
+    @staticmethod
+    def username_exists(username):
         '''
         Check if player with this username exists.
         '''
@@ -36,7 +39,8 @@ class Player:
             return True
         return False
 
-    def session_exists(self, session_token):
+    @staticmethod
+    def session_exists(session_token):
         '''
         Check if player with this session_token exists.
         '''
