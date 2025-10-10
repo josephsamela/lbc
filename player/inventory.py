@@ -1,8 +1,18 @@
-from db import InventoryModel
+from db import InventoryModel, fn
 
 class InventoryManager:
     def __init__(self, player):
         self.player = player
+
+    def count_all(self):
+        '''
+        Sum of quantity of all items in inventory
+        '''
+        return InventoryModel.select(
+            fn.SUM(InventoryModel.quantity)
+        ).where(
+            InventoryModel.player==self.player._record
+        ).scalar()
 
     def count(self, item):
         '''

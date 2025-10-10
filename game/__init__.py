@@ -9,7 +9,7 @@ class Game:
         self.skills = {
             "fishing": {
                 "name": "Fishing",
-                "description": "Grab your rod and tackle! Come join your fellow anglers to go fishing!",
+                "description": "Explore lakes, rivers and oceans to fish exciting locations and discover new species!",
                 "resources": [
                     raw_pink_salmon,
                     raw_coho_salmon,
@@ -25,12 +25,16 @@ class Game:
             "cooking": {
                 "name": "Cooking",
                 "description": "Grab your rod and tackle! Come join your fellow anglers to go fishing!",
-                "resources": []
+                "resources": [
+                    cake
+                ]
             },
             "crafting": {
                 "name": "Crafting",
-                "description": "Grab your rod and tackle! Come join your fellow anglers to go fishing!",
-                "resources": []
+                "description": "Gather materials and use your crafting skill to ",
+                "resources": [
+                    pheasant_tail
+                ]
             }
         }
 
@@ -57,17 +61,22 @@ class Game:
                 raw_coho_salmon,
                 raw_sockeye_salmon,
                 raw_chinook_salmon
-            ]
-        },
-        'recipes': {
-            'skill': 'cooking',
-            'desserts': [
-                cake
+            ],
+            'trout': [
+                raw_brown_trout,
+                raw_brook_trout,
+                raw_rainbow_trout
             ]
         },
         'plants': {
             'skill': 'gardening',
             'vegetables': [
+                cake
+            ]
+        },
+        'recipes': {
+            'skill': 'cooking',
+            'desserts': [
                 cake
             ]
         },

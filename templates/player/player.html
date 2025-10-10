@@ -17,7 +17,7 @@
         <div class="card-subtitle">
             <h5>{{ player.balance }}</h5>
         </div>
-        <p>Lute Bear Coin</p>
+        <p>You have <b>{{ player.balance }}</b> Lute Bear Coin!</p>
     </div>
 </section>
 
@@ -25,6 +25,9 @@
     <div class="card">
         <div class="card-title">
             <h2>Inventory</h2>
+        </div>
+        <div class="card-subtitle">
+            <p>You have <b>{{ player.inventory.count_all() }}</b> items in your inventory!</p>
         </div>
         <a class="card-action" href="/player/inventory">
             <h3>Inventory</h3>
@@ -42,24 +45,28 @@
         </div>
         {% for key, skill in game.skills.items() %}
         <section>
-        <a href="/profile/skill/{{ key }}">
-            <div class="card skill-card {{ key }}">
-                <h3>{{skill.name}}</h3>
-                <div class="icon end"></div>
-                <div class="progress-bar">
-                    <div class="progress-bar progress-bar-inner" style="width:{{ player.experience.next_level_progress(skill) }}%"></div>
+            <a href="/player/skills/{{ key }}">
+                <div class="card skill-card {{ key }}">
+                    <h3>{{skill.name}}</h3>
+                    <div class="icon end skill-icon">
+                        <img src="/static/images/skills/icons/{{ key }}.svg">
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-bar progress-bar-inner" style="width:{{ player.experience.next_level_progress(key) }}%"></div>
+                    </div>
+                    <p class="start">Level <b>{{ player.experience.level(key) }}</b></p>
+                    <p class="center">{{ player.experience.next_level_progress(key) }}%</p>
+                    <p class="end">Level <b>{{ player.experience.next_level(key) }}</b></p>
                 </div>
-                <p class="start">Level <b>{{ player.experience.level(skill) }}</b></p>
-                <p class="center">{{ player.experience.next_level_progress(skill) }}%</p>
-                <p class="end">Level <b>{{ player.experience.next_level(skill) }}</b></p>
-            </div>
-        </a>
+            </a>
         </section>
         {% endfor %}
 
-        <a class="card-action" href="/player/journal">
-            <h3>Skills</h3>
-        </a>
+        <section>
+            <a class="card-action" href="/player/journal">
+                <h3>Skills</h3>
+            </a>
+        </section>
 
     </div>
 </section>
@@ -79,7 +86,10 @@
         <a href="/player/journal/{{ key }}">
             <div class="card skill-card {{ chapter.skill }}">
                 <h3>{{key.title()}}</h3>
-                <div class="icon end"></div>
+                
+                <div class="icon end skill-icon">
+                    <img src="/static/images/skills/icons/{{ chapter.skill }}.svg">
+                </div>
 
                 <div class="card-subtitle"></div>
 
@@ -91,11 +101,25 @@
         </section>
         {% endfor %}
 
-        <a class="card-action" href="/player/journal">
-            <h3>Journal</h3>
-        </a>
+        <section>
+            <a class="card-action" href="/player/journal">
+                <h3>Journal</h3>
+            </a>
+        </section>
 
     </div>
+</section>
+
+<section>
+    <a class="card-action" href="/player/edit">
+        <h3>Edit Profile</h3>
+    </a>
+</section>
+
+<section>
+    <a class="card-action" href="/logout">
+        <h3>Logout</h3>
+    </a>
 </section>
 
 {% endblock %}

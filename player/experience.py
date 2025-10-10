@@ -9,6 +9,9 @@ class ExperienceManager:
         '''
         Return player experience in skill
         '''
+        if not skill in ['fishing', 'gardening', 'cooking', 'crafting']:
+            raise Exception('Not a valid skill')
+
         r,c = ExperienceModel.get_or_create(
             player=self.player._record, 
             skill=skill

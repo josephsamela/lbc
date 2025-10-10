@@ -1,23 +1,65 @@
-{% set title = "Home" %}
+{% set title = game.skills[skill].name %}
 {% extends "base.html" %}
 
 {% block content %}
 
-{% for location in skill.locations %}
 <section>
-    <div class="card" style="background-image: url(/static/locations/{{ location.name.replace(' ','') }}.png);">
+    <div class="card {{ skill }}">
         <div class="card-title">
-            <h2>{{location.name}}</h2>
+            <h2>{{ game.skills[skill].name }}</h2>
         </div>
         <div class="card-subtitle">
-            <p>{{ location.description }}</p>
+            <p>{{ game.skills[skill].description }}</p>
         </div>
-        <div class="card-body"></div>
-        <a class="card-action" href="/skill/{{ skill.name }}">
-            <h3>{{ location.name }}</h3>
-        </a>
-    </card>
+        <section>
+            <div class="skill-icon">
+                <img src="/static/images/skills/icons/{{ skill }}.svg">
+            </div>            
+        </section>
+    </div>
+</section>
+
+<section>
+    <div class="card skill-card {{ skill }}">
+        <h3>{{ game.skills[skill].name }}</h3>
+        <div class="icon end skill-icon">
+            <img src="/static/images/skills/icons/{{ skill }}.svg">
+        </div>
+        <div class="progress-bar">
+            <div class="progress-bar progress-bar-inner" style="width:{{ player.experience.next_level_progress(skill) }}%"></div>
+        </div>
+        <p class="start">Level <b>{{ player.experience.level(skill) }}</b></p>
+        <p class="center">{{ player.experience.next_level_progress(skill) }}%</p>
+        <p class="end">Level <b>{{ player.experience.next_level(skill) }}</b></p>
+    </div>
+</section>
+
+
+{% for item in game.skills[skill].resources %}
+<section>
+    <a href="/items/{{item.name}}">
+        <div class="card">
+            <div class="card-title">
+                <h2>{{ item.name.replace('Raw', '') }}</h2>
+            </div>
+            <div class="card-subtitle">
+                <p>Requires <b>{{ item.level }}</b> {{ game.skills[skill].name }}</p>
+            </div>
+
+            {% if player.journal.discovered_item(item) %}
+                <img src="/static/images/items/{{ item.name }}.png" class="card-image">
+            {% else %}
+                <img src="/static/images/items/{{ item.name }}.png" class="card-image hidden">
+            {% endif %}
+        </div>
+    </a>
 </section>
 {% endfor %}
+
+<section>
+    <a class="card-action" href="/player">
+        <h3>Back to Profile</h3>
+    </a>
+</section>
 
 {% endblock %}

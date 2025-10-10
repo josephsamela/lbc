@@ -114,6 +114,9 @@ a {
     background-position-y: bottom;
     background-repeat: no-repeat;
 }
+.card .card {
+    border-radius: 0.5em;
+}
 
 .card-title {
 
@@ -129,18 +132,17 @@ a {
 }
 
 .card-image {
-    width: 70%;
-    /* margin: 1em; */
+    /* width: 65%; */
 }
 
 .card-action {
-    margin-top: 1em;
     height: 50px;
     width: 100%;
     background-color: var(--button-color);
     border-radius: 0.5em;
     align-content: center;
     display: block;
+    text-align: center;
 }
 
 input, select {
@@ -184,9 +186,19 @@ input, select {
 
 /* SKILL CARD */
 
+.skill-icon {
+    border-radius: 100%;
+    width: fit-content;
+    aspect-ratio: 1;
+    background-color: black;
+    mix-blend-mode: soft-light;
+}
+.skill-icon img {
+    scale: 60%;
+}
+
 .skill-card {
     position: relative;
-    border-radius: 0.5em;
     text-align: left;
     height: 80px;
 }
@@ -213,7 +225,7 @@ input, select {
     height: 1em;
     width: 100%;
     background-color: white;
-    margin: 1em 0px;
+    margin: 1.1em 0px;
     border-radius: 1em;
     mix-blend-mode: soft-light;
 }

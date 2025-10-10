@@ -1,9 +1,11 @@
 import uuid
+from functools import wraps
 
 # Initialize Flask
 from flask import Flask, render_template, request, redirect, make_response
 from flask_bcrypt import Bcrypt
 app = Flask(__name__)
+app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 bcrypt = Bcrypt(app)
 
 # Initialize Database if doesn't already exist
@@ -16,6 +18,17 @@ for model in [ItemModel, PlayerModel, InventoryModel, ExperienceModel]:
 from game import Game
 from player import Player
 game = Game()
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+
+        player = authentication_check(request)
+        if not player:
+            return redirect('/login',code=302)
+        return f(player, *args, **kwargs)
+
+    return decorated_function
 
 def authentication_check(request):
     session_token = request.cookies.get('session')
@@ -39,7 +52,7 @@ def login():
         case 'GET':
             return render_template("access/login.html")
         case 'POST':
-            username = request.form.get("username")
+            username = request.form.get("username").lower()
             password = request.form.get("password")
 
             # Challenge 1. Check player exists.
@@ -76,7 +89,7 @@ def signup():
         case 'GET':
             return render_template("access/signup.html")
         case 'POST':
-            username = request.form.get("username")
+            username = request.form.get("username").lower()
             password = request.form.get("password")
 
             # Challenge 1. Check username isn't taken.
@@ -108,8 +121,8 @@ def signup():
             return response
 
 @app.route("/")
-def home():
-    player = authentication_check(request)
+@login_required
+def home(player):
     return render_template("access/home.html", player=player, game=game)
 
 # ROUTES - PLAYER
@@ -119,10 +132,20 @@ def home():
 #   /player/inventory
 #   /player/journal
 
-@app.route("/player")
-def player():
-    player = authentication_check(request)
-    return render_template("/player/player.html", player=player, game=game)
+@app.route('/player')
+@login_required
+def player(player):
+    return render_template('/player/player.html', player=player, game=game)
+
+@app.route('/player/skills/<skill>')
+@login_required
+def skill(player, skill):
+    return render_template('/player/skill.html', player=player, game=game, skill=skill)
+
+@app.route('/player/journal/<chapter>')
+@login_required
+def journal(player, chapter):
+    return render_template('/player/journal.html', player=player, game=game, chapter=chapter)
 
 # ROUTES - LOCATIONS
 #   /locations

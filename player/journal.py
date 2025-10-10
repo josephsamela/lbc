@@ -4,7 +4,7 @@ class JournalManager:
     def __init__(self, player):
         self.player = player
 
-    def _discovered(self, item):
+    def discovered_item(self, item):
         '''
         Check if player has discovered an item
         '''
@@ -43,7 +43,7 @@ class JournalManager:
         '''
         c = 0
         for item in self._chapter_items(chapter):
-            if self._discovered(item):
+            if self.discovered_item(item):
                 c += 1
         return c
     
