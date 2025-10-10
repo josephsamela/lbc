@@ -1,7 +1,9 @@
 from game.actions import *
-from . import Crafting
 
 class CraftAction(Action):
+
+    def __init__(self):
+        self.skill = 'Crafting'
 
     @property
     def requirements(self):
@@ -10,14 +12,14 @@ class CraftAction(Action):
         '''
         r = [
             LevelRequirement(
-                skill=Crafting,
-                level=self.recipe.required_level
+                skill=self.skill,
+                level=self.recipe.level
             )
         ]
         for material in self.recipe.materials:
             r.append(
                 ItemRequirement(
-                    item=material(),
+                    item=material,
                     quantity=1
                 )
             )
@@ -34,13 +36,13 @@ class CraftAction(Action):
                 quantity=1
             ),
             ExperienceReward(
-                skill=Crafting,
+                skill=self.skill,
                 quantity=self.recipe.xp
             )
         ]
 
     def execute(self, player, recipe):
-        self.recipe = recipe()
+        self.recipe = recipe
 
         super().execute(player)
         return self.recipe

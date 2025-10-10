@@ -1,5 +1,3 @@
-from .requirements import *
-from .rewards import *
 
 class Action:
     requirements = []
@@ -46,3 +44,58 @@ class Action:
         self._check_requirements(player)
         self._consume_resources(player)
         self._grant_rewards(player)
+
+class ItemRequirement:
+    def __init__(self, item, quantity):
+        self.item = item
+        self.quantity = quantity
+        self.note = f'Requires {quantity} {item.name}.'
+
+    def check(self, player):
+        '''
+        Check if player has required item quantity
+        '''
+        return player.inventory.check(self.item, self.quantity)
+        
+class LevelRequirement:
+    def __init__(self, skill, level):
+        self.skill = skill
+        self.level = level
+        self.note = f'Requires {level} {skill}.'
+
+    def check(self, player):
+        '''
+        Check if player has required skill level
+        '''
+        if player.experience.level(self.skill) >= self.level:
+            return True
+        else:
+            return False
+
+class ItemReward:
+    def __init__(self, item, quantity):
+        self.item = item
+        self.quantity = quantity
+
+    def grant(self, player):
+        '''
+        Give player item reward
+        '''
+        player.inventory.add(
+            item=self.item, 
+            quantity=self.quantity
+        )
+
+class ExperienceReward:
+    def __init__(self, skill, quantity):
+        self.skill = skill
+        self.quantity = quantity
+    
+    def grant(self, player):
+        '''
+        Give player experience reward
+        '''
+        player.experience.add(
+            skill=self.skill, 
+            quantity=self.quantity
+        )

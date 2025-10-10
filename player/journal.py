@@ -9,8 +9,8 @@ class JournalManager:
         Check if player has discovered an item
         '''
         return InventoryModel.select().where(
-            (InventoryModel.player == self.player.id) & 
-            (InventoryModel.item == item.id)
+            (InventoryModel.player == self.player._record) & 
+            (InventoryModel.item == item._record)
         ).exists()
 
     def discover(self, item):
@@ -18,3 +18,11 @@ class JournalManager:
         Discover an item
         '''
         self.player.inventory.add(item, quantity=0)
+
+    chapters = [
+        'Fish',
+        'Lures',
+        'Flies',
+        'Vegetables',
+        'Fruits'
+    ]

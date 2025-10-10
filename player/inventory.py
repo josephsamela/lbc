@@ -1,7 +1,4 @@
-from db import Record, InventoryModel
-
-class InventorySlot(Record):
-    _model = InventoryModel
+from db import InventoryModel
 
 class InventoryManager:
     def __init__(self, player):
@@ -12,12 +9,10 @@ class InventoryManager:
         Count quantity of item in inventory
         '''
         if self.player.journal.discovered(item):
-
-            return InventorySlot(
-                player=self.player, 
-                item=item
+            return InventoryModel.get(
+                player=self.player._record, 
+                item=item._record
             ).quantity
-
         else:
             return 0
 
@@ -34,10 +29,12 @@ class InventoryManager:
         '''
         Add quantity of item to inventory
         '''
-        InventorySlot(
-            player=self.player,
-            item=item
-        ).quantity += quantity
+        r,c = InventoryModel.get_or_create(
+            player=self.player._record,
+            item=item._record
+        )
+        r.quantity += quantity
+        r.save()
 
     def remove(self, item, quantity):
         '''
@@ -46,10 +43,12 @@ class InventoryManager:
         if not self.check(item, quantity=quantity):
             raise Exception(f'Insuffient Item Quantity. Player {self.player.username} does not have {quantity} {item.name} to remove.')
 
-        InventorySlot(
-            player=self.player, 
-            item=item
-        ).quantity -= quantity
+        r = InventoryModel.get(
+            player=self.player._record, 
+            item=item._record
+        )
+        r.quantity -= quantity
+        r.save()
 
     def drop(self, item):
         '''
@@ -57,10 +56,12 @@ class InventoryManager:
         '''
         if self.count(item) == 0:
             return
-        InventorySlot(
-            player=self.player, 
-            item=item
-        ).quantity = 0
+        r = InventoryModel.get(
+            player=self.player._record, 
+            item=item._record
+        )
+        r.quantity = 0
+        r.save()
 
     def items(self):
         '''

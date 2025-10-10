@@ -1,7 +1,4 @@
-from db import Record, ExperienceModel
-
-class ExperienceSlot(Record):
-    _model = ExperienceModel
+from db import ExperienceModel
 
 class ExperienceManager:
     def __init__(self, player):
@@ -12,22 +9,23 @@ class ExperienceManager:
         '''
         Return player experience in skill
         '''
-        return ExperienceSlot(
-            player=self.player, 
+        r,c = ExperienceModel.get_or_create(
+            player=self.player._record, 
             skill=skill
-        ).quantity
+        )
+        return r.quantity
 
     def _level_from_xp(self, xp):
         '''
         Calculate level from experience
         '''
-        return round(xp ** (1/self.xp_curve))
+        return int(xp ** (1/self.xp_curve))
     
     def _xp_from_level(self, level):
         '''
         Calculate experience from level
         '''
-        return round(level ** self.xp_curve)
+        return int(level ** self.xp_curve)
 
     def level(self, skill):
         '''
@@ -55,17 +53,24 @@ class ExperienceManager:
         '''
         Return player % progress to next level
         '''
+        # Calc total xp required to go from current level to next level
         xp_curr_lvl = self._xp_from_level(self.level(skill))
         xp_next_lvl = self._xp_from_level(self.next_level(skill))
         total_xp_req = xp_next_lvl - xp_curr_lvl
-        xp_acquired = total_xp_req - self.xp_remaining(skill)
+        
+        # Calc xp acquired since current level
+        xp_acquired = self.count(skill) - xp_curr_lvl
+
+        # Return % complete as decimal
         return xp_acquired / total_xp_req
 
     def add(self, skill, quantity=1):
         '''
         Add experience to player skill
         '''
-        ExperienceSlot(
-            player=self.player, 
+        r,c = ExperienceModel.get_or_create(
+            player=self.player._record, 
             skill=skill
-        ).quantity += quantity
+        )
+        r.quantity += quantity
+        r.save()
