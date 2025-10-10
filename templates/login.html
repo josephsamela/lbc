@@ -1,0 +1,43 @@
+{% set title = "Login" %}
+{% extends "base.html" %}
+
+{% block content %}
+
+<section>
+    <div class="card">
+        <div class="card-title">
+            <h2>Login</h2>
+        </div>
+
+        <div class="card-subtitle"></div>
+
+        <form action="login" method="post">
+            <h4>Username</h4>
+            <input type="text" name="username" required />
+            <h4>Password</h4>
+            <input type="password" name="password" required />
+            <button class="card-action" type="submit">
+                <h3>Submit</h3>
+            </button>
+        </form>
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+
+    </div>
+</section>
+<section>
+    <div class="card">
+        <div class="card-title">
+            <h2>New User?</h2>
+        </div>
+        <div class="card-subtitle">
+            <p>Create an account to get started!</p>
+        </div>
+        <a class="card-action" href="/signup">
+            <h3>Create Account</h3>
+        </a>
+    </div>
+</section>
+
+{% endblock %}
