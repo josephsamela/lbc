@@ -119,14 +119,10 @@ def home():
 #   /player/inventory
 #   /player/journal
 
-@app.route("/profile")
-def profile():
+@app.route("/player")
+def player():
     player = authentication_check(request)
-    return render_template(
-        "profile.html",
-        player=player,
-        game=game
-    )
+    return render_template("/player/player.html", player=player, game=game)
 
 # ROUTES - LOCATIONS
 #   /locations

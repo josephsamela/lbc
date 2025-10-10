@@ -1,0 +1,101 @@
+{% set title = "Player" %}
+{% extends "base.html" %}
+
+{% block content %}
+
+<section>
+    <div class="profile-card" style="background-image: url(/static/images/avatars/default.png);">
+        <p class="name">{{ player.name }} {{player.created_at.strftime("%m/%Y")}}</p>
+    </div>
+</section>
+
+<section>
+    <div class="card">
+        <div class="card-title">
+            <h2>Wallet</h2>
+        </div>
+        <div class="card-subtitle">
+            <h5>{{ player.balance }}</h5>
+        </div>
+        <p>Lute Bear Coin</p>
+    </div>
+</section>
+
+<section>
+    <div class="card">
+        <div class="card-title">
+            <h2>Inventory</h2>
+        </div>
+        <a class="card-action" href="/player/inventory">
+            <h3>Inventory</h3>
+        </a>
+    </div>
+</section>
+
+<section>
+    <div class="card">
+        <div class="card-title">
+            <h2>Skills</h2>
+        </div>
+        <div class="card-subtitle">
+            <p>Earn experience to improve your skills!</p>
+        </div>
+        {% for key, skill in game.skills.items() %}
+        <section>
+        <a href="/profile/skill/{{ key }}">
+            <div class="card skill-card {{ key }}">
+                <h3>{{skill.name}}</h3>
+                <div class="icon end"></div>
+                <div class="progress-bar">
+                    <div class="progress-bar progress-bar-inner" style="width:{{ player.experience.next_level_progress(skill) }}%"></div>
+                </div>
+                <p class="start">Level <b>{{ player.experience.level(skill) }}</b></p>
+                <p class="center">{{ player.experience.next_level_progress(skill) }}%</p>
+                <p class="end">Level <b>{{ player.experience.next_level(skill) }}</b></p>
+            </div>
+        </a>
+        </section>
+        {% endfor %}
+
+        <a class="card-action" href="/player/journal">
+            <h3>Skills</h3>
+        </a>
+
+    </div>
+</section>
+
+<section>
+    <div class="card">
+
+        <div class="card-title">
+            <h2>Journal</h2>
+        </div>
+        <div class="card-subtitle">
+            <p>Discover items to complete your journal!</p>
+        </div>
+
+        {% for key, chapter in game.journal.items() %}
+        <section>
+        <a href="/player/journal/{{ key }}">
+            <div class="card skill-card {{ chapter.skill }}">
+                <h3>{{key.title()}}</h3>
+                <div class="icon end"></div>
+
+                <div class="card-subtitle"></div>
+
+                <h5>{{ player.journal.progress(chapter) }}%</h5>
+                <h2 class="end bottom">{{ player.journal.discovered(chapter) }}/{{ player.journal.discoverable(chapter) }}</h2>
+
+            </div>
+        </a>
+        </section>
+        {% endfor %}
+
+        <a class="card-action" href="/player/journal">
+            <h3>Journal</h3>
+        </a>
+
+    </div>
+</section>
+
+{% endblock %}

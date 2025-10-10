@@ -12,7 +12,7 @@
         <div class="card-subtitle">
             <p>Click here to access your profile!</p>
         </div>
-        <a class="card-action" href="/profile">
+        <a class="card-action" href="/player">
             <h3>Profile</h3>
         </a>
     </div>
@@ -36,9 +36,9 @@
 </section>
 {% endif %}
 
-{% for name, skill in game.skills.items() %}
+{% for key, skill in game.skills.items() %}
 <section>
-    <div class="card" style="background-image: url(/static/locations/Tributary\ River.png);">
+    <div class="card" style="background-image: url(/static/images/skills/{{ key }}.png);">
         <div class="card-title">
             <h2>{{ skill.name }}</h2>
         </div>
@@ -46,7 +46,7 @@
             <p>{{ skill.description }}</p>
         </div>
         <div class="card-body"></div>
-        <a class="card-action" href="/skill/{{ key }}">
+        <a class="card-action" href="/locations/{{ key }}">
             <h3>{{ skill.name }}</h3>
         </a>
     </card>

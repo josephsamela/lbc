@@ -30,6 +30,14 @@ class Player:
     def name(self):
         return self._record.username.title()
 
+    @property
+    def created_at(self):
+        return self._record.created_at
+
+    @property
+    def balance(self):   
+        return f'{self._record.balance:,}'
+
     @staticmethod
     def username_exists(username):
         '''

@@ -65,7 +65,7 @@ h4 {
 }
 
 h5 {
-    font-size: 65px;
+    font-size: 50px;
 }
 
 p {
@@ -165,7 +165,6 @@ input, select {
     height: 190px;
     border-radius: 1em;
     background-color: var(--button-color);
-    background-image: url(/static/avatar/default.png);
     background-position: left;
     background-size: contain;
     background-repeat: no-repeat;
@@ -191,24 +190,30 @@ input, select {
     text-align: left;
     height: 80px;
 }
-.skill-card p{
+.skill-card .start{
     position: absolute;
-    bottom: 0.5em
+    left: 1em;
 }
-.skill-card .current-level{
-    justify-self: start;
+.skill-card .center{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    margin-inline: auto;
+    width: fit-content;
 }
-.skill-card .progress{
-    justify-self: center;
+.skill-card .end{
+    position: absolute;
+    right: 1em;
 }
-.skill-card .next-level{
-    justify-self: end;
+.skill-card .bottom{
+    position: absolute;
+    bottom: 18px;
 }
 .skill-card .progress-bar {
     height: 1em;
     width: 100%;
     background-color: white;
-    margin: 1.25em 0px;
+    margin: 1em 0px;
     border-radius: 1em;
     mix-blend-mode: soft-light;
 }
