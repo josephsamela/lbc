@@ -1,11 +1,8 @@
 from .actions.fishing import FishAction
-from .actions.cooking import CookAction
-from .actions.crafting import CraftAction
 
 from .items.fish import fish
 from .items.bait import bait
 from .items.crafting_recipes import crafting_recipes
-
 
 class Game:
     def __init__(self):
@@ -15,6 +12,26 @@ class Game:
         self.locations = {
             "fishing": {
                 "tributary_river": {
+                    "name": "Tributary River",
+                    "description": "A cold and switch freshwater river that's home to many species!",
+                    "action_text": "Go Fishing",
+                    "action": FishAction(
+                            species=fish['lakes'].values()
+                        )
+                },
+                "estuary": {
+                    "name": "Estuary",
+                    "description": "The Estuary is a coastal brakish environment that's home to many diverse species of fish!",
+                    "actions": []
+                },
+                "open_ocean": {
+                    "name": "Open Ocean",
+                    "description": "The Open Ocean is a rough saltwater marine environment with many species of large fish!",
+                    "actions": []
+                },
+                "coral_reef": {
+                    "name": "Coral Reef",
+                    "description": "The Coral Reef is a vibrant warmwater marine ecosystem with many colorful fish!",
                     "actions": []
                 }
             }

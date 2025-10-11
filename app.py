@@ -1,8 +1,6 @@
 import uuid
 from functools import wraps
 
-from game.actions import actions
-
 # Initialize Flask
 from flask import Flask, render_template, request, redirect, make_response
 from flask_bcrypt import Bcrypt
@@ -173,20 +171,32 @@ def item(player, item):
 #   HarvestAction
 
 @app.route("/action", methods=["POST"])
-def action():
-    action_type = request.form.get("action")
-    action_params = request.form.get("params")
+@login_required
+def action(player):
+    skill = request.form.get("skill")
+    location = request.form.get("location")
+    action = game.locations[skill][location]['action']
 
-    action = actions.get(action_type)
-    action.execute(**action_params)
+    try:
+        result = action.execute(game, player, **request.form)
+    except Exception as e:
+        return render_template('/location/location.html', player=player, game=game, skill=skill, location=location, error=e)
 
+    return render_template('/location/result.html', player=player, game=game, skill=skill, location=location, result=result)
 
 # ROUTES - LOCATIONS
-#   /locations
 #   /locations/<skill>
 #   /locations/<skill>/<location>
-#   /locations/<skill>/<location>/<action>
 
+@app.route("/locations/<skill>")
+@login_required
+def locations(player, skill):
+    return render_template('/location/locations.html', player=player, game=game, skill=skill)
+
+@app.route("/locations/<skill>/<location>")
+@login_required
+def location(player, skill, location):
+    return render_template('/location/location.html', player=player, game=game, skill=skill, location=location)
 
 # FORMATTERS
 import re

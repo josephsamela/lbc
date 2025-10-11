@@ -1,0 +1,20 @@
+{% set title = Result %}
+{% extends "base.html" %}
+
+{% block content %}
+
+{{ result }}
+
+<section>
+    <a class="card-action" href="/locations/{{ skill }}/{{ location }}">
+        <h3>Back to {{ game.locations[skill][location].name }}</h3>
+    </a>
+</section>
+<section>
+    <a class="card-action" href="/player">
+        <h3>Back to Profile</h3>
+    </a>
+</section>
+
+
+{% endblock %}

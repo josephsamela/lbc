@@ -105,13 +105,3 @@ from .gardening import *
 from .cooking import *
 from .crafting import *
 from .inventory import *
-
-actions = {
-    'FishAction': FishAction(),
-    'CookAction': CookAction(),
-    'CraftAction': CraftAction(),
-    'PlantAction': PlantAction(),
-    'ClearAction': ClearAction(),
-    'HarvestAction': HarvestAction(),
-    'DropAction': DropAction()
-}

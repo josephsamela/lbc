@@ -1,24 +1,22 @@
+{% set title = game.locations[skill][location].name %}
 {% extends "base.html" %}
 
 {% block content %}
 
-{% for sublocation in location.locations %}
 
-<section>
-    <div class="card" style="background-image: url(/static/locations/Tributary\ River.png);">
-        <div class="card-title">
-            <h2>{{sublocation.name}}</h2>
-        </div>
-        <div class="card-subtitle">
-            <p>{{ sublocation.description }}</p>
-        </div>
-        <div class="card-body"></div>
-        <div class="card-action">
-            <button><h3>{{ sublocation.action_text }}</h3></button>
-        </div>
-    </card>
-</section>
+<form action="/action" method="post">
+    <div class="card">
+        <h3>Token</h3>
 
-{% endfor %}
+        <input type="string" name="skill" value="fishing" required />
+        <input type="string" name="location" value="tributary_river" required />
+        
+        <input type="string" name="bait" value="earthworms" required />
+
+        <button type="submit">Submit</button>
+
+        <p class="error">{{ error }}</p>
+    </div>    
+</form>
 
 {% endblock %}
