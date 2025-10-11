@@ -18,7 +18,7 @@ class InventoryManager:
         '''
         Count quantity of item in inventory
         '''
-        if self.player.journal.discovered(item):
+        if self.player.journal.discovered_item(item):
             return InventoryModel.get(
                 player=self.player._record, 
                 item=item._record

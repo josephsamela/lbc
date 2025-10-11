@@ -10,12 +10,30 @@
         </div>
         <div class="card-subtitle"></div>
         {% if player.journal.discovered_item(item) %}
-            <img src="/static/images/items/{{ item.name }}.png">
+            <img src="/static/images/items/{{ item.name | snake_case }}.png">
         {% else %}
-            <img src="/static/images/items/{{ item.name }}.png" class="hidden">
+            <img src="/static/images/items/{{ item.name | snake_case }}.png" class="hidden">
         {% endif %}
     </div>
 </section>
+
+{% if player.inventory.check(item) %}
+<section>
+    <div class="card">
+        <div class="card-title">
+            <h2>Backpack</h2>
+        </div>
+        <div class="card-subtitle">
+            <p>You have <b>{{ player.inventory.count(item) }}</b> {{ item.name }}!</p>
+        </div>
+        <section>
+            <a class="card-action" href="/player">
+                <h3>Drop Items</h3>
+            </a>
+        </section>
+    </div>
+</section>
+{% endif %}
 
 {% if item.bait is defined %}
 <section>
@@ -27,19 +45,20 @@
             </div>
             <div class="grid-container">
                 {% for bait in item.bait %}
-                <div class="card">
-                    <div class="grid-item">
-                        <img src="/static/images/items/{{ bait.name }}.png">
-                        <h4>{{ bait.name }}</h4>
+                <a href="/item/{{ bait.name | snake_case }}">
+                    <div class="card">
+                        <div class="grid-item">
+                            <img src="/static/images/items/{{ bait.name }}.png">
+                            <h4>{{ bait.name }}</h4>
+                        </div>
                     </div>
-                </div>
+                </a>
                 {% endfor %}
             </div>
         </div>
     </div>
 </section>
 {% endif %}
-
 
 <section>
     <a class="card-action" href="/player">

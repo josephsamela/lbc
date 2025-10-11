@@ -1,10 +1,9 @@
 import random
-from game.actions import *
+from . import *
 
 class FishAction(Action):
 
-    def __init__(self, species):
-        self.species = species
+    def __init__(self):
         self.skill = 'Fishing'
 
     @property
@@ -37,9 +36,9 @@ class FishAction(Action):
             ]
         return []
 
-    def execute(self, player, bait):
-
+    def execute(self, player, species, bait):
         self.bait = bait
+        self.species = species
 
         drop_table = []
         for species in self.species:

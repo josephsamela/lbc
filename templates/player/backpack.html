@@ -25,7 +25,9 @@
             <div class="grid-item">
                 <a href="/item/{{ slot.item.name | snake_case }}">
                     <div class="card">
-                        <img src="/static/images/items/{{ slot.item.name }}.png" class="card-image">
+                        <div class="card-subtitle">
+                            <img src="/static/images/items/{{ slot.item.name | snake_case }}.png" class="card-image">
+                        </div>
                         <h4>{{ slot.item.name }}</h4>
                         <div class="icon">
                             <h4>{{ slot.quantity }}</h4>

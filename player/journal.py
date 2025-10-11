@@ -16,15 +16,15 @@ class JournalManager:
     def _chapter_items(self, chapter):
         '''
         Return list of items in journal chapter
-        '''
-        if isinstance(chapter, list):
-            return chapter        
-        
+        '''        
         items = []
         for k,v in chapter.items():
-            if isinstance(v, list):
-                items.extend(v)
-
+            if isinstance(v, dict):
+                items.extend(v.values())
+            elif isinstance(v, str):
+                continue
+            else:
+                items.append(v)
         return items
 
     def discover(self, item):

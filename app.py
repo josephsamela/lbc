@@ -1,6 +1,7 @@
 import uuid
-import re
 from functools import wraps
+
+from game.actions import actions
 
 # Initialize Flask
 from flask import Flask, render_template, request, redirect, make_response
@@ -159,6 +160,27 @@ def backpack(player):
 def item(player, item):
     return render_template('/access/item.html', player=player, game=game, item=game.items.get(item))
 
+# ROUTES - ACTIONS
+# /aciton
+# 
+# Actions:
+#   DropAction
+#   FishAction
+#   CookAction
+#   CraftAction
+#   PlantAction
+#   ClearAction
+#   HarvestAction
+
+@app.route("/action", methods=["POST"])
+def action():
+    action_type = request.form.get("action")
+    action_params = request.form.get("params")
+
+    action = actions.get(action_type)
+    action.execute(**action_params)
+
+
 # ROUTES - LOCATIONS
 #   /locations
 #   /locations/<skill>
@@ -167,6 +189,7 @@ def item(player, item):
 
 
 # FORMATTERS
+import re
 @app.template_filter()
 def snake_case(s):
     s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', s)

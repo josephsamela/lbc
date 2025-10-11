@@ -1,4 +1,4 @@
-from game.actions import *
+from . import *
 
 class CraftAction(Action):
 

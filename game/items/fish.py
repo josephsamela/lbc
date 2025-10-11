@@ -1,4 +1,4 @@
-from . import *
+from .bait import *
 
 class Fish(Item):
     def __init__(self, name, level, bait):
@@ -8,50 +8,54 @@ class Fish(Item):
         self.bait = bait
         super().__init__(name)
 
-# LAKES
-raw_bluegill = Fish('Raw Bluegill', 1, [nightcrawlers])
-raw_pumpkinseed = Fish('Raw Pumpkinseed', 10, [nightcrawlers])
-raw_yellow_perch = Fish('Raw Yellow Perch', 20, [nightcrawlers])
-raw_smallmouth_bass = Fish('Raw Smallmouth Bass', 30, [nightcrawlers])
-raw_walleye = Fish('Raw Walleye', 40, [nightcrawlers])
-raw_largemouth_bass = Fish('Raw Largemouth Bass', 50, [nightcrawlers])
-raw_chain_pickerel = Fish('Raw Chain Pickerel', 60, [nightcrawlers])
-raw_muskellunge = Fish('Raw Muskellunge', 70, [nightcrawlers])
-raw_northern_pike = Fish('Raw Northern Pike', 80, [nightcrawlers])
-raw_lake_sturgeon = Fish('Raw Lake Sturgeon', 90, [nightcrawlers])
-
-# RIVERS
-raw_brown_trout = Fish('Raw Brown Trout', 2, [nightcrawlers])
-raw_brook_trout = Fish('Raw Brook Trout', 12, [nightcrawlers])
-raw_rainbow_trout = Fish('Raw Rainbow Trout', 22, [nightcrawlers])
-raw_channel_catfish = Fish('Raw Channel Catfish', 32, [nightcrawlers])
-raw_pink_salmon = Fish('Raw Pink Salmon', 42, [nightcrawlers])
-raw_chum_salmon = Fish('Raw Chum Salmon', 52, [nightcrawlers])
-raw_coho_salmon = Fish('Raw Coho Salmon', 62, [nightcrawlers, meal_worms, crickets, blood_worms])
-raw_longnose_gar = Fish('Raw Longnose Gar', 72, [nightcrawlers])
-raw_sockeye_salmon = Fish('Raw Sockeye Salmon', 82, [nightcrawlers])
-raw_chinook_salmon = Fish('Raw Chinook Salmon', 92, [nightcrawlers])
-
-# OCEANS
-raw_scup = Fish('Raw Scup', 4, [nightcrawlers])
-raw_menhaden = Fish('Raw Menhaden', 14, [nightcrawlers])
-raw_striped_bass = Fish('Raw Striped Bass', 24, [nightcrawlers])
-raw_searobin = Fish('Raw Searobin', 34, [nightcrawlers])
-raw_black_seabass = Fish('Raw Black Seabass', 44, [nightcrawlers])
-raw_arctic_cod = Fish('Raw Arctic Cod', 54, [nightcrawlers])
-raw_bluefish = Fish('Raw Bluefish', 64, [nightcrawlers])
-raw_pacific_halibut = Fish('Raw Pacific Halibut', 74, [nightcrawlers])
-raw_bluefin_tuna = Fish('Raw Bluefin Tuna', 84, [nightcrawlers])
-raw_swordfish = Fish('Raw Swordfish', 94, [nightcrawlers])
-
-# CORAL REEF
-raw_sergeant_major = Fish('Raw Sergeant Major', 6, [nightcrawlers])
-raw_yellowtail_snapper = Fish('Raw Yellowtail Snapper', 16, [nightcrawlers])
-raw_spanish_mackerel = Fish('Raw Spanish Mackerel', 26, [nightcrawlers])
-raw_goatfish = Fish('Raw Goatfish', 36, [nightcrawlers])
-raw_parrotfish = Fish('Raw Parrotfish', 46, [nightcrawlers])
-raw_hogfish = Fish('Raw Hogfish', 56, [nightcrawlers])
-raw_mahi_mahi = Fish('Raw Mahi Mahi', 66, [nightcrawlers])
-raw_red_grouper = Fish('Raw Red Grouper', 76, [nightcrawlers])
-raw_giant_trevally = Fish('Raw Giant Trevally', 86, [nightcrawlers])
-raw_humphead_wrasse = Fish('Raw Humphead Wrasse', 96, [nightcrawlers])
+fish = {
+    'skill': 'fishing',
+    'lakes': {
+        'raw_bluegill': Fish('Raw Bluegill', 1, [earthworms]),
+        'raw_pumpkinseed': Fish('Raw Pumpkinseed', 10, [earthworms]),
+        'raw_yellow_perch': Fish('Raw Yellow Perch', 20, [earthworms]),
+        'raw_smallmouth_bass': Fish('Raw Smallmouth Bass', 30, [earthworms]),
+        'raw_walleye': Fish('Raw Walleye', 40, [earthworms]),
+        'raw_largemouth_bass': Fish('Raw Largemouth Bass', 50, [earthworms]),
+        'raw_chain_pickerel': Fish('Raw Chain Pickerel', 60, [earthworms]),
+        'raw_muskellunge': Fish('Raw Muskellunge', 70, [earthworms]),
+        'raw_northern_pike': Fish('Raw Northern Pike', 80, [earthworms]),
+        'raw_lake_sturgeon': Fish('Raw Lake Sturgeon', 90, [earthworms])
+    },
+    'rivers': {
+        'raw_brown_trout': Fish('Raw Brown Trout', 2, [earthworms]),
+        'raw_brook_trout': Fish('Raw Brook Trout', 12, [earthworms]),
+        'raw_rainbow_trout': Fish('Raw Rainbow Trout', 22, [earthworms]),
+        'raw_channel_catfish': Fish('Raw Channel Catfish', 32, [earthworms]),
+        'raw_pink_salmon': Fish('Raw Pink Salmon', 42, [earthworms]),
+        'raw_chum_salmon': Fish('Raw Chum Salmon', 52, [earthworms]),
+        'raw_coho_salmon': Fish('Raw Coho Salmon', 62, [earthworms, meal_worms, crickets, blood_worms]),
+        'raw_longnose_gar': Fish('Raw Longnose Gar', 72, [earthworms]),
+        'raw_sockeye_salmon': Fish('Raw Sockeye Salmon', 82, [earthworms]),
+        'raw_chinook_salmon': Fish('Raw Chinook Salmon', 92, [earthworms])
+    },
+    'ocean': {
+        'raw_scup': Fish('Raw Scup', 4, [earthworms]),
+        'raw_menhaden': Fish('Raw Menhaden', 14, [earthworms]),
+        'raw_striped_bass': Fish('Raw Striped Bass', 24, [earthworms]),
+        'raw_searobin': Fish('Raw Searobin', 34, [earthworms]),
+        'raw_black_seabass': Fish('Raw Black Seabass', 44, [earthworms]),
+        'raw_arctic_cod': Fish('Raw Arctic Cod', 54, [earthworms]),
+        'raw_bluefish': Fish('Raw Bluefish', 64, [earthworms]),
+        'raw_pacific_halibut': Fish('Raw Pacific Halibut', 74, [earthworms]),
+        'raw_bluefin_tuna': Fish('Raw Bluefin Tuna', 84, [earthworms]),
+        'raw_swordfish': Fish('Raw Swordfish', 94, [earthworms])
+    },
+    'coral reef': {
+        'raw_sergeant_major': Fish('Raw Sergeant Major', 6, [earthworms]),
+        'raw_yellowtail_snapper': Fish('Raw Yellowtail Snapper', 16, [earthworms]),
+        'raw_spanish_mackerel': Fish('Raw Spanish Mackerel', 26, [earthworms]),
+        'raw_goatfish': Fish('Raw Goatfish', 36, [earthworms]),
+        'raw_parrotfish': Fish('Raw Parrotfish', 46, [earthworms]),
+        'raw_hogfish': Fish('Raw Hogfish', 56, [earthworms]),
+        'raw_mahi_mahi': Fish('Raw Mahi Mahi', 66, [earthworms]),
+        'raw_red_grouper': Fish('Raw Red Grouper', 76, [earthworms]),
+        'raw_giant_trevally': Fish('Raw Giant Trevally', 86, [earthworms]),
+        'raw_humphead_wrasse': Fish('Raw Humphead Wrasse', 96, [earthworms])
+    }
+}

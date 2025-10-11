@@ -31,48 +31,50 @@
 {% for subsection, items in game.journal[chapter].items() %}
 
     {% if not items is string %}
-       
-        <section>
-            <div class="card {{ game.journal[chapter].skill }}">
-                <div class="card-title">
-                    <h2>{{ subsection.title() }}</h2>
-                </div>
-
-                <section>
-                    <div class="card skill-card {{ game.journal[chapter].skill }}">
-                        <h3>{{ subsection.title() }}</h3>
-                        <div class="icon end skill-icon">
-                            <img src="/static/images/skills/icons/{{ game.journal[chapter].skill }}.svg">
-                        </div>
-                        <div class="card-subtitle"></div>
-                        <h5>{{ player.journal.progress(items) }}%</h5>
-                        <h2 class="end bottom">{{ player.journal.discovered(items) }}/{{ player.journal.discoverable(items) }}</h2>
-                    </div>
-                </section>
-
-                <div class="grid-container">
-                    {% for item in items %}
-                    <div class="grid-item">
-                        <a href="/item/{{item.name | snake_case}}">
-                            <div class="card-subtitle">
-                                <div class="card-subtitle"></div>
-                                {% if player.journal.discovered_item(item) %}
-                                    <img src="/static/images/items/{{ item.name }}.png" class="card-image sprite">
-                                {% else %}
-                                    <img src="/static/images/items/{{ item.name }}.png" class="card-image hidden">
-                                {% endif %}
-
-                                <h4>{{ item.name.replace('Raw', '') }}</h4>
-                            </div>
-                        </a>
-                    </div>
-                    {% endfor %}
-                </div>
-
+    <section>
+        <div class="card {{ game.journal[chapter].skill }}">
+            <div class="card-title">
+                <h2>{{ subsection.title() }}</h2>
             </div>
-        </section>
 
+            <section>
+                <div class="card skill-card {{ game.journal[chapter].skill }}">
+                    <h3>{{ subsection.title() }}</h3>
+                    <div class="icon end skill-icon">
+                        <img src="/static/images/skills/icons/{{ game.journal[chapter].skill }}.svg">
+                    </div>
+                    <div class="card-subtitle"></div>
+                    <h5>{{ player.journal.progress(items) }}%</h5>
+                    <h2 class="end bottom">{{ player.journal.discovered(items) }}/{{ player.journal.discoverable(items) }}</h2>
+                </div>
+            </section>
+
+            <div class="card-subtitle"></div>
+
+            <div class="grid-container">
+                {% for key,item in items.items() %}
+                <div class="grid-item">
+                    <a href="/item/{{key}}">
+                        <div class="card {{ game.journal[chapter].skill }}">
+                            <h6>{{ item.name.replace('Raw', '') }}</h6>
+
+                            <div class="card-subtitle"></div>
+
+                            {% if player.journal.discovered_item(item) %}
+                                <img src="/static/images/items/{{ key }}.png" class="card-image sprite">
+                            {% else %}
+                                <img src="/static/images/items/{{ key }}.png" class="card-image hidden">
+                            {% endif %}
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
     {% endif %}
+
 {% endfor %}
 
 <section>

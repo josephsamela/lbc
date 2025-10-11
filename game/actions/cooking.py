@@ -1,6 +1,5 @@
 import random
-
-from game.actions import *
+from . import *
 
 class CookAction(Action):
 

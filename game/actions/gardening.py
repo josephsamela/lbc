@@ -1,7 +1,5 @@
 import datetime
-
-from game.actions import *
-from . import Gardening
+from . import *
 
 class PlantAction(Action):
     '''
