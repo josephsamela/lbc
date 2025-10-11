@@ -11,63 +11,63 @@
         <div class="card-subtitle">
             <p>The journal records the items you<br>discover on your adventure!</p>
         </div>
+        <div class="skill-icon">
+            <img src="/static/images/skills/icons/{{ game.journal[chapter].skill }}.svg">
+        </div>
         <section>
-            <div class="skill-icon">
-                <img src="/static/images/skills/icons/{{ game.journal[chapter].skill }}.svg">
-            </div>            
+            <div class="card skill-card {{ game.journal[chapter].skill }}">
+                <h3>{{ chapter.title() }}</h3>
+                <div class="icon end skill-icon">
+                    <img src="/static/images/skills/icons/{{ game.journal[chapter].skill }}.svg">
+                </div>
+                <div class="card-subtitle"></div>
+                <h5>{{ player.journal.progress(game.journal[chapter]) }}%</h5>
+                <h2 class="end bottom">{{ player.journal.discovered(game.journal[chapter]) }}/{{ player.journal.discoverable(game.journal[chapter]) }}</h2>
+            </div>
         </section>
     </div>
 </section>
-
-
-<section>
-    <div class="card skill-card {{ game.journal[chapter].skill }}">
-        <h3>{{ chapter.title() }}</h3>
-
-        <div class="icon end skill-icon">
-            <img src="/static/images/skills/icons/{{ game.journal[chapter].skill }}.svg">
-        </div>
-
-        <div class="card-subtitle"></div>
-
-        <h5>{{ player.journal.progress(game.journal[chapter]) }}%</h5>
-        <h2 class="end bottom">{{ player.journal.discovered(game.journal[chapter]) }}/{{ player.journal.discoverable(game.journal[chapter]) }}</h2>
-    </div>
-</section>
-
 
 {% for subsection, items in game.journal[chapter].items() %}
 
     {% if not items is string %}
        
         <section>
-            <div class="card">
+            <div class="card {{ game.journal[chapter].skill }}">
                 <div class="card-title">
                     <h2>{{ subsection.title() }}</h2>
                 </div>
 
-                {% for item in items %}
-
                 <section>
-                    <a href="/items/{{item.name}}">
-                        <div class="card">
-                            <div class="card-title">
-                                <h2>{{ item.name.replace('Raw', '') }}</h2>
-                            </div>
-                            <div class="card-subtitle">
-                                <p>Requires <b>{{ item.level }}</b> {{ game.journal[chapter].skill }}</p>
-                            </div>
-
-                            {% if player.journal.discovered_item(item) %}
-                                <img src="/static/images/items/{{ item.name }}.png" class="card-image sprite">
-                            {% else %}
-                                <img src="/static/images/items/{{ item.name }}.png" class="card-image hidden">
-                            {% endif %}
+                    <div class="card skill-card {{ game.journal[chapter].skill }}">
+                        <h3>{{ subsection.title() }}</h3>
+                        <div class="icon end skill-icon">
+                            <img src="/static/images/skills/icons/{{ game.journal[chapter].skill }}.svg">
                         </div>
-                    </a>
+                        <div class="card-subtitle"></div>
+                        <h5>{{ player.journal.progress(items) }}%</h5>
+                        <h2 class="end bottom">{{ player.journal.discovered(items) }}/{{ player.journal.discoverable(items) }}</h2>
+                    </div>
                 </section>
 
-                {% endfor %}
+                <div class="grid-container">
+                    {% for item in items %}
+                    <div class="grid-item">
+                        <a href="/item/{{item.name | snake_case}}">
+                            <div class="card-subtitle">
+                                <div class="card-subtitle"></div>
+                                {% if player.journal.discovered_item(item) %}
+                                    <img src="/static/images/items/{{ item.name }}.png" class="card-image sprite">
+                                {% else %}
+                                    <img src="/static/images/items/{{ item.name }}.png" class="card-image hidden">
+                                {% endif %}
+
+                                <h4>{{ item.name.replace('Raw', '') }}</h4>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
 
             </div>
         </section>

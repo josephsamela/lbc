@@ -93,8 +93,10 @@ a {
 
 .banner-logo {
     width: 36px;
-    margin-top: 3px;
     margin-left: auto;
+}
+.banner-logo img {
+    width: 100%;
 }
 
 /* CARD */
@@ -116,6 +118,7 @@ a {
 }
 .card .card {
     border-radius: 0.5em;
+    padding: 1em;
 }
 
 .card-title {
@@ -132,7 +135,8 @@ a {
 }
 
 .card-image {
-    /* width: 65%; */
+    max-height: 60px;
+    max-width: 100%;
 }
 
 .card-action {
@@ -157,7 +161,7 @@ input, select {
     margin: 1em 0px;
     text-align: center;
     text-align-last: center;
-    font-family: 'Comic Neue';
+    font-family: 'National Park';
 }
 
 /* PROFILE CARD */
@@ -184,11 +188,45 @@ input, select {
     bottom: 1.5em
 }
 
+/* GRID */
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-gap: 1em;
+}
+
+.grid-item {
+    width: 100%;
+    text-decoration: none;
+}
+
+.grid-item .card {
+    height: -webkit-fill-available;
+    align-content: center;
+    height: 65px
+}
+
+.grid-item .card .icon {
+    background-color: rgba(255, 255, 255, 50%);
+    border-radius: 100%;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: 0.25em;
+    left: 0.25em;
+    align-content: center;
+    padding: 0.25em;
+}
+
 /* SKILL CARD */
 
 .skill-icon {
     border-radius: 100%;
-    width: fit-content;
+    /* width: fit-content; */
+    display: inline-flex;
+    width: 50%;
+    height: 50%;
     aspect-ratio: 1;
     background-color: black;
     mix-blend-mode: soft-light;

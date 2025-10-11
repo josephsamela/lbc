@@ -1,4 +1,5 @@
 import uuid
+import re
 from functools import wraps
 
 # Initialize Flask
@@ -127,10 +128,9 @@ def home(player):
 
 # ROUTES - PLAYER
 #   /player
-#   /player/skills
 #   /player/skills/<skill>
+#   /player/journal/<skill>
 #   /player/inventory
-#   /player/journal
 
 @app.route('/player')
 @login_required
@@ -147,11 +147,30 @@ def skill(player, skill):
 def journal(player, chapter):
     return render_template('/player/journal.html', player=player, game=game, chapter=chapter)
 
+@app.route('/player/backpack')
+@login_required
+def backpack(player):
+    return render_template('/player/backpack.html', player=player, game=game)
+
+# ROUTES - ITEMS
+# /item/<item>
+@app.route('/item/<item>')
+@login_required
+def item(player, item):
+    return render_template('/access/item.html', player=player, game=game, item=game.items.get(item))
+
 # ROUTES - LOCATIONS
 #   /locations
 #   /locations/<skill>
 #   /locations/<skill>/<location>
 #   /locations/<skill>/<location>/<action>
+
+
+# FORMATTERS
+@app.template_filter()
+def snake_case(s):
+    s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', s)
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower().replace(' ', '')
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5001)

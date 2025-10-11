@@ -1,5 +1,3 @@
-import copy
-
 from db import ItemModel
 
 class Item:

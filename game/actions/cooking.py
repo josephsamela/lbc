@@ -58,7 +58,7 @@ class CookAction(Action):
                 self.result = self.recipe
             case 'Burnt':
                 self.result = self.recipe.burnt
-                self.result.name.replace('Cooked ','')
+                # self.result.name.replace('Cooked ','')
                 c = 0 # Burnt food rewards zero xp
 
         super().execute(player)

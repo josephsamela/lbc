@@ -17,8 +17,10 @@ class JournalManager:
         '''
         Return list of items in journal chapter
         '''
+        if isinstance(chapter, list):
+            return chapter        
+        
         items = []
-
         for k,v in chapter.items():
             if isinstance(v, list):
                 items.extend(v)

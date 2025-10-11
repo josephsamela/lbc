@@ -1,0 +1,50 @@
+{% set title = "Backpack" %}
+{% extends "base.html" %}
+
+{% block content %}
+
+<section>
+    <div class="card">
+        <div class="card-title">
+            <h2>{{ item.name }}</h2>
+        </div>
+        <div class="card-subtitle"></div>
+        {% if player.journal.discovered_item(item) %}
+            <img src="/static/images/items/{{ item.name }}.png">
+        {% else %}
+            <img src="/static/images/items/{{ item.name }}.png" class="hidden">
+        {% endif %}
+    </div>
+</section>
+
+{% if item.bait is defined %}
+<section>
+    <div class="card">
+        <div class="card-title">
+            <h2>Bait</h2>
+            <div class="card-subtitle">
+                <p>{{ item.name.replace('Raw', '') }} only bite these baits.</p>
+            </div>
+            <div class="grid-container">
+                {% for bait in item.bait %}
+                <div class="card">
+                    <div class="grid-item">
+                        <img src="/static/images/items/{{ bait.name }}.png">
+                        <h4>{{ bait.name }}</h4>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+
+<section>
+    <a class="card-action" href="/player">
+        <h3>Back to Profile</h3>
+    </a>
+</section>
+
+{% endblock %}
