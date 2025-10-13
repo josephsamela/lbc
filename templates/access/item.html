@@ -40,21 +40,21 @@
     <div class="card">
         <div class="card-title">
             <h2>Bait</h2>
-            <div class="card-subtitle">
-                <p>{{ item.name.replace('Raw', '') }} only bite these baits.</p>
-            </div>
-            <div class="grid-container">
-                {% for bait in item.bait %}
+        </div>
+        <div class="card-subtitle">
+            <p>{{ item.name.replace('Raw', '') }} only bite these baits.</p>
+        </div>
+        <div class="grid-container">
+            {% for bait in item.bait %}
+            <div class="grid-item">
                 <a href="/item/{{ bait.name | snake_case }}">
                     <div class="card">
-                        <div class="grid-item">
-                            <img src="/static/images/items/{{ bait.name }}.png">
-                            <h4>{{ bait.name }}</h4>
-                        </div>
+                        <img src="/static/images/items/{{ bait.name }}.png">
+                        <h4>{{ bait.name }}</h4>
                     </div>
                 </a>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
     </div>
 </section>

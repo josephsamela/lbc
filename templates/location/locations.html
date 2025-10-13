@@ -6,7 +6,7 @@
 {% for key, location in game.locations[skill].items() %}
 
 <section>
-    <div class="card" style="background-image: url(/static/images/locations/{{ key }}.png);">
+    <div class="card" style="background-image: url('/static/images/locations/{{ key }}.png');">
         <div class="card-title">
             <h2>{{location.name}}</h2>
         </div>

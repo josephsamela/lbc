@@ -3,7 +3,65 @@
 
 {% block content %}
 
-{{ result }}
+<section>
+    <div class="card">
+
+        <div class="card-title">
+            <h2>Result</h2>
+        </div>
+
+        <div class="card-subtitle">
+            <p>{{ result.message }}</p>
+        </div>
+
+        <div class="card-subtitle">
+            <img src="/static/images/items/{{ result.item.name | snake_case }}.png">
+        </div>
+
+        <div class="card-subtitle">
+            <p>You have <b>{{ player.inventory.count(result.param) }}</b> {{ result.param.name }}</p>
+        </div>
+
+        <div class="card">
+            <div class="card-title">
+                <h2>Rewards</h2>
+            </div>
+            <div class="card-subtitle"></div>
+            {% for reward in result.rewards %}
+                <p>{{ reward }}</p>
+            {% endfor %}
+        </div>
+
+        <section>
+            <a href="/player/skills/{{ skill }}">
+                <div class="card skill-card {{ skill }}">
+                    <h3>{{ game.skills[skill].name }}</h3>
+                    <div class="icon end icon skill">
+                        <img src="/static/images/skills/icons/{{ skill }}.svg">
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-bar progress-bar-inner" style="width:{{ player.experience.next_level_progress(skill)*100 }}%"></div>
+                    </div>
+                    <p class="start">Level <b>{{ player.experience.level(skill) }}</b></p>
+                    <p class="center">{{ (player.experience.next_level_progress(skill)*100) | int }}%</p>
+                    <p class="end">Level <b>{{ player.experience.next_level(skill) }}</b></p>
+                </div>
+            </a>
+        </section>
+
+        <section></section>
+
+        <form action="/action" method="post">
+            <input type="string" name="skill" value="{{ skill }}" hidden required />
+            <input type="string" name="location" value="{{ location }}" hidden required />
+            <input type="string" name="target" value="{{ result.param.name | snake_case }}" hidden required />
+            <button id="submit-button" class="card-action" type="submit">
+                <h3>{{ result.repeat_text }}</h3>
+            </button>
+        </form>
+
+    </div>
+</section>
 
 <section>
     <a class="card-action" href="/locations/{{ skill }}/{{ location }}">

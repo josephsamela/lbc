@@ -3,9 +3,9 @@ from . import *
 
 class FishAction(Action):
 
-    def __init__(self, species):
+    def __init__(self, resources):
         self.skill = 'fishing'
-        self.species = species
+        self.resources = resources
 
     @property
     def requirements(self):
@@ -37,11 +37,11 @@ class FishAction(Action):
             ]
         return []
 
-    def execute(self, game, player, bait, *args, **kwargs):
-        self.bait = game.items.get(bait)
+    def execute(self, game, player, target, *args, **kwargs):
+        self.bait = game.items.get(target)
 
         drop_table = []
-        for species in self.species:
+        for species in self.resources:
             if player.experience.level(self.skill) < species.level:
                 # Skip species if player lacks required level
                 continue
@@ -61,10 +61,12 @@ class FishAction(Action):
             # Success
             return {
                 'item': self.fish,
-                'message': f'You caught a {self.fish.name}!',
+                'message': f'You caught a {self.fish.name.replace('Raw ', '')}!',
+                'param': self.bait,
+                'repeat_text': 'Fish Again',
                 'rewards': [
-                    f'+{ self.fish.xp } Fishing Experience',
-                    f'+1 {self.fish.name}'
+                    f'+1 {self.fish.name}',
+                    f'+{ self.fish.xp } Fishing Experience'
                 ]
             }
         else:
@@ -72,6 +74,8 @@ class FishAction(Action):
             return {
                 'item': self.fish,
                 'message': f'You caught nothing.',
+                'param': self.bait,
+                'repeat_text': 'Fish Again',
                 'rewards':[
                     f'+0 Fishing Experience'
                 ]

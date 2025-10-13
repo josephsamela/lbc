@@ -2,8 +2,9 @@ from . import *
 
 class CraftAction(Action):
 
-    def __init__(self):
-        self.skill = 'Crafting'
+    def __init__(self, resources):
+        self.skill = 'crafting'
+        self.resources = resources
 
     @property
     def requirements(self):
@@ -41,8 +42,21 @@ class CraftAction(Action):
             )
         ]
 
-    def execute(self, player, recipe):
-        self.recipe = recipe
+    def execute(self, game, player, target, *args, **kwargs):
+        self.recipe = game.items.get(target)
+
+        if not self.recipe in self.resources:
+            raise Exception(f"You can't craft {recipe.name} here.")
 
         super().execute(player)
-        return self.recipe
+
+        return {
+            'item': self.recipe,
+            'message': f'You crafted a {self.recipe.name}!',
+            'param': self.recipe,
+            'repeat_text': 'Craft Again',
+            'rewards': [
+                f'+1 {self.recipe.name}',
+                f'+{ self.recipe.xp } Crafting Experience'
+            ]
+        }

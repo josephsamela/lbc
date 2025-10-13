@@ -13,6 +13,7 @@ class ItemModel(Base):
     class Meta:
         db_table = 'items'
     name = CharField(unique=True)
+    category = CharField()
 
 class PlayerModel(Base):
     class Meta:

@@ -2,6 +2,10 @@ import datetime
 from . import *
 
 class PlantAction(Action):
+
+    def __init__(self, resources):
+        self.resources = resources
+
     '''
     Plant seed in garden.
     '''

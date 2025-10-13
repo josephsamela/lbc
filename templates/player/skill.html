@@ -11,13 +11,16 @@
         <div class="card-subtitle">
             <p>{{ game.skills[skill].description }}</p>
         </div>
-        <div class="skill-icon">
-            <img src="/static/images/skills/icons/{{ skill }}.svg">
+
+        <div class="card-body">
+            <div class="icon skill">
+                <img src="/static/images/skills/icons/{{ skill }}.svg">
+            </div>
         </div>
         <section>
             <div class="card skill-card {{ skill }}">
                 <h3>{{ game.skills[skill].name }}</h3>
-                <div class="icon end skill-icon">
+                <div class="icon end icon skill">
                     <img src="/static/images/skills/icons/{{ skill }}.svg">
                 </div>
                 <div class="progress-bar">
@@ -38,19 +41,19 @@
             <div class="grid-item">
                 <a href="/item/{{key}}">
                     <div class="card {{ skill }}">
-                        <h6>{{ item.name.replace('Raw', '') }}</h6>
-
-                        <div class="card-subtitle"></div>
-
-                        {% if player.journal.discovered_item(item) %}
-                            <img src="/static/images/items/{{ key }}.png" class="card-image sprite">
-                        {% else %}
-                            <img src="/static/images/items/{{ key }}.png" class="card-image hidden">
-                        {% endif %}
-
-                        <div class="card-subtitle"></div>
 
                         <p><b>{{ item.level }}</b> {{ skill.title() }}</p>
+                        
+                        <div class="card-mini-subtitle">
+                            {% if player.journal.discovered_item(item) %}
+                                <img src="/static/images/items/{{ key }}.png" class="card-image sprite">
+                            {% else %}
+                                <img src="/static/images/items/{{ key }}.png" class="card-image hidden">
+                            {% endif %}
+                        </div>
+
+                        <h6>{{ item.name.replace('Raw', '') }}</h6>
+
                     </div>
                 </a>
             </div>

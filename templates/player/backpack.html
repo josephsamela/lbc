@@ -11,8 +11,10 @@
         <div class="card-subtitle">
             <p>Store all the ingredients, seeds, lures and materials you collect on your adventure!</p>
         </div>
-        <div class="skill-icon">
-            <img src="/static/images/icons/backpack.svg">
+        <div class="card-body">
+            <div class="icon skill">
+                <img src="/static/images/icons/backpack.svg">
+            </div>
         </div>
         <div class="card-subtitle"></div>
         <p>You have <b>{{ player.inventory.count_all() }}</b> items in your backpack!</p>
@@ -25,7 +27,7 @@
             <div class="grid-item">
                 <a href="/item/{{ slot.item.name | snake_case }}">
                     <div class="card">
-                        <div class="card-subtitle">
+                        <div class="card-mini-subtitle">
                             <img src="/static/images/items/{{ slot.item.name | snake_case }}.png" class="card-image">
                         </div>
                         <h4>{{ slot.item.name }}</h4>

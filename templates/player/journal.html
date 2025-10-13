@@ -11,13 +11,15 @@
         <div class="card-subtitle">
             <p>The journal records the items you<br>discover on your adventure!</p>
         </div>
-        <div class="skill-icon">
-            <img src="/static/images/skills/icons/{{ game.journal[chapter].skill }}.svg">
+        <div class="card-body">
+            <div class="icon skill">
+                <img src="/static/images/skills/icons/{{ game.journal[chapter].skill }}.svg">
+            </div>
         </div>
         <section>
             <div class="card skill-card {{ game.journal[chapter].skill }}">
                 <h3>{{ chapter.title() }}</h3>
-                <div class="icon end skill-icon">
+                <div class="icon end icon skill">
                     <img src="/static/images/skills/icons/{{ game.journal[chapter].skill }}.svg">
                 </div>
                 <div class="card-subtitle"></div>
@@ -27,6 +29,7 @@
         </section>
     </div>
 </section>
+
 
 {% for subsection, items in game.journal[chapter].items() %}
 
@@ -40,7 +43,7 @@
             <section>
                 <div class="card skill-card {{ game.journal[chapter].skill }}">
                     <h3>{{ subsection.title() }}</h3>
-                    <div class="icon end skill-icon">
+                    <div class="icon end icon skill">
                         <img src="/static/images/skills/icons/{{ game.journal[chapter].skill }}.svg">
                     </div>
                     <div class="card-subtitle"></div>

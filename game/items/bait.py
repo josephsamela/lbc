@@ -3,12 +3,13 @@ from . import Item
 class Bait(Item):
     def __init__(self, name):
         self.name = name
-        super().__init__(name)
+        self.category = 'live'
+        super().__init__(name, self.category)
 
 # LIVE
 
 earthworms = Bait('Earthworms')
-meal_worms = Bait('Meal Worms')
+mealworms = Bait('Mealworms')
 crickets = Bait('Crickets')
 blood_worms = Bait('Blood Worms')
 glow_worms = Bait('Glow Worms')
@@ -19,7 +20,7 @@ hellgrammites = Bait('Hellgrammites')
 bait = {
     'live': {
         'earthworms': earthworms,
-        'meal_worms': meal_worms,
+        'mealworms': mealworms,
         'crickets': crickets,
         'blood_worms': blood_worms,
         'glow_worms': glow_worms,

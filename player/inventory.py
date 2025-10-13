@@ -1,4 +1,4 @@
-from db import InventoryModel, fn
+from db import InventoryModel, ItemModel, fn
 
 class InventoryManager:
     def __init__(self, player):
@@ -8,11 +8,15 @@ class InventoryManager:
         '''
         Sum of quantity of all items in inventory
         '''
-        return InventoryModel.select(
+        r = InventoryModel.select(
             fn.SUM(InventoryModel.quantity)
         ).where(
             InventoryModel.player==self.player._record
         ).scalar()
+
+        if r:
+            return r
+        return 0
 
     def count(self, item):
         '''
@@ -73,14 +77,20 @@ class InventoryManager:
         r.quantity = 0
         r.save()
 
-    def items(self):
+    def items(self, filter=None):
         '''
         Return items in player inventory
+        Optional. Filter items by category. For example filter='bait' only return bait items.
         '''
+        if not filter:
+            filter = [ItemModel.category]
+
         slots = []
-        for slot in InventoryModel.select().where(
+        for slot in InventoryModel.select().join(ItemModel).where(
+            (InventoryModel.item == ItemModel.id) &
             (InventoryModel.player == self.player._record) &
-            (InventoryModel.quantity > 0)
+            (InventoryModel.quantity > 0) &
+            (ItemModel.category << filter)
         ):
             slots.append(slot)
 
