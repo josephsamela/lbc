@@ -69,7 +69,7 @@ class CookAction(Action):
             # Success
             return {
                 'item': self.result,
-                'message': f'You made {self.result.name}!',
+                'message': f'You made a {self.result.name}!',
                 'param': self.recipe,
                 'repeat_text': 'Cook Again',
                 'rewards': [

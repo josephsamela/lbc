@@ -7,10 +7,10 @@ from .items.bait import bait
 from .items.crafting_recipes import crafting_recipes
 from .items.cooking_recipes import cooking_recipes
 
+# from app import snake_case
+
 class Game:
     def __init__(self):
-
-        self.items = self.flatten([fish, bait, crafting_recipes, cooking_recipes])
 
         self.locations = {
             "fishing": {
@@ -75,8 +75,16 @@ class Game:
                     "action_enabled_text": "Cook",
                     "input": "resources", # Either "inventory" or "resources"
                     "resource_subtitle": "Choose an recipe to cook!",
-                    "resource_filter": ["lures"],
                     "action": CookAction(resources=cooking_recipes['fish'].values())
+                },
+                "bakery": {
+                    "name": "Bakery",
+                    "description": "A cold and switch freshwater river that's home to many species!",
+                    "action_disabled_text": "Select Recipe",
+                    "action_enabled_text": "Cook",
+                    "input": "resources", # Either "inventory" or "resources"
+                    "resource_subtitle": "Choose an recipe to cook!",
+                    "action": CookAction(resources=cooking_recipes['deserts'].values())
                 }
             }
         }
@@ -105,17 +113,30 @@ class Game:
             'Food': cooking_recipes
         }
 
-    @staticmethod
-    def flatten(item_groups):
-        '''
-        Take list of item groups (dict) and flatten into a one-layer dict
-        '''
-        i = {}
-        for item_group in item_groups:
-            for _,group in item_group.items():
-                if isinstance(group, dict):
-                    i.update(group)
-        return i
+        # Build LUT of every item
+        from app import snake_case
+        self.items = dict()
+        for group in [fish, bait, crafting_recipes, cooking_recipes]:
+            for chapter, items in group.items():
+
+                if not isinstance(items, dict):
+                    continue
+
+                for item_key, item in items.items():
+                    item.key = item_key
+                    item.chapter = chapter
+                    self.items[item_key] = item
+
+                    if hasattr(item, 'burnt'):
+                        self.items[snake_case(item.burnt.name)] = item.burnt
+
+        # Attach skill & location info to items
+        for skill, locations in self.locations.items():
+            for key,location in locations.items():
+                for item in location['action'].resources:
+                    item.skill = skill
+                    item.location = location
+                    item.location_key = key
 
     @staticmethod
     def by_level(items):

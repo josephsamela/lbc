@@ -8,6 +8,13 @@ app = Flask(__name__)
 app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 bcrypt = Bcrypt(app)
 
+# FORMATTERS
+import re
+@app.template_filter()
+def snake_case(s):
+    s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', s)
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower().replace(' ', '')
+
 # Initialize Database if doesn't already exist
 from db import *
 for model in [ItemModel, PlayerModel, InventoryModel, ExperienceModel]:
@@ -197,13 +204,6 @@ def locations(player, skill):
 @login_required
 def location(player, skill, location):
     return render_template('/location/location.html', player=player, game=game, skill=skill, location=location)
-
-# FORMATTERS
-import re
-@app.template_filter()
-def snake_case(s):
-    s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', s)
-    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower().replace(' ', '')
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5001)

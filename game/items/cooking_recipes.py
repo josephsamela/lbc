@@ -20,7 +20,9 @@ milk = Item('Milk', 'ingredient')
 cooking_recipes = {
     'skill': 'cooking',
     'deserts': {
-        'cake': CookingRecipe('Cake', 'Burnt Cake', 1, [flour, egg, milk], xp_bonus=100)
+        'bread': CookingRecipe('Bread', 'Burnt Bread', 1, [flour, egg, milk], xp_bonus=100),
+        'cake': CookingRecipe('Cake', 'Burnt Cake', 1, [flour, egg, milk], xp_bonus=100),
+        'biscuits': CookingRecipe('Biscuits', 'Burnt Biscuits', 1, [flour, egg, milk], xp_bonus=100)
     },
     'fish': {
         'cooked_scup': CookingRecipe('Cooked Scup', 'Burnt Scup', 1, [fish['ocean']['raw_scup']])

@@ -36,7 +36,7 @@ fish = {
         'raw_chinook_salmon': Fish('Raw Chinook Salmon', 92, [earthworms])
     },
     'ocean': {
-        'raw_scup': Fish('Raw Scup', 4, [earthworms]),
+        'raw_scup': Fish('Raw Scup', 4, [earthworms, mealworms, crickets, blood_worms]),
         'raw_menhaden': Fish('Raw Menhaden', 14, [earthworms]),
         'raw_striped_bass': Fish('Raw Striped Bass', 24, [earthworms]),
         'raw_searobin': Fish('Raw Searobin', 34, [earthworms]),

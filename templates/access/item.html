@@ -8,11 +8,50 @@
         <div class="card-title">
             <h2>{{ item.name }}</h2>
         </div>
-        <div class="card-subtitle"></div>
+        <div class="card-subtitle">
+            <p>{{ item.chapter.title() }}</p>
+        </div>
+        <div class="card-subtitle">
         {% if player.journal.discovered_item(item) %}
             <img src="/static/images/items/{{ item.name | snake_case }}.png">
         {% else %}
             <img src="/static/images/items/{{ item.name | snake_case }}.png" class="hidden">
+        {% endif %}
+        </div>
+
+        {% if item.skill is defined %}
+        <div class="grid-container">
+            <div class="grid-item">
+                <a href="/player/skills/{{ item.skill }}">
+                    <div class="card {{ item.skill }}">
+                        <div class="card-title">
+                            <h3>Skill</h3>
+                        </div>
+                        <div class="card-mini-subtitle"></div>
+                        <p><b>{{ item.level }}</b> {{ item.skill.title() }}</p>
+                    </div>
+                </a>
+            </div>
+            <div class="grid-item">
+                <a href="/player/skills/{{ item.skill }}">
+                    <div class="card {{ item.skill }}">
+                        <div class="card-title">
+                            <h3>Experience</h3>
+                        </div>
+                        <div class="card-mini-subtitle"></div>
+                        <p><b>{{ item.xp }}</b> XP</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if item.location is defined %}
+        <section>
+            <a class="card-action" href="/locations/{{ item.skill }}/{{ item.location_key }}">
+                <h3>{{ item.location.name }}</h3>
+            </a>
+        </section>
         {% endif %}
     </div>
 </section>
@@ -38,23 +77,56 @@
 {% if item.bait is defined %}
 <section>
     <div class="card">
+
         <div class="card-title">
             <h2>Bait</h2>
         </div>
         <div class="card-subtitle">
-            <p>{{ item.name.replace('Raw', '') }} only bite these baits.</p>
+            <p>{{ item.name.replace('Raw', '') }} target these baits.</p>
         </div>
+
         <div class="grid-container">
-            {% for bait in item.bait %}
+        {% for bait in item.bait %}
             <div class="grid-item">
                 <a href="/item/{{ bait.name | snake_case }}">
                     <div class="card">
-                        <img src="/static/images/items/{{ bait.name }}.png">
+                        <div class="card-mini-subtitle">
+                            <img src="/static/images/items/{{ bait.name | snake_case }}.png" class="card-image">
+                        </div>
                         <h4>{{ bait.name }}</h4>
                     </div>
                 </a>
             </div>
-            {% endfor %}
+        {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% if item.ingredients is defined %}
+<section>
+    <div class="card">
+
+        <div class="card-title">
+            <h2>Ingredients</h2>
+        </div>
+        <div class="card-subtitle">
+            <p>Ingredients for {{ item.name }}.</p>
+        </div>
+
+        <div class="grid-container">
+        {% for ingredient in item.ingredients %}
+            <div class="grid-item">
+                <a href="/item/{{ ingredient.name | snake_case }}">
+                    <div class="card">
+                        <div class="card-mini-subtitle">
+                            <img src="/static/images/items/{{ ingredient.name | snake_case }}.png" class="card-image">
+                        </div>
+                        <h4>{{ ingredient.name }}</h4>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
         </div>
     </div>
 </section>

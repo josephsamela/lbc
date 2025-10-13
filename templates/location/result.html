@@ -18,10 +18,6 @@
             <img src="/static/images/items/{{ result.item.name | snake_case }}.png">
         </div>
 
-        <div class="card-subtitle">
-            <p>You have <b>{{ player.inventory.count(result.param) }}</b> {{ result.param.name }}</p>
-        </div>
-
         <div class="card">
             <div class="card-title">
                 <h2>Rewards</h2>
@@ -30,6 +26,51 @@
             {% for reward in result.rewards %}
                 <p>{{ reward }}</p>
             {% endfor %}
+        </div>
+
+        <section></section>
+
+        {% if result.item.bait is defined %}
+        <div class="card">
+            <div class="card-title">
+                <h2>Resources</h2>
+            </div>
+            <div class="card-subtitle"></div>
+            <p>You have <b>{{ player.inventory.count(result.item) }}</b> {{ result.item.name }}</p>
+            <p>You have <b>{{ player.inventory.count(result.param) }}</b> {{ result.param.name }}</p>
+        </div>
+        {% elif result.item.ingredients is defined %}
+        <div class="card">
+            <div class="card-title">
+                <h2>Resources</h2>
+            </div>
+            <div class="card-subtitle"></div>
+            {% for ingredient in result.item.ingredients %}
+                <p>You have <b>{{ player.inventory.count(result.item) }}</b> {{ result.item.name }}</p>
+                <p>You have <b>{{ player.inventory.count(ingredient) }}</b> {{ ingredient.name }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <section></section>
+
+        <form action="/action" method="post">
+            <input type="string" name="skill" value="{{ skill }}" hidden required />
+            <input type="string" name="location" value="{{ location }}" hidden required />
+            <input type="string" name="target" value="{{ result.param.name | snake_case }}" hidden required />
+            <button id="submit-button" class="card-action" type="submit">
+                <h3>{{ result.repeat_text }}</h3>
+            </button>
+        </form>
+
+    </div>
+</section>
+
+<section>
+    <div class="card">
+
+        <div class="card-title">
+            <h2>Progress</h2>
         </div>
 
         <section>
@@ -49,25 +90,9 @@
             </a>
         </section>
 
-        <section></section>
-
-        <form action="/action" method="post">
-            <input type="string" name="skill" value="{{ skill }}" hidden required />
-            <input type="string" name="location" value="{{ location }}" hidden required />
-            <input type="string" name="target" value="{{ result.param.name | snake_case }}" hidden required />
-            <button id="submit-button" class="card-action" type="submit">
-                <h3>{{ result.repeat_text }}</h3>
-            </button>
-        </form>
-
     </div>
 </section>
 
-<section>
-    <a class="card-action" href="/locations/{{ skill }}/{{ location }}">
-        <h3>Back to {{ game.locations[skill][location].name }}</h3>
-    </a>
-</section>
 <section>
     <a class="card-action" href="/player">
         <h3>Back to Profile</h3>
