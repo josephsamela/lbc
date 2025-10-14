@@ -14,20 +14,19 @@ bead = Item('Bead', 'materials')
 feather = Item('Feather', 'materials')
 wire = Item('Wire', 'materials')
 
-crafting_recipes = {
-    'skill': 'crafting',
-    'lures': {
-        'crankbait': CraftingRecipe('Crankbait', 1, [bead, feather, wire], 'lures'),
-        'popper': CraftingRecipe('Popper', 1, [bead, feather, wire], 'lures'),
-        'spoon': CraftingRecipe('Spoon', 1, [bead, feather, wire], 'lures'),
-        'spinner': CraftingRecipe('Spinner', 1, [bead, feather, wire], 'lures'),
-        'jig': CraftingRecipe('Jig', 1, [bead, feather, wire], 'lures'),
-        'jerkbait': CraftingRecipe('Jerkbait', 1, [bead, feather, wire], 'lures'),
-        'swimbait': CraftingRecipe('Swimbait', 1, [bead, feather, wire], 'lures'),
-        'topwater': CraftingRecipe('Topwater', 1, [bead, feather, wire], 'lures')
-    },
+lures = {
+    'crankbait': CraftingRecipe('Crankbait', 1, [bead, feather, wire], 'lures'),
+    'popper': CraftingRecipe('Popper', 1, [bead, feather, wire], 'lures'),
+    'spoon': CraftingRecipe('Spoon', 1, [bead, feather, wire], 'lures'),
+    'spinner': CraftingRecipe('Spinner', 1, [bead, feather, wire], 'lures'),
+    'jig': CraftingRecipe('Jig', 1, [bead, feather, wire], 'lures'),
+    'jerkbait': CraftingRecipe('Jerkbait', 1, [bead, feather, wire], 'lures'),
+    'swimbait': CraftingRecipe('Swimbait', 1, [bead, feather, wire], 'lures'),
+    'topwater': CraftingRecipe('Topwater', 1, [bead, feather, wire], 'lures')
+}
+
+flies = {
     'nymphs': {
-        # Nymphs
         'pheasant_tail': CraftingRecipe('Pheasant Tail', 1, [bead, feather, wire], 'nymphs'),
         'beadhead_prince': CraftingRecipe('Beadhead Prince', 13, [bead, feather, wire], 'nymphs'),
         'biot_midge': CraftingRecipe('Biot Midge', 25, [bead, feather, wire], 'nymphs'),
@@ -38,7 +37,6 @@ crafting_recipes = {
         'golden_walts': CraftingRecipe('Golden Walts', 85, [bead, feather, wire], 'nymphs'),
     },
     'dry flies': {
-        # Dry Flies
         'blue_dun': CraftingRecipe('Blue Dun', 4, [bead, feather, wire], 'dry flies'),
         'parachute_adams': CraftingRecipe('Parachute Adams', 16, [bead, feather, wire], 'dry flies'),
         'green_drake': CraftingRecipe('Green Drake', 28, [bead, feather, wire], 'dry flies'),
@@ -49,7 +47,6 @@ crafting_recipes = {
         'olive_quill': CraftingRecipe('Olive Quill', 88, [bead, feather, wire], 'dry flies'),
     },
     'wet flies': {
-        # Wet Flies
         'royal_coachman': CraftingRecipe('Royal Coachman', 7, [bead, feather, wire], 'wet flies'),
         'soft_hackle': CraftingRecipe('Soft Hackle', 19, [bead, feather, wire], 'wet flies'),
         'jimmy_starling': CraftingRecipe('Jimmy Starling', 31, [bead, feather, wire], 'wet flies'),
@@ -60,7 +57,6 @@ crafting_recipes = {
         'pamachene_belle': CraftingRecipe('Pamachene Belle', 91, [bead, feather, wire], 'wet flies'),
     },
     'streamers': {
-        # Streamers
         'wooly_bugger': CraftingRecipe('Wooly Bugger', 10, [bead, feather, wire], 'streamers'),
         'mickey_finn': CraftingRecipe('Mickey Finn', 21, [bead, feather, wire], 'streamers'),
         'ashdown_green': CraftingRecipe('Ashdown Green', 34, [bead, feather, wire], 'streamers'),
@@ -70,4 +66,9 @@ crafting_recipes = {
         'crimson_duke': CraftingRecipe('Crimson Duke', 82, [bead, feather, wire], 'streamers'),
         'amber_scourge': CraftingRecipe('Amber Scourge', 94, [bead, feather, wire], 'streamers')
     }
+}
+
+crafting_recipes = {
+    'flies': flies,
+    'lures': lures
 }

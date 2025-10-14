@@ -2,12 +2,30 @@ from .actions.fishing import FishAction
 from .actions.crafting import CraftAction
 from .actions.cooking import CookAction
 
-from .items.fish import fish
+from .items.fish import fish, lake, river, ocean, coral_reef
 from .items.bait import bait
-from .items.crafting_recipes import crafting_recipes
-from .items.cooking_recipes import cooking_recipes
+from .items.crafting_recipes import crafting_recipes, flies, lures
+from .items.cooking_recipes import cooking_recipes, cooked_fish
 
-# from app import snake_case
+@staticmethod
+def flatten(d, parent='', level=0):
+    items = {}
+
+    for k, v in d.items():
+        
+        if isinstance(v, str):
+            continue
+
+        if isinstance(v, dict):
+            level+=1
+            items.update(flatten(v, k, level))
+        else:
+            v.key = k
+            v.chapter = parent
+            items[k] = v
+
+    return items
+
 
 class Game:
     def __init__(self):
@@ -22,7 +40,7 @@ class Game:
                     "input": "inventory", # Either "inventory" or "resources"
                     "resource_subtitle": "Choose bait from your inventory!",
                     "resource_filter": ["live", "lures", "nymphs", "wet flies", "dry_files", "streamers"],
-                    "action": FishAction(resources=fish['lake'].values())
+                    "action": FishAction(resources=lake)
                 },
                 "river": {
                     "name": "River",
@@ -32,7 +50,7 @@ class Game:
                     "input": "inventory", # Either "inventory" or "resources"
                     "resource_subtitle": "Choose bait from your inventory!",
                     "resource_filter": ["live", "lures", "nymphs", "wet flies", "dry_files", "streamers"],
-                    "action": FishAction(resources=fish['river'].values())
+                    "action": FishAction(resources=river)
                 },
                 "ocean": {
                     "name": "Ocean",
@@ -42,7 +60,7 @@ class Game:
                     "input": "inventory", # Either "inventory" or "resources"
                     "resource_subtitle": "Choose bait from your inventory!",
                     "resource_filter": ["live", "lures", "nymphs", "wet flies", "dry_files", "streamers"],
-                    "action": FishAction(resources=fish['ocean'].values())
+                    "action": FishAction(resources=ocean)
                 },
                 "coral reef": {
                     "name": "Coral Reef",
@@ -52,19 +70,29 @@ class Game:
                     "input": "inventory", # Either "inventory" or "resources"
                     "resource_subtitle": "Choose bait from your inventory!",
                     "resource_filter": ["live", "lures", "nymphs", "wet flies", "dry_files", "streamers"],
-                    "action": FishAction(resources=fish['coral reef'].values())
+                    "action": FishAction(resources=coral_reef)
                 }
             },
             "crafting": {
-                "pavilion": {
-                    "name": "Pavilion",
-                    "description": "A cold and switch freshwater river that's home to many species!",
+                "lakeside_cottage": {
+                    "name": "Lakeside Cottage",
+                    "description": "A charming cottage by the lake with a workshop and tools for crafting lures.",
                     "action_disabled_text": "Select Recipe",
                     "action_enabled_text": "Craft",
                     "input": "resources", # Either "inventory" or "resources"
-                    "resource_subtitle": "Choose an item to craft!",
+                    "resource_subtitle": "Choose an lure to craft!",
                     "resource_filter": ["lures"],
-                    "action": CraftAction(resources=crafting_recipes['lures'].values())
+                    "action": CraftAction(resources=lures)
+                },
+                "river_lodge": {
+                    "name": "River Lodge",
+                    "description": "Rustic lodge overlooking the river with good light and a fly tying stand for crafting flies.",
+                    "action_disabled_text": "Select Recipe",
+                    "action_enabled_text": "Craft",
+                    "input": "resources", # Either "inventory" or "resources"
+                    "resource_subtitle": "Choose a fly to craft!",
+                    "resource_filter": ["lures"],
+                    "action": CraftAction(resources=flies)
                 }
             },
             "cooking": {
@@ -75,16 +103,7 @@ class Game:
                     "action_enabled_text": "Cook",
                     "input": "resources", # Either "inventory" or "resources"
                     "resource_subtitle": "Choose an recipe to cook!",
-                    "action": CookAction(resources=cooking_recipes['fish'].values())
-                },
-                "bakery": {
-                    "name": "Bakery",
-                    "description": "A cold and switch freshwater river that's home to many species!",
-                    "action_disabled_text": "Select Recipe",
-                    "action_enabled_text": "Cook",
-                    "input": "resources", # Either "inventory" or "resources"
-                    "resource_subtitle": "Choose an recipe to cook!",
-                    "action": CookAction(resources=cooking_recipes['deserts'].values())
+                    "action": CookAction(resources=cooked_fish)
                 }
             }
         }
@@ -93,50 +112,52 @@ class Game:
             "fishing": {
                 "name": "Fishing",
                 "description": "Explore lakes, rivers and oceans to fish exciting locations and discover new species!",
-                "resources": self.by_level(fish)
             },
             "crafting": {
                 "name": "Crafting",
                 "description": "Explore lakes, rivers and oceans to fish exciting locations and discover new species!",
-                "resources": self.by_level(crafting_recipes)
             },
             "cooking": {
                 "name": "Cooking",
                 "description": "Explore lakes, rivers and oceans to fish exciting locations and discover new species!",
-                "resources": self.by_level(cooking_recipes)
             }
         }
 
         self.journal = {
-            'Fish': fish,
-            'Bait': crafting_recipes,
-            'Food': cooking_recipes
+            'fishing': {
+                'skill': 'fishing',
+                'lake': lake,
+                'river': river,
+                'ocean': ocean,
+                'coral reef': coral_reef
+            },
+            'crafting': {
+                'skill': 'crafting',
+                'lures': lures,
+                'nymphs': flies['nymphs'],
+                'dry flies': flies['dry flies'],
+                'wet flies': flies['wet flies'],
+                'streamers': flies['streamers']
+            },
+            'cooking': {
+                'skill': 'cooking',
+                'fish': cooked_fish
+            }
         }
 
         # Build LUT of every item
-        from app import snake_case
-        self.items = dict()
+        self.items = {}
         for group in [fish, bait, crafting_recipes, cooking_recipes]:
-            for chapter, items in group.items():
-
-                if not isinstance(items, dict):
-                    continue
-
-                for item_key, item in items.items():
-                    item.key = item_key
-                    item.chapter = chapter
-                    self.items[item_key] = item
-
-                    if hasattr(item, 'burnt'):
-                        self.items[snake_case(item.burnt.name)] = item.burnt
+            self.items.update(flatten(group))
 
         # Attach skill & location info to items
         for skill, locations in self.locations.items():
-            for key,location in locations.items():
-                for item in location['action'].resources:
+            for location_key,location in locations.items():
+                for item_key, item in flatten(location['action'].resources).items():
+                
                     item.skill = skill
                     item.location = location
-                    item.location_key = key
+                    item.location_key = location_key
 
     @staticmethod
     def by_level(items):

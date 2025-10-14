@@ -135,7 +135,6 @@ def home(player):
 # ROUTES - PLAYER
 #   /player
 #   /player/skills/<skill>
-#   /player/journal/<skill>
 #   /player/inventory
 
 @app.route('/player')
@@ -147,11 +146,6 @@ def player(player):
 @login_required
 def skill(player, skill):
     return render_template('/player/skill.html', player=player, game=game, skill=skill)
-
-@app.route('/player/journal/<chapter>')
-@login_required
-def journal(player, chapter):
-    return render_template('/player/journal.html', player=player, game=game, chapter=chapter)
 
 @app.route('/player/backpack')
 @login_required

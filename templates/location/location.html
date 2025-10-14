@@ -15,7 +15,7 @@
             <p>{{ location.description }}</p>
         </div>
         <div class="card-body">
-            <div id="item-icon-container" class="item" style="display: none;">
+            <div id="item-icon-container" class="item icon" style="display: none;">
                 <img id="item-icon" src="/static/images/skills/icons/{{ skill }}.svg">
             </div>
         </div>
@@ -37,7 +37,6 @@
 </section>
 
 {% if location.input == 'resources' %}
-
 <section>
     <div class="card">
         <div class="card-title">
@@ -49,21 +48,21 @@
         </div>
 
         <div class="grid-container">
-        {% for resource in location.action.resources %}
+        {% for key, resource in location.action.resources.items() %}
             <div class="grid-item">
                 <div id="{{ resource.name | snake_case }}" class="card" onclick="item_select('{{ resource.name | snake_case }}')">
                     <h4>{{ resource.name }}</h4>
-                    <img src="/static/images/items/{{ resource.name | snake_case }}.png" class="card-image">
-                    <p>Level {{ resource.level }} {{ skill.title() }}</p>
+                    <div class="card-subtitle">
+                        <img src="/static/images/items/{{ resource.name | snake_case }}.png" class="card-image">
+                    </div>
+                    <p>{{ resource.level }} {{ skill.title() }}</p>
                 </div>
             </div>
         {% endfor %}
         </div>
     </div>
 </section>
-
 {% elif location.input == 'inventory' %}
-
 <section>
     <div class="card">
         <div class="card-title">

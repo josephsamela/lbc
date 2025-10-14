@@ -19,7 +19,7 @@ class CookAction(Action):
             )
         ]
         for ingredient in self.recipe.ingredients:
-            r.append(
+            r.insert(0,
                 ItemRequirement(
                     item=ingredient,
                     quantity=1

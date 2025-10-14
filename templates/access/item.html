@@ -9,9 +9,6 @@
             <h2>{{ item.name }}</h2>
         </div>
         <div class="card-subtitle">
-            <p>{{ item.chapter.title() }}</p>
-        </div>
-        <div class="card-subtitle">
         {% if player.journal.discovered_item(item) %}
             <img src="/static/images/items/{{ item.name | snake_case }}.png">
         {% else %}
@@ -20,30 +17,21 @@
         </div>
 
         {% if item.skill is defined %}
-        <div class="grid-container">
-            <div class="grid-item">
-                <a href="/player/skills/{{ item.skill }}">
-                    <div class="card {{ item.skill }}">
-                        <div class="card-title">
-                            <h3>Skill</h3>
-                        </div>
-                        <div class="card-mini-subtitle"></div>
-                        <p><b>{{ item.level }}</b> {{ item.skill.title() }}</p>
+        <section>
+            <a href="/player/skills/{{ item.skill }}">
+                <div class="card skill-card {{ item.skill }}">
+                    <h3>{{ item.skill.title() }}</h3>
+                    <div class="icon end icon skill">
+                        <img src="/static/images/skills/icons/{{ item.skill }}.svg">
                     </div>
-                </a>
-            </div>
-            <div class="grid-item">
-                <a href="/player/skills/{{ item.skill }}">
-                    <div class="card {{ item.skill }}">
-                        <div class="card-title">
-                            <h3>Experience</h3>
-                        </div>
-                        <div class="card-mini-subtitle"></div>
-                        <p><b>{{ item.xp }}</b> XP</p>
-                    </div>
-                </a>
-            </div>
-        </div>
+                    <section></section>
+                    <section></section>
+                    <section></section>
+                    <p class="start">Level <b>{{ item.level }}</b> {{ item.skill.title() }}</p>
+                    <p class="end"><b>{{ item.xp }}</b> XP</p>
+                </div>
+            </a>
+        </section>
         {% endif %}
 
         {% if item.location is defined %}
@@ -56,7 +44,7 @@
     </div>
 </section>
 
-{% if player.inventory.check(item) %}
+<!-- {% if player.inventory.check(item) %}
 <section>
     <div class="card">
         <div class="card-title">
@@ -72,7 +60,7 @@
         </section>
     </div>
 </section>
-{% endif %}
+{% endif %} -->
 
 {% if item.bait is defined %}
 <section>

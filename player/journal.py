@@ -1,4 +1,5 @@
 from db import InventoryModel
+from game import flatten
 
 class JournalManager:
     def __init__(self, player):
@@ -13,20 +14,6 @@ class JournalManager:
             (InventoryModel.item == item._record)
         ).exists()
 
-    def _chapter_items(self, chapter):
-        '''
-        Return list of items in journal chapter
-        '''        
-        items = []
-        for k,v in chapter.items():
-            if isinstance(v, dict):
-                items.extend(v.values())
-            elif isinstance(v, str):
-                continue
-            else:
-                items.append(v)
-        return items
-
     def discover(self, item):
         '''
         Discover an item
@@ -37,14 +24,14 @@ class JournalManager:
         '''
         Return count of discoverable items in chapter
         '''
-        return len(self._chapter_items(chapter))
+        return len(flatten(chapter))
     
     def discovered(self, chapter):
         '''
         Return count of discovered items in chapter
         '''
         c = 0
-        for item in self._chapter_items(chapter):
+        for _,item in flatten(chapter).items():
             if self.discovered_item(item):
                 c += 1
         return c

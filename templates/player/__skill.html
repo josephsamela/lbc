@@ -1,0 +1,43 @@
+{% set title = game.skills[skill].name + ' Skill'%}
+{% extends "base.html" %}
+
+{% block content %}
+
+<section>
+    <div class="card {{ skill }}">
+        <div class="card-title">
+            <h2>{{ game.skills[skill].name }}</h2>
+        </div>
+        <div class="card-subtitle">
+            <p>{{ game.skills[skill].description }}</p>
+        </div>
+
+        <div class="card-body">
+            <div class="icon skill">
+                <img src="/static/images/skills/icons/{{ skill }}.svg">
+            </div>
+        </div>
+        <section>
+            <div class="card skill-card {{ skill }}">
+                <h3>{{ game.skills[skill].name }}</h3>
+                <div class="icon end icon skill">
+                    <img src="/static/images/skills/icons/{{ skill }}.svg">
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-bar progress-bar-inner" style="width:{{ player.experience.next_level_progress(skill)*100 }}%"></div>
+                </div>
+                <p class="start">Level <b>{{ player.experience.level(skill) }}</b></p>
+                <p class="center">{{ (player.experience.next_level_progress(skill)*100) | int }}%</p>
+                <p class="end">Level <b>{{ player.experience.next_level(skill) }}</b></p>
+            </div>
+        </section>
+    </div>
+</section>
+
+<section>
+    <a class="card-action" href="/player">
+        <h3>Back to Profile</h3>
+    </a>
+</section>
+
+{% endblock %}

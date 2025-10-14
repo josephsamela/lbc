@@ -49,7 +49,7 @@ class ItemRequirement:
     def __init__(self, item, quantity):
         self.item = item
         self.quantity = quantity
-        self.note = f'Requires {quantity} {item.name}.'
+        self.note = f'Requires {quantity} {item.name}'
 
     def check(self, player):
         '''
@@ -61,7 +61,7 @@ class LevelRequirement:
     def __init__(self, skill, level):
         self.skill = skill
         self.level = level
-        self.note = f'Requires {level} {skill}.'
+        self.note = f'Requires {level} {skill.title()}'
 
     def check(self, player):
         '''

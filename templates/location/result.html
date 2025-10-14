@@ -67,30 +67,20 @@
 </section>
 
 <section>
-    <div class="card">
-
-        <div class="card-title">
-            <h2>Progress</h2>
+    <a href="/player/skills/{{ skill }}">
+        <div class="card skill-card {{ skill }}">
+            <h3>{{ game.skills[skill].name }}</h3>
+            <div class="icon end icon skill">
+                <img src="/static/images/skills/icons/{{ skill }}.svg">
+            </div>
+            <div class="progress-bar">
+                <div class="progress-bar progress-bar-inner" style="width:{{ player.experience.next_level_progress(skill)*100 }}%"></div>
+            </div>
+            <p class="start">Level <b>{{ player.experience.level(skill) }}</b></p>
+            <p class="center">{{ (player.experience.next_level_progress(skill)*100) | int }}%</p>
+            <p class="end">Level <b>{{ player.experience.next_level(skill) }}</b></p>
         </div>
-
-        <section>
-            <a href="/player/skills/{{ skill }}">
-                <div class="card skill-card {{ skill }}">
-                    <h3>{{ game.skills[skill].name }}</h3>
-                    <div class="icon end icon skill">
-                        <img src="/static/images/skills/icons/{{ skill }}.svg">
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-bar progress-bar-inner" style="width:{{ player.experience.next_level_progress(skill)*100 }}%"></div>
-                    </div>
-                    <p class="start">Level <b>{{ player.experience.level(skill) }}</b></p>
-                    <p class="center">{{ (player.experience.next_level_progress(skill)*100) | int }}%</p>
-                    <p class="end">Level <b>{{ player.experience.next_level(skill) }}</b></p>
-                </div>
-            </a>
-        </section>
-
-    </div>
+    </a>
 </section>
 
 <section>
