@@ -1,4 +1,5 @@
 from . import *
+from common import flatten
 
 class CraftAction(Action):
 
@@ -45,7 +46,7 @@ class CraftAction(Action):
     def execute(self, game, player, target, *args, **kwargs):
         self.recipe = game.items.get(target)
 
-        if not target in self.resources:
+        if not target in flatten(self.resources):
             raise Exception(f"You can't craft {self.recipe.name} here.")
 
         super().execute(player)

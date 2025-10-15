@@ -1,5 +1,6 @@
 import random
 from . import *
+from common import flatten
 
 class CookAction(Action):
 
@@ -46,7 +47,7 @@ class CookAction(Action):
     def execute(self, game, player, target, *args, **kwargs):
         self.recipe = game.items.get(target)
 
-        if not target in self.resources:
+        if not target in flatten(self.resources):
             raise Exception(f"You can't cook {self.recipe.name} here.")
 
         # Cooking success or failure is random. However, the outcome

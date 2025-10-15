@@ -75,12 +75,13 @@ class LevelRequirement:
 class BalanceRequirement:
     def __init__(self, quantity):
         self.quantity = quantity
+        self.note = f'Requires {quantity} LBC'
 
     def check(self, player):
         '''
         Check player has required balance
         '''
-        if player.balance >= self.quantity:
+        if player._record.balance >= self.quantity:
             return True
         else:
             return False
@@ -117,7 +118,7 @@ class BalanceReward:
     def __init__(self, quantity):
         self.quantity = quantity
 
-    def check(self, player):
+    def grant(self, player):
         '''
         Add quantity to player balance
         '''

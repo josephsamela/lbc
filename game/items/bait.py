@@ -18,15 +18,17 @@ cray_fish = Bait('Cray Fish', 6)
 sand_flea = Bait('Sand Fleas', 7)
 hellgrammites = Bait('Hellgrammites', 8)
 
+live_bait = {
+    'earthworms': earthworms,
+    'mealworms': mealworms,
+    'crickets': crickets,
+    'blood_worms': blood_worms,
+    'glow_worms': glow_worms,
+    'cray_fish': cray_fish,
+    'sand_flea': sand_flea,
+    'hellgrammites': hellgrammites
+}
+
 bait = {
-    'live': {
-        'earthworms': earthworms,
-        'mealworms': mealworms,
-        'crickets': crickets,
-        'blood_worms': blood_worms,
-        'glow_worms': glow_worms,
-        'cray_fish': cray_fish,
-        'sand_flea': sand_flea,
-        'hellgrammites': hellgrammites
-    }
+    'live bait': live_bait
 }

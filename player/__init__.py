@@ -36,7 +36,7 @@ class Player:
 
     @property
     def balance(self):   
-        return f'{self._record.balance:,}'
+        return self._record.balance
 
     @staticmethod
     def username_exists(username):
