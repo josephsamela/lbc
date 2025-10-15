@@ -36,18 +36,18 @@
 </section>
 {% endif %}
 
-{% for key, skill in game.skills.items() %}
+{% for key, area in game.locations.items() %}
 <section>
     <div class="card" style="background-image: url(/static/images/skills/backgrounds/{{ key }}.png);">
         <div class="card-title">
-            <h2>{{ skill.name }}</h2>
+            <h2>{{ area.name }}</h2>
         </div>
         <div class="card-subtitle">
-            <p>{{ skill.description }}</p>
+            <p>{{ area.description }}</p>
         </div>
         <div class="card-body"></div>
         <a class="card-action" href="/locations/{{ key }}">
-            <h3>{{ skill.name }}</h3>
+            <h3>{{ area.name }}</h3>
         </a>
     </card>
 </section>

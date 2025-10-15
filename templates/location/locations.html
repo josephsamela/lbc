@@ -5,6 +5,8 @@
 
 {% for key, location in game.locations[skill].items() %}
 
+{% if location is not string %}
+
 <section>
     <div class="card" style="background-image: url('/static/images/locations/{{ key }}.png');">
         <div class="card-title">
@@ -19,6 +21,8 @@
         </a>
     </card>
 </section>
+
+{% endif %}
 
 {% endfor %}
 

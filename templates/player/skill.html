@@ -11,11 +11,11 @@
         <div class="card-subtitle">
             <p>{{ game.skills[skill].description }}</p>
         </div>
-        <!-- <div class="card-body">
+        <div class="card-body">
             <div class="icon skill">
                 <img src="/static/images/skills/icons/{{ skill }}.svg">
             </div>
-        </div> -->
+        </div>
 
         <section>
             <div class="card skill-card {{ skill }}">
@@ -32,36 +32,6 @@
             </div>
         </section>
 
-        <section></section>
-        <p>You are level <b>{{ player.experience.level(skill) }}</b> {{ skill.title() }}!</p>
-
-    </div>
-</section>
-
-<section>
-    <div class="card {{ skill }}">
-        <div class="card-title">
-            <h2>Collection Log</h2>
-        </div>
-        <div class="card-subtitle">
-            <p>The collection log records the<br>items you discover on your adventure!</p>
-        </div>
-
-        <section>
-            <div class="card skill-card {{ skill }}">
-                <h3>{{ skill.title() }}</h3>
-                <div class="icon end icon skill">
-                    <img src="/static/images/skills/icons/{{ skill }}.svg">
-                </div>
-                <div class="card-subtitle"></div>
-                <h5>{{ player.journal.progress(game.journal[skill]) }}%</h5>
-                <h2 class="end bottom">{{ player.journal.discovered(game.journal[skill]) }}/{{ player.journal.discoverable(game.journal[skill]) }}</h2>
-            </div>
-        </section>
-
-        <section></section>
-        <p>You have discovered <b>{{ player.journal.discovered(game.journal[skill]) }}</b> different {{ skill }}!</p>
-
     </div>
 </section>
 
@@ -76,7 +46,7 @@
 
             <section>
                 <div class="card skill-card {{ skill }}">
-                    <h3>{{ subsection.title() }}</h3>
+                    <h3>Journal</h3>
                     <div class="icon end icon skill">
                         <img src="/static/images/skills/icons/{{ skill }}.svg">
                     </div>

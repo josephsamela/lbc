@@ -1,21 +1,22 @@
 from . import Item
 
 class Bait(Item):
-    def __init__(self, name):
+    def __init__(self, name, cost):
         self.name = name
         self.category = 'live'
+        self.cost = cost
         super().__init__(name, self.category)
 
 # LIVE
 
-earthworms = Bait('Earthworms')
-mealworms = Bait('Mealworms')
-crickets = Bait('Crickets')
-blood_worms = Bait('Blood Worms')
-glow_worms = Bait('Glow Worms')
-cray_fish = Bait('Cray Fish')
-sand_flea = Bait('Sand Fleas')
-hellgrammites = Bait('Hellgrammites')
+earthworms = Bait('Earthworms', 1)
+mealworms = Bait('Mealworms', 2)
+crickets = Bait('Crickets', 4)
+blood_worms = Bait('Blood Worms', 4)
+glow_worms = Bait('Glow Worms', 5)
+cray_fish = Bait('Cray Fish', 6)
+sand_flea = Bait('Sand Fleas', 7)
+hellgrammites = Bait('Hellgrammites', 8)
 
 bait = {
     'live': {

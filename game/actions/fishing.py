@@ -41,7 +41,7 @@ class FishAction(Action):
         self.bait = game.items.get(target)
 
         drop_table = []
-        for species in self.resources:
+        for key,species in self.resources.items():
             if player.experience.level(self.skill) < species.level:
                 # Skip species if player lacks required level
                 continue
@@ -60,9 +60,9 @@ class FishAction(Action):
         if self.fish:
             # Success
             return {
-                'item': self.fish,
+                'result': self.fish,
                 'message': f'You caught a {self.fish.name.replace('Raw ', '')}!',
-                'param': self.bait,
+                'target': self.bait,
                 'repeat_text': 'Fish Again',
                 'rewards': [
                     f'+1 {self.fish.name}',
@@ -72,9 +72,9 @@ class FishAction(Action):
         else:
             # Failure
             return {
-                'item': self.fish,
+                'result': self.fish,
                 'message': f'You caught nothing.',
-                'param': self.bait,
+                'target': self.bait,
                 'repeat_text': 'Fish Again',
                 'rewards':[
                     f'+0 Fishing Experience'

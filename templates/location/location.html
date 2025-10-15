@@ -37,31 +37,40 @@
 </section>
 
 {% if location.input == 'resources' %}
+
+{% for group_key, group in location.action.resources.items() %}
 <section>
     <div class="card">
         <div class="card-title">
-            <h2>Recipes</h2>
+            <h2>{{ group_key.title() }}</h2>
         </div>
-
-        <div class="card-subtitle">
-            <p>{{ location.resource_subtitle }}</p>
-        </div>
+        
+        <div class="card-subtitle"></div>
 
         <div class="grid-container">
-        {% for key, resource in location.action.resources.items() %}
+            {% for item_key, item in group.items() %}
             <div class="grid-item">
-                <div id="{{ resource.name | snake_case }}" class="card" onclick="item_select('{{ resource.name | snake_case }}')">
-                    <h4>{{ resource.name }}</h4>
+                <div id="{{ item_key }}" class="card" onclick="item_select('{{ item_key }}')">
+                    <h4>{{ item.name }}</h4>
                     <div class="card-subtitle">
-                        <img src="/static/images/items/{{ resource.name | snake_case }}.png" class="card-image">
+                        <img src="/static/images/items/{{ item_key }}.png" class="card-image">
                     </div>
-                    <p>{{ resource.level }} {{ skill.title() }}</p>
+
+                    {% if item.cost is defined %}
+                    <p><b>{{ item.cost }}</b> LBC</p>
+                    {% else %}
+                    <p><b>{{ item.level }}</b> {{ skill.title() }}</p>
+                    {% endif %}
+
                 </div>
             </div>
-        {% endfor %}
+            {% endfor %}
         </div>
     </div>
 </section>
+{% endfor %}
+
+
 {% elif location.input == 'inventory' %}
 <section>
     <div class="card">
@@ -76,7 +85,7 @@
         <div class="grid-container">
         {% for slot in player.inventory.items(location.resource_filter) %}
             <div class="grid-item">
-                <div id="{{ slot.item.name | snake_case }}" class="card" onclick="item_select('{{ slot.item.name | snake_case }}')">
+                <div id="{{ slot.item.name | snake_case }}" name="{{ slot.item.name }}" class="card" onclick="item_select('{{ slot.item.name | snake_case }}')">
                     <img src="/static/images/items/{{ slot.item.name | snake_case }}.png" class="card-image">
                     <h4>{{ slot.item.name }}</h4>
                     <div class="icon">
@@ -116,8 +125,8 @@
         item.classList.add('selected')
 
         // Set item icon and reveal container
-        item_icon.src = '/static/images/items/'+item_id+'.png'
-        item_icon_container.style.display = ''
+        // item_icon.src = '/static/images/items/'+item_id+'.png'
+        // item_icon_container.style.display = ''
     }
 </script>
 

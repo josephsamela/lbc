@@ -15,14 +15,16 @@ feather = Item('Feather', 'materials')
 wire = Item('Wire', 'materials')
 
 lures = {
-    'crankbait': CraftingRecipe('Crankbait', 1, [bead, feather, wire], 'lures'),
-    'popper': CraftingRecipe('Popper', 1, [bead, feather, wire], 'lures'),
-    'spoon': CraftingRecipe('Spoon', 1, [bead, feather, wire], 'lures'),
-    'spinner': CraftingRecipe('Spinner', 1, [bead, feather, wire], 'lures'),
-    'jig': CraftingRecipe('Jig', 1, [bead, feather, wire], 'lures'),
-    'jerkbait': CraftingRecipe('Jerkbait', 1, [bead, feather, wire], 'lures'),
-    'swimbait': CraftingRecipe('Swimbait', 1, [bead, feather, wire], 'lures'),
-    'topwater': CraftingRecipe('Topwater', 1, [bead, feather, wire], 'lures')
+    'lures': {
+        'crankbait': CraftingRecipe('Crankbait', 1, [bead, feather, wire], 'lures'),
+        'popper': CraftingRecipe('Popper', 1, [bead, feather, wire], 'lures'),
+        'spoon': CraftingRecipe('Spoon', 1, [bead, feather, wire], 'lures'),
+        'spinner': CraftingRecipe('Spinner', 1, [bead, feather, wire], 'lures'),
+        'jig': CraftingRecipe('Jig', 1, [bead, feather, wire], 'lures'),
+        'jerkbait': CraftingRecipe('Jerkbait', 1, [bead, feather, wire], 'lures'),
+        'swimbait': CraftingRecipe('Swimbait', 1, [bead, feather, wire], 'lures'),
+        'topwater': CraftingRecipe('Topwater', 1, [bead, feather, wire], 'lures')
+    }
 }
 
 flies = {

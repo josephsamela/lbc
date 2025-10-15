@@ -46,8 +46,8 @@ class CookAction(Action):
     def execute(self, game, player, target, *args, **kwargs):
         self.recipe = game.items.get(target)
 
-        if not self.recipe in self.resources:
-            raise Exception(f"You can't cook {recipe.name} here.")
+        if not target in self.resources:
+            raise Exception(f"You can't cook {self.recipe.name} here.")
 
         # Cooking success or failure is random. However, the outcome
         # is weighted by recipe difficulty and player skill.
@@ -68,9 +68,9 @@ class CookAction(Action):
         if result == 'Cooked':
             # Success
             return {
-                'item': self.result,
+                'result': self.result,
                 'message': f'You made a {self.result.name}!',
-                'param': self.recipe,
+                'target': self.recipe,
                 'repeat_text': 'Cook Again',
                 'rewards': [
                     f'+1 {self.result.name}',
@@ -80,9 +80,9 @@ class CookAction(Action):
         else:
             # Failure
             return {
-                'item': self.result,
+                'result': self.result,
                 'message': f'You made a {self.result.name}.',
-                'param': self.recipe,
+                'target': self.recipe,
                 'repeat_text': 'Cook Again',
                 'rewards':[
                     f'+1 {self.result.name}',

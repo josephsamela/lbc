@@ -1,13 +1,13 @@
 from .actions.fishing import FishAction
 from .actions.crafting import CraftAction
 from .actions.cooking import CookAction
+from .actions.shopping import BuyAction
 
 from .items.fish import fish, lake, river, ocean, coral_reef
 from .items.bait import bait
 from .items.crafting_recipes import crafting_recipes, flies, lures
 from .items.cooking_recipes import cooking_recipes, cooked_fish
 
-@staticmethod
 def flatten(d, parent='', level=0):
     items = {}
 
@@ -26,12 +26,27 @@ def flatten(d, parent='', level=0):
 
     return items
 
-
 class Game:
     def __init__(self):
 
         self.locations = {
+            "market": {     
+                "name": "Market",
+                "description": "Explore lakes, rivers and oceans to fish exciting locations and discover new species!",
+
+                "bait_&_tackle": {
+                    "name": "Bait & Tackle",
+                    "description": "A cold and switch freshwater river that's home to many species!",
+                    "action_disabled_text": "Select Item",
+                    "action_enabled_text": "Purchase",
+                    "input": "resources", # Either "inventory" or "resources"
+                    "resource_subtitle": "Choose an item to buy!",
+                    "action": BuyAction(resources=bait)
+                }
+            },
             "fishing": {
+                "name": "Fishing",
+                "description": "Explore lakes, rivers and oceans to fish exciting locations and discover new species!",
                 "lake": {
                     "name": "Lake",
                     "description": "A cold and switch freshwater river that's home to many species!",
@@ -74,28 +89,30 @@ class Game:
                 }
             },
             "crafting": {
+                "name": "Crafting",
+                "description": "Explore lakes, rivers and oceans to fish exciting locations and discover new species!",
                 "lakeside_cottage": {
                     "name": "Lakeside Cottage",
                     "description": "A charming cottage by the lake with a workshop and tools for crafting lures.",
-                    "action_disabled_text": "Select Recipe",
+                    "action_disabled_text": "Select Lure",
                     "action_enabled_text": "Craft",
                     "input": "resources", # Either "inventory" or "resources"
                     "resource_subtitle": "Choose an lure to craft!",
-                    "resource_filter": ["lures"],
                     "action": CraftAction(resources=lures)
                 },
                 "river_lodge": {
                     "name": "River Lodge",
                     "description": "Rustic lodge overlooking the river with good light and a fly tying stand for crafting flies.",
-                    "action_disabled_text": "Select Recipe",
+                    "action_disabled_text": "Select Fly",
                     "action_enabled_text": "Craft",
                     "input": "resources", # Either "inventory" or "resources"
                     "resource_subtitle": "Choose a fly to craft!",
-                    "resource_filter": ["lures"],
                     "action": CraftAction(resources=flies)
                 }
             },
             "cooking": {
+                "name": "Cooking",
+                "description": "Explore lakes, rivers and oceans to fish exciting locations and discover new species!",
                 "campfire": {
                     "name": "Campfire",
                     "description": "A cold and switch freshwater river that's home to many species!",
@@ -151,13 +168,21 @@ class Game:
             self.items.update(flatten(group))
 
         # Attach skill & location info to items
+        from app import snake_case
         for skill, locations in self.locations.items():
             for location_key,location in locations.items():
+
+                if isinstance(location, str):
+                    continue
+
                 for item_key, item in flatten(location['action'].resources).items():
                 
                     item.skill = skill
                     item.location = location
                     item.location_key = location_key
+
+                    if hasattr(item, 'burnt'):
+                        self.items[ snake_case(item.burnt.name) ] = item.burnt
 
     @staticmethod
     def by_level(items):

@@ -72,6 +72,19 @@ class LevelRequirement:
         else:
             return False
 
+class BalanceRequirement:
+    def __init__(self, quantity):
+        self.quantity = quantity
+
+    def check(self, player):
+        '''
+        Check player has required balance
+        '''
+        if player.balance >= self.quantity:
+            return True
+        else:
+            return False
+
 class ItemReward:
     def __init__(self, item, quantity):
         self.item = item
@@ -99,6 +112,17 @@ class ExperienceReward:
             skill=self.skill, 
             quantity=self.quantity
         )
+
+class BalanceReward:
+    def __init__(self, quantity):
+        self.quantity = quantity
+
+    def check(self, player):
+        '''
+        Add quantity to player balance
+        '''
+        player._record.balance += self.quantity
+        player._record.save()
 
 from .fishing import *
 from .gardening import *

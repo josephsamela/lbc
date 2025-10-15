@@ -45,15 +45,15 @@ class CraftAction(Action):
     def execute(self, game, player, target, *args, **kwargs):
         self.recipe = game.items.get(target)
 
-        if not self.recipe in self.resources:
-            raise Exception(f"You can't craft {recipe.name} here.")
+        if not target in self.resources:
+            raise Exception(f"You can't craft {self.recipe.name} here.")
 
         super().execute(player)
 
         return {
-            'item': self.recipe,
+            'result': self.recipe,
             'message': f'You crafted a {self.recipe.name}!',
-            'param': self.recipe,
+            'target': self.recipe,
             'repeat_text': 'Craft Again',
             'rewards': [
                 f'+1 {self.recipe.name}',

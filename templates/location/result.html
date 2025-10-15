@@ -14,8 +14,8 @@
             <p>{{ result.message }}</p>
         </div>
 
-        <div class="card-subtitle">
-            <img src="/static/images/items/{{ result.item.name | snake_case }}.png">
+        <div class="card-body">
+            <img src="/static/images/items/{{ result.result.name | snake_case }}.png">
         </div>
 
         <div class="card">
@@ -30,34 +30,10 @@
 
         <section></section>
 
-        {% if result.item.bait is defined %}
-        <div class="card">
-            <div class="card-title">
-                <h2>Resources</h2>
-            </div>
-            <div class="card-subtitle"></div>
-            <p>You have <b>{{ player.inventory.count(result.item) }}</b> {{ result.item.name }}</p>
-            <p>You have <b>{{ player.inventory.count(result.param) }}</b> {{ result.param.name }}</p>
-        </div>
-        {% elif result.item.ingredients is defined %}
-        <div class="card">
-            <div class="card-title">
-                <h2>Resources</h2>
-            </div>
-            <div class="card-subtitle"></div>
-            {% for ingredient in result.item.ingredients %}
-                <p>You have <b>{{ player.inventory.count(result.item) }}</b> {{ result.item.name }}</p>
-                <p>You have <b>{{ player.inventory.count(ingredient) }}</b> {{ ingredient.name }}</p>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        <section></section>
-
         <form action="/action" method="post">
             <input type="string" name="skill" value="{{ skill }}" hidden required />
             <input type="string" name="location" value="{{ location }}" hidden required />
-            <input type="string" name="target" value="{{ result.param.name | snake_case }}" hidden required />
+            <input type="string" name="target" value="{{ result.target.name | snake_case }}" hidden required />
             <button id="submit-button" class="card-action" type="submit">
                 <h3>{{ result.repeat_text }}</h3>
             </button>
@@ -67,6 +43,28 @@
 </section>
 
 <section>
+    <div class="card">
+
+        <div class="card-title">
+            <h2>Progress</h2>
+        </div>
+        <div class="card-subtitle"></div>
+
+        {% if result.target.ingredients is defined %}
+        
+        <p>You have <b>{{ player.inventory.count(result.result) }}</b> {{ result.result.name }}</p>
+        {% for ingredient in result.target.ingredients %}
+        <p>You have <b>{{ player.inventory.count(ingredient) }}</b> {{ ingredient.name }}</p>
+        {% endfor %}
+
+        {% else %}
+
+        <p>You have <b>{{ player.inventory.count(result.result) }}</b> {{ result.result.name }}</p>
+        <p>You have <b>{{ player.inventory.count(result.target) }}</b> {{ result.target.name }}</p>
+
+        {% endif %}
+        <section></section>
+
     <a href="/player/skills/{{ skill }}">
         <div class="card skill-card {{ skill }}">
             <h3>{{ game.skills[skill].name }}</h3>
@@ -81,6 +79,8 @@
             <p class="end">Level <b>{{ player.experience.next_level(skill) }}</b></p>
         </div>
     </a>
+
+    </div>
 </section>
 
 <section>

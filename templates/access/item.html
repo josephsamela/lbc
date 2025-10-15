@@ -8,7 +8,14 @@
         <div class="card-title">
             <h2>{{ item.name }}</h2>
         </div>
+
+        {% if player.inventory.check(item) %}
         <div class="card-subtitle">
+            <p>You have <b>{{ player.inventory.count(item) }}</b> {{ item.name }}!</p>
+        </div>
+        {% endif %}
+
+        <div class="card-body">
         {% if player.journal.discovered_item(item) %}
             <img src="/static/images/items/{{ item.name | snake_case }}.png">
         {% else %}
@@ -43,24 +50,6 @@
         {% endif %}
     </div>
 </section>
-
-<!-- {% if player.inventory.check(item) %}
-<section>
-    <div class="card">
-        <div class="card-title">
-            <h2>Backpack</h2>
-        </div>
-        <div class="card-subtitle">
-            <p>You have <b>{{ player.inventory.count(item) }}</b> {{ item.name }}!</p>
-        </div>
-        <section>
-            <a class="card-action" href="/player">
-                <h3>Drop Items</h3>
-            </a>
-        </section>
-    </div>
-</section>
-{% endif %} -->
 
 {% if item.bait is defined %}
 <section>
