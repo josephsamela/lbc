@@ -37,8 +37,9 @@ class FishAction(Action):
             ]
         return []
 
-    def execute(self, game, player, target, *args, **kwargs):
+    def execute(self, game, player, target, quantity, *args, **kwargs):
         self.bait = game.items.get(target)
+        self.quantity = int(quantity)
 
         drop_table = []
         for key,species in self.resources.items():
@@ -62,9 +63,10 @@ class FishAction(Action):
             return {
                 'result': self.fish,
                 'message': f'You caught a {self.fish.name.replace('Raw ', '')}!',
-                'target': self.bait,
-                'repeat_text': 'Fish Again',
+                'target': target,
+                'quantity': self.quantity-1,
                 'rewards': [
+                    f'-1 {self.bait.name}',
                     f'+1 {self.fish.name}',
                     f'+{ self.fish.xp } Fishing Experience'
                 ]
@@ -74,9 +76,10 @@ class FishAction(Action):
             return {
                 'result': self.fish,
                 'message': f'You caught nothing.',
-                'target': self.bait,
-                'repeat_text': 'Fish Again',
+                'target': target,
+                'quantity': self.quantity-1,
                 'rewards':[
-                    f'+0 Fishing Experience'
+                    f'-1 {self.bait.name}',
+                    f'0 Fishing Experience'
                 ]
             }

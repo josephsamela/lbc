@@ -183,7 +183,13 @@ def action(player):
     except Exception as e:
         return render_template('/location/location.html', player=player, game=game, skill=skill, location=location, error=e)
 
-    return render_template('/location/result.html', player=player, game=game, skill=skill, location=location, result=result)
+    match skill:
+        case 'market':
+            r = '/results/shopping.html'
+        case _:
+            r = '/results/result.html'
+
+    return render_template(r, player=player, game=game, skill=skill, location=location, result=result)
 
 # ROUTES - LOCATIONS
 #   /locations/<skill>
@@ -197,7 +203,17 @@ def locations(player, skill):
 @app.route("/locations/<skill>/<location>")
 @login_required
 def location(player, skill, location):
-    return render_template('/location/location.html', player=player, game=game, skill=skill, location=location)
+
+    match skill:
+
+        case 'market':
+            t = '/location/store.html'
+        case 'fishing':
+            t = '/location/fishing.html'
+        case _:
+            t = '/location/location.html'
+
+    return render_template(t, player=player, game=game, skill=skill, location=location)
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5001)

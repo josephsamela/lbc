@@ -51,7 +51,7 @@
             {% for item_key, item in group.items() %}
             <div class="grid-item">
                 <div id="{{ item_key }}" class="card" onclick="item_select('{{ item_key }}')">
-                    <h4>{{ item.name }}</h4>
+                    <h6>{{ item.name }}</h6>
                     <div class="card-subtitle">
                         <img src="/static/images/items/{{ item_key }}.png" class="card-image">
                     </div>
@@ -87,7 +87,7 @@
             <div class="grid-item">
                 <div id="{{ slot.item.name | snake_case }}" name="{{ slot.item.name }}" class="card" onclick="item_select('{{ slot.item.name | snake_case }}')">
                     <img src="/static/images/items/{{ slot.item.name | snake_case }}.png" class="card-image">
-                    <h4>{{ slot.item.name }}</h4>
+                    <h6>{{ slot.item.name }}</h6>
                     <div class="icon">
                         <h4>{{ slot.quantity }}</h4>
                     </div>

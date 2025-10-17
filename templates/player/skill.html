@@ -35,13 +35,13 @@
     </div>
 </section>
 
-{% for subsection, items in game.journal[skill].items() %}
+{% for chapter, items in game.journal[skill].items() %}
 
     {% if not items is string %}
     <section>
         <div class="card {{ skill }}">
             <div class="card-title">
-                <h2>{{ subsection.title() }}</h2>
+                <h2>{{ chapter.title() }}</h2>
             </div>
 
             <section>

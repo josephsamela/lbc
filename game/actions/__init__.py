@@ -124,9 +124,3 @@ class BalanceReward:
         '''
         player._record.balance += self.quantity
         player._record.save()
-
-from .fishing import *
-from .gardening import *
-from .cooking import *
-from .crafting import *
-from .inventory import *

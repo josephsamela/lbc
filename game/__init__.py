@@ -5,8 +5,8 @@ from .actions.shopping import BuyAction
 
 from .items.fish import fish, lake, river, ocean, coral_reef
 from .items.bait import bait
-from .items.crafting_recipes import crafting_recipes, flies, lures
-from .items.cooking_recipes import cooking_recipes, cooked_fish
+from .items.crafting_recipes import crafting_recipes, flies, lures, materials, nymphs, wet_flies, dry_flies, streamers
+from .items.cooking_recipes import cooking_recipes, cooked_fish, campfire_recipes
 
 from common import flatten
 
@@ -17,15 +17,23 @@ class Game:
             "market": {     
                 "name": "Market",
                 "description": "Explore lakes, rivers and oceans to fish exciting locations and discover new species!",
-
-                "bait_&_tackle": {
-                    "name": "Bait & Tackle",
+                "tackle_shop": {
+                    "name": "Tackle Shop",
                     "description": "A cold and switch freshwater river that's home to many species!",
                     "action_disabled_text": "Select Item",
                     "action_enabled_text": "Purchase",
-                    "input": "resources", # Either "inventory" or "resources"
+                    "input": "resources",
                     "resource_subtitle": "Choose an item to buy!",
                     "action": BuyAction(resources=bait)
+                },
+                "craft_shop": {
+                    "name": "Craft Store",
+                    "description": "A cold and switch freshwater river that's home to many species!",
+                    "action_disabled_text": "Select Item",
+                    "action_enabled_text": "Purchase",
+                    "input": "resources",
+                    "resource_subtitle": "Choose an item to buy!",
+                    "action": BuyAction(resources=materials)
                 }
             },
             "fishing": {
@@ -82,7 +90,7 @@ class Game:
                     "action_enabled_text": "Craft",
                     "input": "resources", # Either "inventory" or "resources"
                     "resource_subtitle": "Choose an lure to craft!",
-                    "action": CraftAction(resources=lures)
+                    "action": CraftAction(resources={'lures': lures})
                 },
                 "river_lodge": {
                     "name": "River Lodge",
@@ -104,7 +112,7 @@ class Game:
                     "action_enabled_text": "Cook",
                     "input": "resources", # Either "inventory" or "resources"
                     "resource_subtitle": "Choose an recipe to cook!",
-                    "action": CookAction(resources=cooked_fish)
+                    "action": CookAction(resources=campfire_recipes)
                 }
             }
         }
@@ -135,10 +143,10 @@ class Game:
             'crafting': {
                 'skill': 'crafting',
                 'lures': lures,
-                'nymphs': flies['nymphs'],
-                'dry flies': flies['dry flies'],
-                'wet flies': flies['wet flies'],
-                'streamers': flies['streamers']
+                'nymphs': nymphs,
+                'dry flies': dry_flies,
+                'wet flies': wet_flies,
+                'streamers': streamers
             },
             'cooking': {
                 'skill': 'cooking',
@@ -148,7 +156,7 @@ class Game:
 
         # Build LUT of every item
         self.items = {}
-        for group in [fish, bait, crafting_recipes, cooking_recipes]:
+        for group in [fish, bait, crafting_recipes, materials, cooking_recipes]:
             self.items.update(flatten(group))
 
         # Attach skill & location info to items

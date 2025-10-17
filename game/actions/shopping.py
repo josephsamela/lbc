@@ -11,7 +11,7 @@ class BuyAction(Action):
     def requirements(self):
         return [
             BalanceRequirement(
-                quantity=self.item.cost
+                quantity=self.total_cost
             )
         ]
 
@@ -20,15 +20,17 @@ class BuyAction(Action):
         return [
             ItemReward(
                 item=self.item,
-                quantity=1 # Only support buying items one at a time atm
+                quantity=self.quantity 
             ),
             BalanceReward(
-                quantity= -self.item.cost # Subtract item cost from player balance
+                quantity= -(self.total_cost)
             )
         ]
 
-    def execute(self, game, player, target, *args, **kwargs):
+    def execute(self, game, player, target, quantity, *args, **kwargs):
         self.item = game.items.get(target)
+        self.quantity = int(quantity)
+        self.total_cost = self.item.cost * self.quantity
 
         if not target in flatten(self.resources):
             raise Exception(f'{self.item.name} is not for sale.')
@@ -37,11 +39,11 @@ class BuyAction(Action):
 
         return {
             'result': self.item,
-            'message': f'You purchased {self.item.name} for {self.item.cost} LBC!',
-            'target': self.item,
+            'message': f'You purchased {self.quantity} {self.item.name} for {self.total_cost} LBC!',
+            'target': target,
             'repeat_text': 'Buy Again',
             'rewards': [
-                f'+1 {self.item.name}',
-                f'-{ self.item.cost } LBC'
+                f'+{self.quantity} {self.item.name}',
+                f'-{ self.total_cost } LBC'
             ]
         }

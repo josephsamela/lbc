@@ -1,0 +1,188 @@
+{% set title = game.locations[skill][location].name %}
+{% extends "base.html" %}
+
+{% set key = location %}
+{% set location = game.locations[skill][location] %}
+
+{% block content %}
+
+<section>
+    <div class="card" style="background-image: url('/static/images/locations/{{ key }}.png');">
+        <div class="card-title">
+            <h2>{{location.name}}</h2>
+        </div>
+        <div class="card-subtitle">
+            <p>{{ location.description }}</p>
+        </div>
+        <div class="card-body">
+            <div id="item-icon-container" class="item icon" style="display: none;">
+                <img id="item-icon" src="/static/images/skills/icons/{{ skill }}.svg">
+            </div>
+        </div>
+        <a class="card-action" href="/locations/{{ skill }}">
+            <h3> Back to {{ skill.title() }}</h3>
+        </a>
+    </div>
+</section>
+
+<section>
+    <div class="card">
+        <div class="card-title">
+            <h2>Wallet</h2>
+        </div>
+        <div class="card-subtitle">
+            <h5>{{ player.balance }}</h5>
+        </div>
+        <p>You have <b>{{ player.balance }}</b> Lute Bear Coin!</p>
+    </div>
+</section>
+
+<section>
+    <div class="card">
+        <div class="card-title">
+            <h2>Checkout</h2>
+        </div>
+
+        <div id="submit-item-subtitle" class="card-subtitle">
+
+            {% if error %}
+            <p class="error">{{error}}</p>
+            {% else %}
+            <p>Select item for sale</p>
+            {% endif %}
+        </div>
+
+        <div id="submit-item-preview" class="card card-body">
+            
+        </div>
+
+        <section class="horizontal-options">
+            <button id="quantity-option-1" onclick="set_quantity(this)" data-value=1 class="card-action selected disabled" disabled><h3>1</h3></button>
+            <button id="quantity-option-2" onclick="set_quantity(this)" data-value=5 class="card-action disabled" disabled><h3>5</h3></button>
+            <button id="quantity-option-3" onclick="set_quantity(this)" data-value=10 class="card-action disabled" disabled><h3>10</h3></button>
+            <button id="quantity-option-4" onclick="set_quantity(this)" data-value=100 class="card-action disabled" disabled><h3>100</h3></button>
+        </section>
+
+        <section></section>
+        <form action="/action" method="post">
+            <input type="string" name="skill" value="{{ skill }}" hidden required />
+            <input type="string" name="location" value="{{ key }}" hidden required />
+            <input id="submit-item" type="string" name="target" hidden required />
+            <input id="submit-quantity" type="string" name="quantity" hidden required />
+            <button id="submit-button" class="card-action disabled" type="submit" disabled>
+                <h3>Buy</h3>
+            </button>
+        </form>
+
+    </div>
+
+</section>
+
+
+{% for group_key, group in location.action.resources.items() %}
+<section>
+    <div class="card">
+        <div class="card-title">
+            <h2>{{ group_key.title() }}</h2>
+        </div>
+        
+        <div class="card-subtitle"></div>
+
+        <div class="grid-container">
+            {% for item_key, item in group.items() %}
+            <div class="grid-item">
+                <div id="{{ item_key }}" class="card" data-name="{{ item.name }}" data-cost="{{ item.cost }}"  onclick="item_select('{{ item_key }}')">
+                    <h6>{{ item.name }}</h6>
+                    <div class="card-subtitle">
+                        <img src="/static/images/items/{{ item_key }}.png" class="card-image">
+                    </div>
+
+                    {% if item.cost is defined %}
+                    <p><b>{{ item.cost }}</b> LBC</p>
+                    {% else %}
+                    <p><b>{{ item.level }}</b> {{ skill.title() }}</p>
+                    {% endif %}
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endfor %}
+
+<script>
+
+    // Selectors
+    var submit_item = document.getElementById('submit-item')
+    var submit_quantity = document.getElementById('submit-quantity')
+    var submit_button = document.getElementById('submit-button')
+    var quantity_option_1 = document.getElementById('quantity-option-1')
+    var quantity_option_2 = document.getElementById('quantity-option-2')
+    var quantity_option_3 = document.getElementById('quantity-option-3')
+    var quantity_option_4 = document.getElementById('quantity-option-4')
+    var submit_item_preview = document.getElementById('submit-item-preview')
+    var submit_item_subtitle = document.getElementById('submit-item-subtitle')
+    var quantity = 1
+
+    function set_quantity(qty) {
+        quantity_option_1.classList.remove('selected')
+        quantity_option_2.classList.remove('selected')
+        quantity_option_3.classList.remove('selected')
+        quantity_option_4.classList.remove('selected')
+
+        qty.classList.add('selected')
+        
+        quantity = qty.dataset.value
+
+        item_select(submit_item.value)
+    }
+
+    function item_select(item_id) {
+        var selected_item = document.getElementById(item_id)
+
+        // When player selects an item...
+
+        // 1. Unselect all items.
+        document.querySelectorAll('.card').forEach(
+            e => e.classList.remove('selected')
+        )
+
+        // 2. Select selected item.
+        selected_item.classList.add('selected')
+
+        // 3. Remove disabled from submit and quantity buttons.
+        submit_button.classList.remove('disabled')
+        quantity_option_1.classList.remove('disabled')
+        quantity_option_2.classList.remove('disabled')
+        quantity_option_3.classList.remove('disabled')
+        quantity_option_4.classList.remove('disabled')
+
+        // 4. Set submit subtitle
+        // submit_item_subtitle.innerHTML = `<p>Buy ${} ${} for ${} LBC</p>`
+        submit_item_subtitle.innerHTML = `<p>Buy ${quantity} ${selected_item.dataset.name} for ${quantity * selected_item.dataset.cost} LBC</p>`
+
+        // 5. Set submit preview
+        submit_item_preview.innerHTML = '<img src="/static/images/items/'+item_id+'.png">'
+
+        // 6. Set submit form details
+        submit_item.value = item_id
+        submit_quantity.value = quantity
+
+        // 7. Enable buttons
+        submit_button.disabled = false
+        quantity_option_1.disabled = false
+        quantity_option_2.disabled = false
+        quantity_option_3.disabled = false
+        quantity_option_4.disabled = false
+
+    }
+</script>
+
+<section>
+    <a class="card-action" href="/player">
+        <h3>Back to Profile</h3>
+    </a>
+</section>
+
+{% endblock %}

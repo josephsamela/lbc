@@ -109,6 +109,35 @@
 </section>
 {% endif %}
 
+{% if item.materials is defined %}
+<section>
+    <div class="card">
+
+        <div class="card-title">
+            <h2>Materials</h2>
+        </div>
+        <div class="card-subtitle">
+            <p>Materials for {{ item.name }}.</p>
+        </div>
+
+        <div class="grid-container">
+        {% for material in item.materials %}
+            <div class="grid-item">
+                <a href="/item/{{ material.name | snake_case }}">
+                    <div class="card">
+                        <div class="card-mini-subtitle">
+                            <img src="/static/images/items/{{ material.name | snake_case }}.png" class="card-image">
+                        </div>
+                        <h4>{{ material.name }}</h4>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
 <section>
     <a class="card-action" href="/player">
         <h3>Back to Profile</h3>

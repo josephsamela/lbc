@@ -1,0 +1,60 @@
+{% set title = Result %}
+{% extends "base.html" %}
+
+{% block content %}
+
+<section>
+    <div class="card">
+
+        <div class="card-title">
+            <h2>Result</h2>
+        </div>
+
+        <div id="result-subtitle" class="card-subtitle">
+            <p>{{ result.message }}</p>
+        </div>
+
+        <div id="graphic" class="card-body">
+            <img src="/static/images/items/{{ result.result.name | snake_case }}.png">
+        </div>
+
+        <div id="result-rewards" class="card">
+            <div class="card-title">
+                <h2>Rewards</h2>
+            </div>
+            <div class="card-subtitle">
+            {% for reward in result.rewards %}
+                <p>{{ reward }}</p>
+            {% endfor %}
+            </div>
+            <p>You have <b>{{ player.inventory.count(result.result) }}</b> {{ result.result.name }}</p>
+        </div>
+
+        <section>
+            <a class="card-action" href="/locations/{{ skill }}/{{ location }}">
+                <h3>Continue Shopping</h3>
+            </a>
+        </section>
+
+    </div>
+</section>
+
+<section>
+    <div class="card">
+        <div class="card-title">
+            <h2>Wallet</h2>
+        </div>
+        <div class="card-subtitle">
+            <h5>{{ player.balance }}</h5>
+        </div>
+        <p>You have <b>{{ player.balance }}</b> Lute Bear Coin!</p>
+    </div>
+</section>
+
+<section>
+    <a class="card-action" href="/player">
+        <h3>Back to Profile</h3>
+    </a>
+</section>
+
+{% endblock %}

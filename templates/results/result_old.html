@@ -1,0 +1,200 @@
+{% set title = Result %}
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if result.result %}
+
+<section>
+    <div class="card">
+
+        <div class="card-title">
+            <h2>Result</h2>
+        </div>
+
+        <div id="result-subtitle" class="card-subtitle" style="visibility: hidden;">
+            <p>{{ result.message }}</p>
+        </div>
+
+        <div id="graphic" class="card-body">
+            <h5>.</h5>
+        </div>
+
+        <div id="result-rewards" class="card" style="visibility: hidden;">
+            <div class="card-title">
+                <h2>Rewards</h2>
+            </div>
+            <div class="card-subtitle"></div>
+            {% for reward in result.rewards %}
+                <p>{{ reward }}</p>
+            {% endfor %}
+        </div>
+
+        {% if skill in game.skills %}
+
+        <section>
+            <div class="card skill-card {{ skill }}">
+                <h3>{{ game.skills[skill].name }}</h3>
+                <div class="icon end icon skill">
+                    <img src="/static/images/skills/icons/{{ skill }}.svg">
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-bar progress-bar-inner" style="width:{{ player.experience.next_level_progress(skill)*100 }}%"></div>
+                </div>
+                <p class="start">Level <b>{{ player.experience.level(skill) }}</b></p>
+                <p class="center">{{ (player.experience.next_level_progress(skill)*100) | int }}%</p>
+                <p class="end">Level <b>{{ player.experience.next_level(skill) }}</b></p>
+            </div>
+        </section>
+
+        {% endif %}
+
+        <section></section>
+
+        {% if result.target.ingredients is defined %}
+
+            {% for item in result.target.ingredients %}
+            <p>You have <b>{{ player.inventory.count(item) }}</b> {{ item.name }}</p>
+            {% endfor %}
+
+        {% elif result.target.materials is defined %}
+
+            {% for item in result.target.materials %}
+            <p>You have <b>{{ player.inventory.count(item) }}</b> {{ item.name }}</p>
+            {% endfor %}
+
+        {% else %}
+
+        <p>You have <b>{{ player.inventory.count(result.target) }}</b> {{ result.target.name }}</p>
+
+        {% endif %}
+
+        <!-- <section>
+            <div class="card">
+
+                <div class="card-title">
+                    <h2>Resources</h2>
+                </div>
+                <div class="card-subtitle"></div>
+
+                {% if result.target.ingredients is defined %}
+                
+                <p>You have <b>{{ player.inventory.count(result.result) }}</b> {{ result.result.name }}</p>
+                {% for ingredient in result.target.ingredients %}
+                <p>You have <b>{{ player.inventory.count(ingredient) }}</b> {{ ingredient.name }}</p>
+                {% endfor %}
+
+                {% elif result.target.materials is defined %}
+                
+                <p>You have <b>{{ player.inventory.count(result.result) }}</b> {{ result.result.name }}</p>
+                {% for material in result.target.materials %}
+                <p>You have <b>{{ player.inventory.count(material) }}</b> {{ material.name }}</p>
+                {% endfor %}
+
+                {% else %}
+
+                <p>You have <b>{{ player.inventory.count(result.target) }}</b> {{ result.target.name }}</p>
+                <p>You have <b>{{ player.inventory.count(result.result) }}</b> {{ result.result.name }}</p>
+
+                {% endif %}
+
+            </div>
+        </section> -->
+
+        <form action="/action" method="post">
+            <input type="string" name="skill" value="{{ skill }}" hidden required />
+            <input type="string" name="location" value="{{ location }}" hidden required />
+            <input type="string" name="target" value="{{ result.target.name | snake_case }}" hidden required />
+            <button id="submit-button" type="submit" hidden></button>
+        </form>
+
+    </div>
+</section>
+
+{% else %}
+
+<section>
+    <div class="card">
+
+        <div class="card-title">
+            <h2>Result</h2>
+        </div>
+
+        <div class="card-subtitle">
+            <p>{{ result.message }}</p>
+        </div>
+
+        <div class="card-body"></div>
+
+        <div class="card">
+            <div class="card-title">
+                <h2>Rewards</h2>
+            </div>
+            <div class="card-subtitle"></div>
+            {% for reward in result.rewards %}
+                <p>{{ reward }}</p>
+            {% endfor %}
+        </div>
+
+        <section></section>
+
+        <a href="/locations/{{ skill }}/{{ location }}">
+            <div class="card-action">
+                <h3>Return to {{ location.title() }}</h3>
+            </div>
+        </a>
+
+    </div>
+</section>
+
+{% endif %}
+
+<section>
+    <a class="card-action" href="/locations/{{ skill }}/{{ location }}">
+        <h3>Return to {{ location.title() }}</h3>
+    </a>
+</section>
+
+<section>
+    <a class="card-action" href="/player">
+        <h3>Back to Profile</h3>
+    </a>
+</section>
+
+<script>
+
+    var graphic = document.getElementById('graphic')
+
+    var step = 0
+    var steps = [
+        '<h5>..</h5>',
+        '<h5>...</h5>',
+        '<img src="/static/images/items/{{ result.result.name | snake_case }}.png">'
+    ]
+    const stepInterval = setInterval(() => {
+
+        graphic.innerHTML = steps[step]
+
+        if (step >= 2) {
+
+            document.getElementById('result-subtitle').style.visibility = 'visible'
+            document.getElementById('result-rewards').style.visibility = 'visible'
+            // document.getElementById('result-resource').style.visibility = 'visible'
+            // document.getElementById('result-skill').style.visibility = 'visible'
+
+            clearInterval(stepInterval)
+
+            setInterval(() => {
+                document.getElementById('submit-button').click()
+            }, 2000);
+
+            return
+        }
+
+        step++
+
+    }, 1000);
+
+</script>
+
+{% endblock %}

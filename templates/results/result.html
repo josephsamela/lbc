@@ -1,0 +1,91 @@
+{% set title = Result %}
+{% extends "base.html" %}
+
+{% block content %}
+
+<section>
+    <div class="card">
+
+        <div class="card-title">
+            <h2>Result</h2>
+        </div>
+
+        <div id="result-subtitle" class="card-subtitle">
+            <p>{{ result.message }}</p>
+        </div>
+
+        <div id="graphic" class="card-body">
+            <img src="/static/images/items/{{ result.result.name | snake_case }}.png">
+        </div>
+
+        <div id="result-rewards" class="card">
+            <div class="card-title">
+                <h2>Rewards</h2>
+            </div>
+            <div class="card-subtitle">
+            {% for reward in result.rewards %}
+                <p>{{ reward }}</p>
+            {% endfor %}
+            </div>
+            <p>You have <b>{{ player.inventory.count(result.result) }}</b> {{ result.result.name }}</p>
+        </div>
+
+        <section>
+            <div class="card skill-card {{ skill }}">
+                <h3>{{ game.skills[skill].name }}</h3>
+                <div class="icon end icon skill">
+                    <img src="/static/images/skills/icons/{{ skill }}.svg">
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-bar progress-bar-inner" style="width:{{ player.experience.next_level_progress(skill)*100 }}%"></div>
+                </div>
+                <p class="start">Level <b>{{ player.experience.level(skill) }}</b></p>
+                <p class="center">{{ (player.experience.next_level_progress(skill)*100) | int }}%</p>
+                <p class="end">Level <b>{{ player.experience.next_level(skill) }}</b></p>
+            </div>
+        </section>
+
+        <section>
+            <a class="card-action" href="/locations/{{ skill }}/{{ location }}">
+                <h3>Back to {{ location.title() }}</h3>
+            </a>
+        </section>
+
+        <form action="/action" method="post">
+            <input type="string" name="skill" value="{{ skill }}" hidden required />
+            <input type="string" name="location" value="{{ location }}" hidden required />
+            <input type="string" name="target" value="{{ result.target | snake_case }}" hidden required />
+            <input type="string" name="quantity" value="{{ result.quantity }}" hidden required />
+            <button id="submit-button" type="submit" hidden></button>
+        </form>
+
+    </div>
+</section>
+
+<section>
+    <a class="card-action" href="/player">
+        <h3>Back to Profile</h3>
+    </a>
+</section>
+
+<script>
+
+    var quantity = {{ result.quantity }}
+
+    setInterval(() => {
+
+        if ( quantity <= 0 ) {
+            var s = "{{ skill }}"
+            var l = "{{ location }}"
+            window.location.href = `/locations/${s}/${l}`
+        }
+        else {
+            document.getElementById('submit-button').click()
+        }
+
+    }, 3000);
+
+</script>
+
+
+{% endblock %}
