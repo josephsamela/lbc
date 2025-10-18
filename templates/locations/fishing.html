@@ -48,7 +48,7 @@
             <button id="quantity-option-1" onclick="set_quantity(this)" data-value=1 class="card-action selected disabled" disabled><h3>1</h3></button>
             <button id="quantity-option-2" onclick="set_quantity(this)" data-value=5 class="card-action disabled" disabled><h3>5</h3></button>
             <button id="quantity-option-3" onclick="set_quantity(this)" data-value=10 class="card-action disabled" disabled><h3>10</h3></button>
-            <button id="quantity-option-4" onclick="set_quantity(this)" data-value="All" class="card-action disabled" disabled><h3>All</h3></button>
+            <button id="quantity-option-4" onclick="set_quantity(this)" data-value="*" class="card-action disabled" disabled><h3>All</h3></button>
         </section>
 
         <section></section>
@@ -57,6 +57,7 @@
             <input type="string" name="location" value="{{ key }}" hidden required />
             <input id="submit-item" type="string" name="target" hidden required />
             <input id="submit-quantity" type="string" name="quantity" hidden required />
+            <input type="string" name="attempt" value="0" hidden required />
             <button id="submit-button" class="card-action disabled" type="submit" disabled>
                 <h3>Fish</h3>
             </button>

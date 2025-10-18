@@ -17,8 +17,8 @@ class Game:
             "market": {     
                 "name": "Market",
                 "description": "Explore lakes, rivers and oceans to fish exciting locations and discover new species!",
-                "tackle_shop": {
-                    "name": "Tackle Shop",
+                "bait_store": {
+                    "name": "Bait Store",
                     "description": "A cold and switch freshwater river that's home to many species!",
                     "action_disabled_text": "Select Item",
                     "action_enabled_text": "Purchase",
@@ -26,8 +26,8 @@ class Game:
                     "resource_subtitle": "Choose an item to buy!",
                     "action": BuyAction(resources=bait)
                 },
-                "craft_shop": {
-                    "name": "Craft Store",
+                "tackle_shop": {
+                    "name": "Tackle Shop",
                     "description": "A cold and switch freshwater river that's home to many species!",
                     "action_disabled_text": "Select Item",
                     "action_enabled_text": "Purchase",
@@ -83,7 +83,7 @@ class Game:
             "crafting": {
                 "name": "Crafting",
                 "description": "Explore lakes, rivers and oceans to fish exciting locations and discover new species!",
-                "lakeside_cottage": {
+                "lakeside cottage": {
                     "name": "Lakeside Cottage",
                     "description": "A charming cottage by the lake with a workshop and tools for crafting lures.",
                     "action_disabled_text": "Select Lure",
@@ -92,7 +92,7 @@ class Game:
                     "resource_subtitle": "Choose an lure to craft!",
                     "action": CraftAction(resources={'lures': lures})
                 },
-                "river_lodge": {
+                "river lodge": {
                     "name": "River Lodge",
                     "description": "Rustic lodge overlooking the river with good light and a fly tying stand for crafting flies.",
                     "action_disabled_text": "Select Fly",

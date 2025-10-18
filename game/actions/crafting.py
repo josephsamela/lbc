@@ -43,21 +43,27 @@ class CraftAction(Action):
             )
         ]
 
-    def execute(self, game, player, target, *args, **kwargs):
+    def execute(self, game, player, target, quantity, attempt, *args, **kwargs):
         self.recipe = game.items.get(target)
+        self.attempt = int(attempt)
 
         if not target in flatten(self.resources):
             raise Exception(f"You can't craft {self.recipe.name} here.")
 
         super().execute(player)
 
+        rewards = []
+        for material in self.recipe.materials:
+            rewards.append(f'-1 {material.name}')
+        rewards.append(f'+1 {self.recipe.name}')
+        rewards.append(f'+{self.recipe.xp} Crafting Experience')
+
         return {
             'result': self.recipe,
+            'resource': self.recipe.materials,
             'message': f'You crafted a {self.recipe.name}!',
-            'target': self.recipe,
-            'repeat_text': 'Craft Again',
-            'rewards': [
-                f'+1 {self.recipe.name}',
-                f'+{ self.recipe.xp } Crafting Experience'
-            ]
+            'target': target,
+            'quantity': quantity,
+            'attempt': self.attempt+1,
+            'rewards': rewards
         }

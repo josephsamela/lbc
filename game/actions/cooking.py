@@ -44,8 +44,9 @@ class CookAction(Action):
             )
         ]
 
-    def execute(self, game, player, target, *args, **kwargs):
+    def execute(self, game, player, target, quantity, attempt, *args, **kwargs):
         self.recipe = game.items.get(target)
+        self.attempt = int(attempt)
 
         if not target in flatten(self.resources):
             raise Exception(f"You can't cook {self.recipe.name} here.")
@@ -65,29 +66,36 @@ class CookAction(Action):
                 c = 0 # Burnt food rewards zero xp
 
         super().execute(player)
-        
+
+        rewards = []
+        for ingredient in self.recipe.ingredients:
+            rewards.append(f'-1 {ingredient.name}')
+
         if result == 'Cooked':
             # Success
+            rewards.append(f'+1 {self.recipe.name}')
+            rewards.append(f'+{self.recipe.xp} Cooking Experience')
             return {
                 'result': self.result,
-                'message': f'You made a {self.result.name}!',
-                'target': self.recipe,
-                'repeat_text': 'Cook Again',
-                'rewards': [
-                    f'+1 {self.result.name}',
-                    f'+{ self.recipe.xp } Cooking Experience'
-                ]
+                'resource': self.recipe.ingredients,
+                'message': f'You made a {self.recipe.name}!',
+                'target': target,
+                'quantity': quantity,
+                'attempt': self.attempt+1,
+                'rewards': rewards
             }
+
         else:
             # Failure
+            rewards.append(f'+1 {self.result.name}')
+            rewards.append(f'{self.result.xp} Cooking Experience')
             return {
                 'result': self.result,
+                'resource': self.recipe.ingredients,
                 'message': f'You made a {self.result.name}.',
-                'target': self.recipe,
-                'repeat_text': 'Cook Again',
-                'rewards':[
-                    f'+1 {self.result.name}',
-                    f'+0 Cooking Experience'
-                ]
+                'target': target,
+                'quantity': quantity,
+                'attempt': self.attempt+1,
+                'rewards': rewards
             }
 

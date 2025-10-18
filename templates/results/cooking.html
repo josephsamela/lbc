@@ -15,7 +15,13 @@
         </div>
 
         <div id="graphic" class="card-body">
+            {% if result.result %}
             <img src="/static/images/items/{{ result.result.name | snake_case }}.png">
+            {% endif %}
+        </div>
+
+        <div class="card-subtitle">
+            <p>Attempt <b>{{ result.attempt }}/{{ result.quantity }}</b></p>
         </div>
 
         <div id="result-rewards" class="card">
@@ -27,7 +33,13 @@
                 <p>{{ reward }}</p>
             {% endfor %}
             </div>
+            {% if result.result %}
             <p>You have <b>{{ player.inventory.count(result.result) }}</b> {{ result.result.name }}</p>
+            {% endif %}
+
+            {% for resource in result.resource %}
+            <p>You have <b>{{ player.inventory.count(resource) }}</b> {{ resource.name }}</p>
+            {% endfor %}
         </div>
 
         <section>
@@ -56,6 +68,7 @@
             <input type="string" name="location" value="{{ location }}" hidden required />
             <input type="string" name="target" value="{{ result.target | snake_case }}" hidden required />
             <input type="string" name="quantity" value="{{ result.quantity }}" hidden required />
+            <input type="string" name="attempt" value="{{ result.attempt }}" hidden required />
             <button id="submit-button" type="submit" hidden></button>
         </form>
 
@@ -69,22 +82,30 @@
 </section>
 
 <script>
-
-    var quantity = {{ result.quantity }}
+    var quantity = "{{ result.quantity }}"
+    var attempt = {{ result.attempt }}
+    var graphic = document.getElementById('graphic')
+    var c = 0
 
     setInterval(() => {
-
-        if ( quantity <= 0 ) {
-            var s = "{{ skill }}"
-            var l = "{{ location }}"
-            window.location.href = `/locations/${s}/${l}`
+        c++
+        if (c == 3) {
+            graphic.innerHTML = '<h2>●</h2>'
         }
-        else {
-            document.getElementById('submit-button').click()
+        else if (c == 4) {
+            graphic.innerHTML = '<h2>● ●</h2>'
         }
-
-    }, 3000);
-
+        else if (c == 5) {
+            graphic.innerHTML = '<h2>● ● ●</h2>'
+        }
+        else if (c > 5) {
+            if (quantity == "*") {
+                document.getElementById('submit-button').click()
+            } else if ((parseInt(quantity)-attempt) > 0) {
+                document.getElementById('submit-button').click()
+            }
+        }
+    }, 1000);
 </script>
 
 

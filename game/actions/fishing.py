@@ -25,6 +25,7 @@ class FishAction(Action):
     @property
     def rewards(self):
         if self.fish:
+            # Only consume bait if fish is caught
             return [
                 ItemReward(
                     item=self.fish,
@@ -37,9 +38,9 @@ class FishAction(Action):
             ]
         return []
 
-    def execute(self, game, player, target, quantity, *args, **kwargs):
+    def execute(self, game, player, target, quantity, attempt, *args, **kwargs):
         self.bait = game.items.get(target)
-        self.quantity = int(quantity)
+        self.attempt = int(attempt)
 
         drop_table = []
         for key,species in self.resources.items():
@@ -62,9 +63,11 @@ class FishAction(Action):
             # Success
             return {
                 'result': self.fish,
+                'resource': self.bait,
                 'message': f'You caught a {self.fish.name.replace('Raw ', '')}!',
                 'target': target,
-                'quantity': self.quantity-1,
+                'quantity': quantity,
+                'attempt': self.attempt+1,
                 'rewards': [
                     f'-1 {self.bait.name}',
                     f'+1 {self.fish.name}',
@@ -75,11 +78,12 @@ class FishAction(Action):
             # Failure
             return {
                 'result': self.fish,
+                'resource': self.bait,
                 'message': f'You caught nothing.',
                 'target': target,
-                'quantity': self.quantity-1,
+                'quantity': quantity,
+                'attempt': self.attempt+1,
                 'rewards':[
-                    f'-1 {self.bait.name}',
                     f'0 Fishing Experience'
                 ]
             }
