@@ -13,7 +13,7 @@ class Material(Item):
     def __init__(self, name, cost):
         self.name = name
         self.category = 'materials'
-        self.cost = cost
+        self.value = cost
         super().__init__(self.name, self.category)
 
 # Materials

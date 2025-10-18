@@ -197,7 +197,18 @@ def locations(player, skill):
 @app.route("/locations/<skill>/<location>")
 @login_required
 def location(player, skill, location):
-    return render_template(f'/locations/{skill}.html', player=player, game=game, skill=skill, location=location)
+    match game.locations[skill][location]['action'].__class__.__name__:
+        case 'BuyAction':
+            t = '/locations/buy.html'
+        case 'SellAction':
+            t = '/locations/sell.html'
+        case 'FishAction':
+            t = '/locations/fish.html'
+        case 'CraftAction':
+            t = '/locations/craft.html'
+        case 'CookAction':
+            t = '/locations/cook.html'
+    return render_template(t, player=player, game=game, skill=skill, location=location)
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5001)

@@ -4,7 +4,7 @@ class Bait(Item):
     def __init__(self, name, cost):
         self.name = name
         self.category = 'live'
-        self.cost = cost
+        self.value = cost
         super().__init__(name, self.category)
 
 # LIVE

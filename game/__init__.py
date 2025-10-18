@@ -1,7 +1,7 @@
 from .actions.fishing import FishAction
 from .actions.crafting import CraftAction
 from .actions.cooking import CookAction
-from .actions.shopping import BuyAction
+from .actions.shopping import BuyAction, SellAction
 
 from .items.fish import fish, lake, river, ocean, coral_reef
 from .items.bait import bait
@@ -34,6 +34,15 @@ class Game:
                     "input": "resources",
                     "resource_subtitle": "Choose an item to buy!",
                     "action": BuyAction(resources=materials)
+                },
+                "flea_market": {
+                    "name": "Flea Market",
+                    "description": "A cold and switch freshwater river that's home to many species!",
+                    "action_disabled_text": "Select Item",
+                    "action_enabled_text": "Purchase",
+                    "input": "resources",
+                    "resource_subtitle": "Choose an item to buy!",
+                    "action": SellAction()
                 }
             },
             "fishing": {

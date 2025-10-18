@@ -41,7 +41,49 @@ class BuyAction(Action):
             'result': self.item,
             'message': f'You purchased {self.quantity} {self.item.name} for {self.total_cost} LBC!',
             'target': target,
-            'repeat_text': 'Buy Again',
+            'rewards': [
+                f'+{self.quantity} {self.item.name}',
+                f'-{ self.total_cost } LBC'
+            ]
+        }
+
+class SellAction(Action):
+
+    def __init__(self):
+        self.resources = {}
+
+    @property
+    def requirements(self):
+        return [
+            ItemRequirement(
+                item=self.item,
+                quantity=self.quantity
+            )
+        ]
+
+    @property
+    def rewards(self):
+        return [
+            ItemReward(
+                item=self.item,
+                quantity=-(self.quantity)
+            ),
+            BalanceReward(
+                quantity=self.total_cost
+            )
+        ]
+
+    def execute(self, game, player, target, quantity, *args, **kwargs):
+        self.item = game.items.get(target)
+        self.quantity = int(quantity)
+        self.total_cost = self.item.cost * self.quantity
+
+        super().execute(player)
+
+        return {
+            'result': self.item,
+            'message': f'You sold {self.quantity} {self.item.name} for {self.total_cost} LBC!',
+            'target': target,
             'rewards': [
                 f'+{self.quantity} {self.item.name}',
                 f'-{ self.total_cost } LBC'
