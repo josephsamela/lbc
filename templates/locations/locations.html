@@ -1,0 +1,29 @@
+{% set title = skill.title()+' Locations' %}
+{% extends "base.html" %}
+
+{% block content %}
+
+{% for key, location in game.locations[skill].items() %}
+
+{% if location is not string %}
+
+<section>
+    <div class="card" style="background-image: url('/static/images/locations/{{ key }}.png');">
+        <div class="card-title">
+            <h2>{{location.name}}</h2>
+        </div>
+        <div class="card-subtitle">
+            <p>{{ location.description }}</p>
+        </div>
+        <div class="card-body"></div>
+        <a class="card-action" href="/locations/{{ skill }}/{{ key }}">
+            <h3>{{ location.name }}</h3>
+        </a>
+    </card>
+</section>
+
+{% endif %}
+
+{% endfor %}
+
+{% endblock %}

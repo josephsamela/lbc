@@ -43,7 +43,7 @@
         </div>
 
         <section>
-            <div class="card skill-card {{ skill }}">
+            <a href="/player/skills/{{ skill }}" class="card skill-card {{ skill }}">
                 <h3>{{ game.skills[skill].name }}</h3>
                 <div class="icon end icon skill">
                     <img src="/static/images/skills/icons/{{ skill }}.svg">
@@ -54,7 +54,7 @@
                 <p class="start">Level <b>{{ player.experience.level(skill) }}</b></p>
                 <p class="center">{{ (player.experience.next_level_progress(skill)*100) | int }}%</p>
                 <p class="end">Level <b>{{ player.experience.next_level(skill) }}</b></p>
-            </div>
+            </a>
         </section>
 
         <section>
@@ -99,7 +99,7 @@
             graphic.innerHTML = '<h2>● ● ●</h2>'
         }
         else if (c > 5) {
-            if (quantity == "*") {
+            if (quantity == "All") {
                 document.getElementById('submit-button').click()
             } else if ((parseInt(quantity)-attempt) > 0) {
                 document.getElementById('submit-button').click()

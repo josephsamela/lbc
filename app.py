@@ -2,7 +2,7 @@ import uuid
 from functools import wraps
 
 # Initialize Flask
-from flask import Flask, render_template, request, redirect, make_response
+from flask import Flask, render_template, request, redirect, make_response, url_for
 from flask_bcrypt import Bcrypt
 app = Flask(__name__)
 app.jinja_env.add_extension('jinja2.ext.loopcontrols')
@@ -122,6 +122,9 @@ def signup():
                 session_expiration=session_expiration
             )
 
+            player._record.balance = 1000
+            player._record.save()
+
             response = make_response(redirect('/'))
             response.set_cookie('session', session_token, expires=session_expiration)
  
@@ -160,35 +163,32 @@ def item(player, item):
     return render_template('/access/item.html', player=player, game=game, item=game.items.get(item))
 
 # ROUTES - ACTIONS
-# /aciton
-# 
-# Actions:
-#   DropAction
-#   FishAction
-#   CookAction
-#   CraftAction
-#   PlantAction
-#   ClearAction
-#   HarvestAction
-
 @app.route("/action", methods=["POST"])
 @login_required
 def action(player):
     skill = request.form.get("skill")
     location = request.form.get("location")
     action = game.locations[skill][location]['action']
-
     try:
         result = action.execute(game, player, **request.form)
+        return render_template(f'/results/{skill}.html', player=player, game=game, skill=skill, location=location, result=result)
     except Exception as e:
-        return render_template(f'/locations/{skill}.html', player=player, game=game, skill=skill, location=location, error=e)
-
-    return render_template(f'/results/{skill}.html', player=player, game=game, skill=skill, location=location, result=result)
+        match game.locations[skill][location]['action'].__class__.__name__:
+            case 'BuyAction':
+                t = '/locations/buy.html'
+            case 'SellAction':
+                t = '/locations/sell.html'
+            case 'FishAction':
+                t = '/locations/fish.html'
+            case 'CraftAction':
+                t = '/locations/craft.html'
+            case 'CookAction':
+                t = '/locations/cook.html'
+        return render_template(t, player=player, game=game, skill=skill, location=location, error=e)
 
 # ROUTES - LOCATIONS
 #   /locations/<skill>
 #   /locations/<skill>/<location>
-
 @app.route("/locations/<skill>")
 @login_required
 def locations(player, skill):
@@ -196,7 +196,7 @@ def locations(player, skill):
 
 @app.route("/locations/<skill>/<location>")
 @login_required
-def location(player, skill, location):
+def location(player, skill, location, error=None):
     match game.locations[skill][location]['action'].__class__.__name__:
         case 'BuyAction':
             t = '/locations/buy.html'

@@ -48,7 +48,7 @@
             <button id="quantity-option-1" onclick="set_quantity(this)" data-value=1 class="card-action selected disabled" disabled><h3>1</h3></button>
             <button id="quantity-option-2" onclick="set_quantity(this)" data-value=5 class="card-action disabled" disabled><h3>5</h3></button>
             <button id="quantity-option-3" onclick="set_quantity(this)" data-value=10 class="card-action disabled" disabled><h3>10</h3></button>
-            <button id="quantity-option-4" onclick="set_quantity(this)" data-value="*" class="card-action disabled" disabled><h3>All</h3></button>
+            <button id="quantity-option-4" onclick="set_quantity(this)" data-value="All" class="card-action disabled" disabled><h3>All</h3></button>
         </section>
 
         <section></section>
@@ -77,7 +77,7 @@
         <div class="grid-container">
         {% for slot in player.inventory.items(location.resource_filter) %}
             <div class="grid-item">
-                <div id="{{ slot.item.name | snake_case }}" data-name="{{ slot.item.name }}" class="card" onclick="item_select('{{ slot.item.name | snake_case }}')">
+                <div id="{{ slot.item.name | snake_case }}" data-name="{{ slot.item.name }}" data-quantity={{ slot.quantity }} class="card" onclick="item_select('{{ slot.item.name | snake_case }}')">
                     <img src="/static/images/items/{{ slot.item.name | snake_case }}.png" class="card-image">
                     <h6>{{ slot.item.name }}</h6>
                     <div class="icon">
@@ -89,7 +89,7 @@
         </div>
 
         <section>
-            <a class="card-action" href="/locations/market/tackle_shop">
+            <a class="card-action" href="/locations/market">
                 <h3>Purchase Bait</h3>
             </a>
         </section>
@@ -110,6 +110,8 @@
     var submit_item_preview = document.getElementById('submit-item-preview')
     var submit_item_subtitle = document.getElementById('submit-item-subtitle')
     var quantity = 1
+    var selected_item = null
+
 
     function set_quantity(qty) {
         quantity_option_1.classList.remove('selected')
@@ -119,13 +121,17 @@
 
         qty.classList.add('selected')
         
-        quantity = qty.dataset.value
+        if (qty.dataset.value=="All") {
+            quantity = selected_item.dataset.quantity
+        } else {
+            quantity = qty.dataset.value
+        }
 
         item_select(submit_item.value)
     }
 
     function item_select(item_id) {
-        var selected_item = document.getElementById(item_id)
+        selected_item = document.getElementById(item_id)
 
         // When player selects an item...
 

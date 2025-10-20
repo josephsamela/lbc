@@ -20,28 +20,16 @@ class Game:
                 "bait_store": {
                     "name": "Bait Store",
                     "description": "A cold and switch freshwater river that's home to many species!",
-                    "action_disabled_text": "Select Item",
-                    "action_enabled_text": "Purchase",
-                    "input": "resources",
-                    "resource_subtitle": "Choose an item to buy!",
                     "action": BuyAction(resources=bait)
                 },
                 "tackle_shop": {
                     "name": "Tackle Shop",
                     "description": "A cold and switch freshwater river that's home to many species!",
-                    "action_disabled_text": "Select Item",
-                    "action_enabled_text": "Purchase",
-                    "input": "resources",
-                    "resource_subtitle": "Choose an item to buy!",
                     "action": BuyAction(resources=materials)
                 },
                 "flea_market": {
                     "name": "Flea Market",
                     "description": "A cold and switch freshwater river that's home to many species!",
-                    "action_disabled_text": "Select Item",
-                    "action_enabled_text": "Purchase",
-                    "input": "resources",
-                    "resource_subtitle": "Choose an item to buy!",
                     "action": SellAction()
                 }
             },
@@ -51,40 +39,24 @@ class Game:
                 "lake": {
                     "name": "Lake",
                     "description": "A cold and switch freshwater river that's home to many species!",
-                    "action_disabled_text": "Select Bait",
-                    "action_enabled_text": "Fish",
-                    "input": "inventory", # Either "inventory" or "resources"
-                    "resource_subtitle": "Choose bait from your inventory!",
                     "resource_filter": ["live", "lures", "nymphs", "wet flies", "dry_files", "streamers"],
                     "action": FishAction(resources=lake)
                 },
                 "river": {
                     "name": "River",
                     "description": "A cold and switch freshwater river that's home to many species!",
-                    "action_disabled_text": "Select Bait",
-                    "action_enabled_text": "Fish",
-                    "input": "inventory", # Either "inventory" or "resources"
-                    "resource_subtitle": "Choose bait from your inventory!",
                     "resource_filter": ["live", "lures", "nymphs", "wet flies", "dry_files", "streamers"],
                     "action": FishAction(resources=river)
                 },
                 "ocean": {
                     "name": "Ocean",
                     "description": "A cold and switch freshwater river that's home to many species!",
-                    "action_disabled_text": "Select Bait",
-                    "action_enabled_text": "Fish",
-                    "input": "inventory", # Either "inventory" or "resources"
-                    "resource_subtitle": "Choose bait from your inventory!",
                     "resource_filter": ["live", "lures", "nymphs", "wet flies", "dry_files", "streamers"],
                     "action": FishAction(resources=ocean)
                 },
                 "coral reef": {
                     "name": "Coral Reef",
                     "description": "A cold and switch freshwater river that's home to many species!",
-                    "action_disabled_text": "Select Bait",
-                    "action_enabled_text": "Fish",
-                    "input": "inventory", # Either "inventory" or "resources"
-                    "resource_subtitle": "Choose bait from your inventory!",
                     "resource_filter": ["live", "lures", "nymphs", "wet flies", "dry_files", "streamers"],
                     "action": FishAction(resources=coral_reef)
                 }
@@ -95,19 +67,11 @@ class Game:
                 "lakeside cottage": {
                     "name": "Lakeside Cottage",
                     "description": "A charming cottage by the lake with a workshop and tools for crafting lures.",
-                    "action_disabled_text": "Select Lure",
-                    "action_enabled_text": "Craft",
-                    "input": "resources", # Either "inventory" or "resources"
-                    "resource_subtitle": "Choose an lure to craft!",
                     "action": CraftAction(resources={'lures': lures})
                 },
                 "river lodge": {
                     "name": "River Lodge",
                     "description": "Rustic lodge overlooking the river with good light and a fly tying stand for crafting flies.",
-                    "action_disabled_text": "Select Fly",
-                    "action_enabled_text": "Craft",
-                    "input": "resources", # Either "inventory" or "resources"
-                    "resource_subtitle": "Choose a fly to craft!",
                     "action": CraftAction(resources=flies)
                 }
             },
@@ -116,11 +80,7 @@ class Game:
                 "description": "Explore lakes, rivers and oceans to fish exciting locations and discover new species!",
                 "campfire": {
                     "name": "Campfire",
-                    "description": "A cold and switch freshwater river that's home to many species!",
-                    "action_disabled_text": "Select Recipe",
-                    "action_enabled_text": "Cook",
-                    "input": "resources", # Either "inventory" or "resources"
-                    "resource_subtitle": "Choose an recipe to cook!",
+                    "description": "A cozy fire by with a warm bed of coals - perfect for cooking your catch.",
                     "action": CookAction(resources=campfire_recipes)
                 }
             }
@@ -129,15 +89,15 @@ class Game:
         self.skills = {
             "fishing": {
                 "name": "Fishing",
-                "description": "Explore lakes, rivers and oceans to fish exciting locations and discover new species!",
+                "description": "Explore lakes, rivers and oceans to fish exciting locations and discover new species!"
             },
             "crafting": {
                 "name": "Crafting",
-                "description": "Explore lakes, rivers and oceans to fish exciting locations and discover new species!",
+                "description": "Gather materials and combine them to craft lures and flies for fishing!"
             },
             "cooking": {
                 "name": "Cooking",
-                "description": "Explore lakes, rivers and oceans to fish exciting locations and discover new species!",
+                "description": "Use the ingredients you've collected to cook unique and exciting recipes!"
             }
         }
 

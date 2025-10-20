@@ -48,7 +48,7 @@
             <button id="quantity-option-1" onclick="set_quantity(this)" data-value=1 class="card-action selected disabled" disabled><h3>1</h3></button>
             <button id="quantity-option-2" onclick="set_quantity(this)" data-value=5 class="card-action disabled" disabled><h3>5</h3></button>
             <button id="quantity-option-3" onclick="set_quantity(this)" data-value=10 class="card-action disabled" disabled><h3>10</h3></button>
-            <button id="quantity-option-4" onclick="set_quantity(this)" data-value="*" class="card-action disabled" disabled><h3>All</h3></button>
+            <button id="quantity-option-4" onclick="set_quantity(this)" data-value="All" class="card-action disabled" disabled><h3>All</h3></button>
         </section>
 
         <section></section>
@@ -77,15 +77,16 @@
         <div class="grid-container">
         {% for slot in player.inventory.items() %}
 
-
-        
             {% set item_key = slot.item.name | snake_case %}
             {% set item = game.items.get(item_key) %}
 
             <div class="grid-item">
-                <div id="{{ item_key }}" data-name="{{ item.name }}" data-cost="{{ item.cost }}" data-quantity="{{ slot.quantity }}" class="card" onclick="item_select('{{ item_key }}')">
-                    <img src="/static/images/items/{{ item_key }}.png" class="card-image">
+                <div id="{{ item_key }}" data-name="{{ item.name }}" data-cost="{{ item.cost }}" data-quantity={{ slot.quantity }} class="card" onclick="item_select('{{ item_key }}')">
                     <h6>{{ item.name }}</h6>
+                    <div class="card-subtitle">
+                        <img src="/static/images/items/{{ item_key }}.png" class="card-image">
+                    </div>
+                    <p><b>{{ item.cost }}</b> LBC</p>
                     <div class="icon">
                         <h4>{{ slot.quantity }}</h4>
                     </div>
@@ -116,6 +117,7 @@
     var submit_item_preview = document.getElementById('submit-item-preview')
     var submit_item_subtitle = document.getElementById('submit-item-subtitle')
     var quantity = 1
+    var selected_item = null
 
     function set_quantity(qty) {
         quantity_option_1.classList.remove('selected')
@@ -125,13 +127,17 @@
 
         qty.classList.add('selected')
         
-        quantity = qty.dataset.value
+        if (qty.dataset.value=="All") {
+            quantity = selected_item.dataset.quantity
+        } else {
+            quantity = qty.dataset.value
+        }
 
         item_select(submit_item.value)
     }
 
     function item_select(item_id) {
-        var selected_item = document.getElementById(item_id)
+        selected_item = document.getElementById(item_id)
 
         // When player selects an item...
 

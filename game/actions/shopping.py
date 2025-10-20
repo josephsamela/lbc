@@ -64,10 +64,6 @@ class SellAction(Action):
     @property
     def rewards(self):
         return [
-            ItemReward(
-                item=self.item,
-                quantity=-(self.quantity)
-            ),
             BalanceReward(
                 quantity=self.total_cost
             )
@@ -85,7 +81,7 @@ class SellAction(Action):
             'message': f'You sold {self.quantity} {self.item.name} for {self.total_cost} LBC!',
             'target': target,
             'rewards': [
-                f'+{self.quantity} {self.item.name}',
-                f'-{ self.total_cost } LBC'
+                f'-{self.quantity} {self.item.name}',
+                f'+{ self.total_cost } LBC'
             ]
         }

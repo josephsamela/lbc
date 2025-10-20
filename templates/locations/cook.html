@@ -48,7 +48,7 @@
             <button id="quantity-option-1" onclick="set_quantity(this)" data-value=1 class="card-action selected disabled" disabled><h3>1</h3></button>
             <button id="quantity-option-2" onclick="set_quantity(this)" data-value=5 class="card-action disabled" disabled><h3>5</h3></button>
             <button id="quantity-option-3" onclick="set_quantity(this)" data-value=10 class="card-action disabled" disabled><h3>10</h3></button>
-            <button id="quantity-option-4" onclick="set_quantity(this)" data-value="*" class="card-action disabled" disabled><h3>All</h3></button>
+            <button id="quantity-option-4" onclick="set_quantity(this)" data-value="All" class="card-action disabled" disabled><h3>All</h3></button>
         </section>
 
         <section></section>
@@ -87,13 +87,7 @@
                         <img src="/static/images/items/{{ item_key }}.png" class="card-image hidden">
                         {% endif %}
                     </div>
-
-                    {% if item.cost is defined %}
-                    <p><b>{{ item.cost }}</b> LBC</p>
-                    {% else %}
                     <p><b>{{ item.level }}</b> {{ skill.title() }}</p>
-                    {% endif %}
-
                 </div>
             </div>
             {% endfor %}
@@ -150,7 +144,7 @@
         quantity_option_4.classList.remove('disabled')
 
         // 4. Set submit subtitle
-        submit_item_subtitle.innerHTML = `<p>Craft ${quantity} ${selected_item.dataset.name}</p>`
+        submit_item_subtitle.innerHTML = `<p>Cook ${quantity} ${selected_item.dataset.name}</p>`
 
         // 5. Set submit preview
         submit_item_preview.innerHTML = '<img src="/static/images/items/'+item_id+'.png">'
