@@ -41,8 +41,8 @@ raw_black_seabass = Fish('Raw Black Seabass', 44, [glow_worms, crankbait, fontin
 raw_arctic_cod = Fish('Raw Arctic Cod', 54, [glow_worms, jig, grizzly_king])
 raw_bluefish = Fish('Raw Bluefish', 64, [cray_fish, swimbait, royal_wulff])
 raw_pacific_halibut = Fish('Raw Pacific Halibut', 74, [cray_fish, tungsten_dart])
-raw_bluefin_tuna = Fish('Raw Bluefin Tuna', 84, [sand_flea, topwater, golden_walts])
-raw_swordfish = Fish('Raw Swordfish', 94, [sand_flea, ashdown_green])
+raw_bluefin_tuna = Fish('Raw Bluefin Tuna', 84, [sand_fleas, topwater, golden_walts])
+raw_swordfish = Fish('Raw Swordfish', 94, [sand_fleas, ashdown_green])
 # Coral Reef
 raw_sergeant_major = Fish('Raw Sergeant Major', 6, [blood_worms, spoon, royal_coachman])
 raw_yellowtail_snapper = Fish('Raw Yellowtail Snapper', 16, [blood_worms, spinner, parachute_adams])
@@ -50,8 +50,8 @@ raw_spanish_mackerel = Fish('Raw Spanish Mackerel', 26, [glow_worms, jerkbait, b
 raw_goatfish = Fish('Raw Goatfish', 36, [glow_worms, popper, emerald_tag])
 raw_parrotfish = Fish('Raw Parrotfish', 46, [cray_fish, crankbait, black_conehead])
 raw_hogfish = Fish('Raw Hogfish', 56, [cray_fish, jig, grizzly_king])
-raw_mahi_mahi = Fish('Raw Mahi Mahi', 66, [sand_flea, swimbait, pink_lady])
-raw_red_grouper = Fish('Raw Red Grouper', 76, [sand_flea, topwater, clark_cicada])
+raw_mahi_mahi = Fish('Raw Mahi Mahi', 66, [sand_fleas, swimbait, pink_lady])
+raw_red_grouper = Fish('Raw Red Grouper', 76, [sand_fleas, topwater, clark_cicada])
 raw_giant_trevally = Fish('Raw Giant Trevally', 86, [hellgrammites, olive_quill])
 raw_humphead_wrasse = Fish('Raw Humphead Wrasse', 96, [hellgrammites, pamachene_belle])
 

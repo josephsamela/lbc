@@ -16,20 +16,20 @@ class Game:
         self.locations = {
             "market": {     
                 "name": "Market",
-                "description": "Explore lakes, rivers and oceans to fish exciting locations and discover new species!",
+                "description": "The market is a fun place where folks gather to buy and sell items with Lute Bear Coin!",
                 "bait_store": {
                     "name": "Bait Store",
-                    "description": "A cold and switch freshwater river that's home to many species!",
+                    "description": "The corner bait store that specializes in vermiculture and selling live bait!",
                     "action": BuyAction(resources=bait)
                 },
                 "tackle_shop": {
                     "name": "Tackle Shop",
-                    "description": "A cold and switch freshwater river that's home to many species!",
+                    "description": "The local tackle shop that sells materials for crafting lures and tying flies!",
                     "action": BuyAction(resources=materials)
                 },
                 "flea_market": {
                     "name": "Flea Market",
-                    "description": "A cold and switch freshwater river that's home to many species!",
+                    "description": "The community market where you can sell any item in your inventory!",
                     "action": SellAction()
                 }
             },
@@ -39,31 +39,31 @@ class Game:
                 "lake": {
                     "name": "Lake",
                     "description": "A cold and switch freshwater river that's home to many species!",
-                    "resource_filter": ["live", "lures", "nymphs", "wet flies", "dry_files", "streamers"],
+                    "resource_filter": ["live", "lures", "nymphs", "wet flies", "dry flies", "streamers"],
                     "action": FishAction(resources=lake)
                 },
                 "river": {
                     "name": "River",
                     "description": "A cold and switch freshwater river that's home to many species!",
-                    "resource_filter": ["live", "lures", "nymphs", "wet flies", "dry_files", "streamers"],
+                    "resource_filter": ["live", "lures", "nymphs", "wet flies", "dry flies", "streamers"],
                     "action": FishAction(resources=river)
                 },
                 "ocean": {
                     "name": "Ocean",
                     "description": "A cold and switch freshwater river that's home to many species!",
-                    "resource_filter": ["live", "lures", "nymphs", "wet flies", "dry_files", "streamers"],
+                    "resource_filter": ["live", "lures", "nymphs", "wet flies", "dry flies", "streamers"],
                     "action": FishAction(resources=ocean)
                 },
                 "coral reef": {
                     "name": "Coral Reef",
                     "description": "A cold and switch freshwater river that's home to many species!",
-                    "resource_filter": ["live", "lures", "nymphs", "wet flies", "dry_files", "streamers"],
+                    "resource_filter": ["live", "lures", "nymphs", "wet flies", "dry flies", "streamers"],
                     "action": FishAction(resources=coral_reef)
                 }
             },
             "crafting": {
                 "name": "Crafting",
-                "description": "Explore lakes, rivers and oceans to fish exciting locations and discover new species!",
+                "description": "Gather materials and use your creativity to craft lures and flies for fishing!",
                 "lakeside cottage": {
                     "name": "Lakeside Cottage",
                     "description": "A charming cottage by the lake with a workshop and tools for crafting lures.",
@@ -77,7 +77,7 @@ class Game:
             },
             "cooking": {
                 "name": "Cooking",
-                "description": "Explore lakes, rivers and oceans to fish exciting locations and discover new species!",
+                "description": "Combine the ingredients you've collected to discover recipes and cook delicious meals!",
                 "campfire": {
                     "name": "Campfire",
                     "description": "A cozy fire by with a warm bed of coals - perfect for cooking your catch.",

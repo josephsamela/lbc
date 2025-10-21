@@ -52,7 +52,6 @@ def authentication_check(request):
     return player
 
 # ROUTES - ACCESS
-
 @app.route("/login", methods=["GET", "POST"])
 def login():
     match request.method:
@@ -130,6 +129,42 @@ def signup():
  
             return response
 
+@app.route("/change-password", methods=["GET", "POST"])
+@login_required
+def change_password(player):
+    current_password = request.form.get("current_password")
+    new_password = request.form.get("new_password")
+
+    # 1. Check current_password is correct
+    if not bcrypt.check_password_hash(player._record.password, current_password):
+        return render_template(
+            '/player/edit.html', 
+            player=player, 
+            game=game,
+            error="Current password is incorrect"
+        )
+
+
+    # 2. Check that new password is at least 8 characters
+    if not len(new_password) >= 8:
+        return render_template(
+            '/player/edit.html',
+            player=player, 
+            game=game,
+            error="New password must be 8+ characters"
+        )
+
+    # If the request passes both checks, get the new password hash write to db
+    new_password_hash = bcrypt.generate_password_hash(new_password).decode('utf-8')
+    player._record.password = new_password_hash
+    
+    return render_template(
+        '/player/edit.html',
+        player=player, 
+        game=game,
+        success="Your password has been updated!"
+    )
+
 @app.route("/")
 @login_required
 def home(player):
@@ -154,6 +189,11 @@ def skill(player, skill):
 @login_required
 def backpack(player):
     return render_template('/player/backpack.html', player=player, game=game)
+
+@app.route('/player/edit')
+@login_required
+def edit(player):
+    return render_template('/player/edit.html', player=player, game=game)
 
 # ROUTES - ITEMS
 # /item/<item>

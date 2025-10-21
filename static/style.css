@@ -90,6 +90,11 @@ a {
     margin-top: 1em;
 }
 
+.success {
+    color: green;
+    margin-top: 1em;
+}
+
 /* BANNER */
 
 .banner-title {

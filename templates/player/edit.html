@@ -1,0 +1,50 @@
+{% set title = "Home" %}
+{% extends "base.html" %}
+
+{% block content %}
+<section>
+    <div class="profile-card" style="background-image: url(/static/images/avatars/default.png);">
+        <p class="name">{{ player.name }} {{player.created_at.strftime("%m/%Y")}}</p>
+    </div>
+</section>
+
+<section>
+    <div class="card">
+        <div class="card-title">
+            <h2>Change Password</h2>
+        </div>
+
+        <form action="/change-password" method="post">
+
+            <div class="card-subtitle">
+                <p>Current Password</p>
+                <input type="password" name="current_password" required>
+
+                <p>New Password</p>
+                <input type="password" name="new_password" required>
+            </div>
+            
+            <button class="card-action" type="submit">
+                <h3>Submit</h3>
+            </button>
+
+            {% if error %}
+            <div class="card-subtitle"></div>
+            <p class="error">{{ error }}</p>
+            {% endif %}
+
+            {% if success %}
+            <div class="card-subtitle"></div>
+            <p class="success">{{ success }}</p>
+            {% endif %}
+        </form>
+    </div>
+</section>
+
+<section>
+    <a class="card-action" href="/logout">
+        <h3>Logout</h3>
+    </a>
+</section>
+
+{% endblock %}
